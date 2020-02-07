@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -22,14 +23,13 @@ namespace LotteryCore
         static void Main(string[] args)
         {
 
-
-
+            
 
 
             StatisticHandler.DownloadNumbersFromInternet();
             StatisticHandler.GenerateSections();
-            
-
+            StatisticHandler.LoadNumbersFromJson("test.json");
+            StatisticHandler.MakeStatisticFromEarlierWeek();
             
            
             
@@ -39,13 +39,10 @@ namespace LotteryCore
             StatisticHandler.RunMethodWithEachTime(StatisticHandler.GenerateAvarageStepLines, 1, "By Avarage Steps");
             StatisticHandler.RunMethodWithEachTime(StatisticHandler.GenereateRandom, 2, "By Avarage Randoms");
             StatisticHandler.RunMethodWithEachTime(StatisticHandler.GenerateNumbersFromSum, 2, "By Sums");
+            StatisticHandler.UseEarlierWeekPercentageForNumbersDraw();
             StatisticHandler.SaveCurrentNumbersToFileWithJson("test.json");
             Console.ReadKey();
         }
-
-        
-
-        
     }
 
 }

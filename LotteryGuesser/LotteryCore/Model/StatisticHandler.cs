@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -13,7 +14,7 @@ namespace LotteryCore.Model
     {
         public static LotteryStatistic LotteryStatistic;
 
-        public static List<SaveNumbers> SaveNumbers = new List<SaveNumbers>();
+        public static List<SaveNumber> SaveNumbers = new List<SaveNumber>();
 
         static List<LotteryModel> lotteryCollection;
 
@@ -48,6 +49,16 @@ namespace LotteryCore.Model
                     index++;
                 }
             }
+        }
+
+        public static void AddNumbersToSaveFile(SaveNumber saveNumber)
+        {
+            SaveNumbers.Add(saveNumber);
+        }
+
+        public static void LoadNumbersFromJson(string path)
+        {
+            SaveNumbers =JsonConvert.DeserializeObject<List<SaveNumber>>(File.ReadAllText(path));
         }
 
         public static void GenerateSections()
@@ -86,7 +97,7 @@ namespace LotteryCore.Model
             {
                 action();
                 if(LotteryModels.Count >0)
-                SaveNumbers.Add(new SaveNumbers(LotteryModels.Last().Numbers.OrderBy(x => x).ToArray(), message));
+                SaveNumbers.Add(new SaveNumber(LotteryModels.Last().Numbers.OrderBy(x => x).ToArray(), message));
             }        
             
         }
@@ -336,5 +347,67 @@ namespace LotteryCore.Model
             }
         }
 
+        public static void MakeStatisticFromEarlierWeek()
+        {
+            var getLotteryDrawing =  SaveNumbers.Where(x=> x.WeekOfPull ==lotteryCollection.Last().WeekOfLotteryDrawing).ToList();
+            var lastDrawning = lotteryCollection.Last();
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < getLotteryDrawing.Count(); j++)
+                {
+                    var e = getLotteryDrawing[j].Numbers[i];
+                    var k = lastDrawning.Numbers[i];
+                    var t = (double) e /k ;
+                    getLotteryDrawing[j].DifferentInPercentage.Add(t);
+                }
+            }
+        }
+
+        public static void UseEarlierWeekPercentageForNumbersDraw()
+        {
+            var getLotteryDrawing = SaveNumbers.Where(x => x.WeekOfPull == lotteryCollection.Last().WeekOfLotteryDrawing).ToList();
+            var actualWeekNumbers = SaveNumbers.Where(x => x.WeekOfPull == GetWeeksInYear()).ToList();
+            Console.WriteLine("Calculted From earlier week");
+            for (int i = 0; i < actualWeekNumbers.Count; i++)
+            {
+                SaveNumber saveNumber = new SaveNumber();
+                saveNumber.Numbers= new List<int>();
+                saveNumber.Message = "Calculated";
+                for (int j = 0; j < 5; j++)
+                {
+                    var rand = new Random();
+                    double calculatedNumber =
+                        actualWeekNumbers[i].Numbers[j] * getLotteryDrawing[rand.Next(0,getLotteryDrawing.Count-1)].DifferentInPercentage[j];
+                    saveNumber.Numbers.Add((int)calculatedNumber); 
+                }
+                SaveNumbers.Add(saveNumber);
+                Console.WriteLine(saveNumber);
+            }
+        }
+
+        // From https://en.wikipedia.org/wiki/ISO_week_date#Weeks_per_year:
+        //
+        // The long years, with 53 weeks in them, can be described by any of the following equivalent definitions:
+        //
+        // - Any year starting on Thursday and any leap year starting on Wednesday.
+        // - Any year ending on Thursday and any leap year ending on Friday.
+        // - Years in which 1 January and 31 December (in common years) or either (in leap years) are Thursdays.
+        //
+        // All other week-numbering years are short years and have 52 weeks.
+
+        public static int GetWeeksInYear()
+        {
+            DateTime inputDate = DateTime.Now;
+            var d = inputDate;
+
+            CultureInfo cul = CultureInfo.CurrentCulture;
+            int weekNum = cul.Calendar.GetWeekOfYear(
+                d,
+                CalendarWeekRule.FirstDay,
+                DayOfWeek.Monday);
+
+
+            return weekNum;
+        }
     }
 }
