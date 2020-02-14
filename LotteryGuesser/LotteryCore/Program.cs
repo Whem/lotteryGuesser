@@ -38,7 +38,7 @@ namespace LotteryCore
             StatisticHandler.UseEarlierWeekPercentageForNumbersDraw();
             StatisticHandler.RunMethodWithEachTime(StatisticHandler.CalcTheFiveMostCommonNumbers, 1, "By Distribution Based Current Draw");
             
-            StatisticHandler.SaveCurrentNumbersToFileWithJson("test.json"); 
+            //StatisticHandler.SaveCurrentNumbersToFileWithJson("test.json"); 
             Console.ReadKey();
         }
     }

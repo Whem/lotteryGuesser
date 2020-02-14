@@ -127,29 +127,17 @@ namespace LotteryCore.Model
 
         public static LotteryModel CalcTheFiveMostCommonNumbers()
         {
-            List<int> allNumbers = new List<int>();
-            foreach (LotteryModel lotteryModel in LotteryModels)
+            return new LotteryModel()
             {
-                allNumbers.AddRange(lotteryModel.Numbers);
-            }
-            var groupedBy = allNumbers
-                .GroupBy(n => n)
+                Numbers = LotteryModels.SelectMany(x => x.Numbers).ToList().GroupBy(n => n)
                 .Select(n => new
                     {
                         MetricName = n.Key,
                         MetricCount = n.Count()
                     }
                 )
-                .OrderBy(n => n.MetricCount);
-
-            var elements = groupedBy.Skip(groupedBy.Count() - 5);
-            LotteryModel lm = new LotteryModel();
-            foreach (var element in elements)
-            {
-                lm.AddNumber(element.MetricName);
-            }
-
-            return lm;
+                .OrderByDescending(n => n.MetricCount).Take(5).Select(x => x.MetricName).ToList()
+            };
         }
 
         public static void SaveCurrentNumbersToFileWithJson(string filePath)
