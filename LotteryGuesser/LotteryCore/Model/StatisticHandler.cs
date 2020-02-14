@@ -22,16 +22,13 @@ namespace LotteryCore.Model
 
         public static List<LotteryModel> LotteryModels { get; set; }
 
-        public static void DownloadNumbersFromInternet()
+        public static void DownloadNumbersFromInternet(string link)
         {
             lotteryCollection = new List<LotteryModel>();
-            using (WebClient clientt = new WebClient()) // WebClient class inherits IDisposable
+            using (WebClient client = new WebClient()) // WebClient class inherits IDisposable
             {
-
-
-
                 // Or you can get the file content without saving it
-                string htmlCode = clientt.DownloadString("https://bet.szerencsejatek.hu/cmsfiles/otos.html");
+                string htmlCode = client.DownloadString(link);
                 HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
                 doc.LoadHtml(htmlCode);
 
@@ -49,6 +46,16 @@ namespace LotteryCore.Model
                     index++;
                 }
             }
+        }
+
+        public static List<LotteryModel> GetLotteryCollection()
+        {
+            return lotteryCollection;
+        }
+
+        public static List<NumberSections> GetLotteryStatistics()
+        {
+            return numberSections;
         }
 
         public static void AddNumbersToSaveFile(SaveNumber saveNumber)
@@ -89,21 +96,69 @@ namespace LotteryCore.Model
             }
         }
 
-        public static void RunMethodWithEachTime(Action action, int count, string message)
+        public static void RunMethodWithEachTime(Func<LotteryModel> action, int count, string message)
         {
-            LotteryModels = new List<LotteryModel>();
+            if(LotteryModels == null)LotteryModels = new List<LotteryModel>();
             Console.WriteLine(message);
-            for (int i=0; i < count; i++)
+            int index = 0;
+            while (true)
             {
-                action();
-                if(LotteryModels.Count >0)
-                SaveNumbers.Add(new SaveNumber(LotteryModels.Last().Numbers.OrderBy(x => x).ToArray(), message));
-            }        
-            
+                var returnedModel= action();
+
+
+                if (IsValidLotteryNumbers(returnedModel))
+                {
+                    index++;
+                    returnedModel.Message = message;
+                    Console.WriteLine(returnedModel);
+                    LotteryModels.Add(returnedModel);
+                }
+                else
+                {
+                    continue;
+                }
+                if (index == count)
+                {
+                    break;
+                }
+
+            }
         }
-        
+
+        public static LotteryModel CalcTheFiveMostCommonNumbers()
+        {
+            List<int> allNumbers = new List<int>();
+            foreach (LotteryModel lotteryModel in LotteryModels)
+            {
+                allNumbers.AddRange(lotteryModel.Numbers);
+            }
+            var groupedBy = allNumbers
+                .GroupBy(n => n)
+                .Select(n => new
+                    {
+                        MetricName = n.Key,
+                        MetricCount = n.Count()
+                    }
+                )
+                .OrderBy(n => n.MetricCount);
+
+            var elements = groupedBy.Skip(groupedBy.Count() - 5);
+            LotteryModel lm = new LotteryModel();
+            foreach (var element in elements)
+            {
+                lm.AddNumber(element.MetricName);
+            }
+
+            return lm;
+        }
+
         public static void SaveCurrentNumbersToFileWithJson(string filePath)
         {
+            foreach (LotteryModel lotteryModel in LotteryModels)
+            {
+                SaveNumbers.Add(new SaveNumber(lotteryModel.Numbers.OrderBy(x => x).ToArray(), lotteryModel.Message));
+            }
+
             string json = JsonConvert.SerializeObject(SaveNumbers, Formatting.Indented);
             using (var writer = File.CreateText(filePath))
             {
@@ -111,10 +166,9 @@ namespace LotteryCore.Model
             }
         }
 
-        public static void GenerateFromInterVal()
+        public static LotteryModel GenerateFromInterVal()
         {
-            while (true)
-            {
+            
                 var acutal = numberSections.Where(x => x.ActualNumber == lotteryCollection.Last().FirstNumber);
 
                 LotteryModel lm = new LotteryModel();
@@ -138,11 +192,8 @@ namespace LotteryCore.Model
                                 break;
                             if (getsec.NextNumber > lm.Numbers.Max())
                                 break;
-                            else
-                            {
-                                maxcoount++;
-                                getsec = spec[0].First(x => x.Pieces == maxCount[maxcoount]);
-                            }
+                            maxcoount++;
+                            getsec = spec[0].First(x => x.Pieces == maxCount[maxcoount]);
                         }
                     }
 
@@ -151,23 +202,27 @@ namespace LotteryCore.Model
                     acutal = numberSections.Where(x => x.ActualNumber == getAf);
 
                 }
-                var duplicateKeys = lm.Numbers.GroupBy(x => x)
-                    .Where(group => group.Count() > 1)
-                    .Select(group => group.Key);
 
-                if (!duplicateKeys.Any())
-                {
-                    LotteryModels.Add(lm);
-                    Console.WriteLine(lm);
-                    break;
-                }
+                return lm;
 
-            }
 
 
         }
 
-        public static void GenerateNumbersFromSum()
+        public static bool IsValidLotteryNumbers(LotteryModel lm)
+        {
+            if (lm == null) return false;
+            var duplicateKeys = lm.Numbers.GroupBy(x => x)
+                .Where(group => group.Count() > 1)
+                .Select(group => group.Key);
+
+            var hasOverRangedValue = lm.Numbers.Where(x => x > 90 || x < 1);
+         
+
+            return  !duplicateKeys.Any() && !hasOverRangedValue.Any();
+        }
+
+        public static LotteryModel GenerateNumbersFromSum()
         {
             var getLastSum = lotteryCollection.Last().Sum;
             LotteryModel getbeforeLastSumId;
@@ -196,36 +251,24 @@ namespace LotteryCore.Model
             }
 
 
-            while (true)
+            
+            LotteryModel lm = new LotteryModel();
+            Random rnd2 = new Random();
+            for (int i = 0; i < 5; i++)
             {
-                LotteryModel lm = new LotteryModel();
-                Random rnd = new Random();
-                for (int i = 0; i < 5; i++)
-                {
-                    lm.AddNumber(rnd.Next(1, 91));
-                }
-                if (lotteryCollection.Any(x => x.Numbers.SequenceEqual(lm.Numbers))) continue;
-                if (lm.Sum >= getbeforeLastSumId.Sum - 10 && lm.Sum <= getbeforeLastSumId.Sum + 10)
-                {
-                    var duplicateKeys = lm.Numbers.GroupBy(x => x)
-                        .Where(group => group.Count() > 1)
-                        .Select(group => group.Key);
-
-                    if (!duplicateKeys.Any())
-                    {
-                        LotteryModels.Add(lm);
-                        Console.WriteLine(lm);
-                        break;
-                    }
-                }
+                lm.AddNumber(rnd2.Next(1, 91));
             }
+            
+            if (lm.Sum >= getbeforeLastSumId.Sum - 10 && lm.Sum <= getbeforeLastSumId.Sum + 10)
+            {
+                return lm;
+            }
+
+            return null;
         }
 
-        public static void GenereateRandom()
+        public static LotteryModel GenereateRandom()
         {
-
-            while (true)
-            {
                 LotteryModel lm = new LotteryModel();
                 for (int i = 0; i < 5; i++)
                 {
@@ -244,27 +287,12 @@ namespace LotteryCore.Model
                     }
                 }
 
-                if (lotteryCollection.Any(x => x.Numbers.SequenceEqual(lm.Numbers)))
-                {
-                    continue;
-                }
-
-                if (lm.Sum >= 440 || lm.Numbers.Max() > 15)
-                {
-                    continue;
-                }
-                LotteryModels.Add(lm);
-                Console.WriteLine(lm);
-                break;
-            }
-
-
+                return lm;
         }
 
-        public static void GenerateAvarageStepLines()
+        public static LotteryModel GenerateAvarageStepLines()
         {
-            while (true)
-            {
+           
                 Random random = new Random();
                 int start2 = random.Next(1, 90);
                 LotteryModel lm = new LotteryModel();
@@ -274,28 +302,15 @@ namespace LotteryCore.Model
                 lm.AddNumber(lm.Numbers.Last() + (int)Math.Round(LotteryStatistic.Avarage2to3, 0));
                 lm.AddNumber(lm.Numbers.Last() + (int)Math.Round(LotteryStatistic.Avarage3to4, 0));
                 lm.AddNumber(lm.Numbers.Last() + (int)Math.Round(LotteryStatistic.Avarage4to5, 0));
-
-
-                if (lotteryCollection.Any(x => x.Numbers.SequenceEqual(lm.Numbers)))
-                {
-                    continue;
-                }
-
-                if (lm.Sum >= 440 || lm.Numbers.Max() > 90)
-                {
-                    continue;
-                }
+                
                 LotteryModels.Add(lm);
-                Console.WriteLine(lm);
-                break;
-            }
+                return lm;
+
         }
 
 
-        public static void GenerateLottery()
+        public static LotteryModel GenerateLottery()
         {
-            while (true)
-            {
                 LotteryModel lm = new LotteryModel();
 
 
@@ -337,14 +352,8 @@ namespace LotteryCore.Model
 
                     lm.AddNumber(generateNumber.NextNumber);
                 }
+                return lm;
 
-
-                if (lotteryCollection.Any(x => x.Numbers.SequenceEqual(lm.Numbers))) continue;
-
-                LotteryModels.Add(lm);
-                Console.WriteLine(lm);
-                break;
-            }
         }
 
         public static void MakeStatisticFromEarlierWeek()
@@ -366,22 +375,34 @@ namespace LotteryCore.Model
         public static void UseEarlierWeekPercentageForNumbersDraw()
         {
             var getLotteryDrawing = SaveNumbers.Where(x => x.WeekOfPull == lotteryCollection.Last().WeekOfLotteryDrawing).ToList();
-            var actualWeekNumbers = SaveNumbers.Where(x => x.WeekOfPull == GetWeeksInYear()).ToList();
-            Console.WriteLine("Calculted From earlier week");
-            for (int i = 0; i < actualWeekNumbers.Count; i++)
+            
+            Console.WriteLine("Calculated From earlier week");
+            int index = 0;
+            int end = LotteryModels.Count;
+            while (true)
             {
-                SaveNumber saveNumber = new SaveNumber();
-                saveNumber.Numbers= new List<int>();
-                saveNumber.Message = "Calculated";
+                LotteryModel lm = new LotteryModel();
+                lm.Numbers = new List<int>();
+                lm.Message = "Calculated";
                 for (int j = 0; j < 5; j++)
                 {
                     var rand = new Random();
                     double calculatedNumber =
-                        actualWeekNumbers[i].Numbers[j] * getLotteryDrawing[rand.Next(0,getLotteryDrawing.Count-1)].DifferentInPercentage[j];
-                    saveNumber.Numbers.Add((int)calculatedNumber); 
+                        LotteryModels[index].Numbers[j] * getLotteryDrawing[rand.Next(0, getLotteryDrawing.Count - 1)].DifferentInPercentage[j];
+                    lm.Numbers.Add((int)calculatedNumber);
                 }
-                SaveNumbers.Add(saveNumber);
-                Console.WriteLine(saveNumber);
+
+                if (IsValidLotteryNumbers(lm))
+                {
+                    index++;
+                    LotteryModels.Add(lm);
+                    Console.WriteLine(lm);
+                }
+
+                if (index == end)
+                {
+                    break;
+                }
             }
         }
 

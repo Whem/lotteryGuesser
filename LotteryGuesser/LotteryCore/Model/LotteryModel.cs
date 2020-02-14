@@ -26,6 +26,8 @@ namespace LotteryCore.Model
         public int FifthNumber { get; set; }
         public List<string> XlsxString { get; set; }
 
+        public string Message { get; set; }
+
         public List<int> Numbers
         {
             get { return _numbers; }

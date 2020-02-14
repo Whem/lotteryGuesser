@@ -22,11 +22,7 @@ namespace LotteryCore
 
         static void Main(string[] args)
         {
-
-            
-
-
-            StatisticHandler.DownloadNumbersFromInternet();
+            StatisticHandler.DownloadNumbersFromInternet("https://bet.szerencsejatek.hu/cmsfiles/otos.html");
             StatisticHandler.GenerateSections();
             StatisticHandler.LoadNumbersFromJson("test.json");
             StatisticHandler.MakeStatisticFromEarlierWeek();
@@ -40,7 +36,9 @@ namespace LotteryCore
             StatisticHandler.RunMethodWithEachTime(StatisticHandler.GenereateRandom, 2, "By Avarage Randoms");
             StatisticHandler.RunMethodWithEachTime(StatisticHandler.GenerateNumbersFromSum, 2, "By Sums");
             StatisticHandler.UseEarlierWeekPercentageForNumbersDraw();
-            StatisticHandler.SaveCurrentNumbersToFileWithJson("test.json");
+            StatisticHandler.RunMethodWithEachTime(StatisticHandler.CalcTheFiveMostCommonNumbers, 1, "By Distribution Based Current Draw");
+            
+            StatisticHandler.SaveCurrentNumbersToFileWithJson("test.json"); 
             Console.ReadKey();
         }
     }
