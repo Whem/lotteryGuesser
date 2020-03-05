@@ -10,21 +10,21 @@ namespace LotteryCore.Model
     [JsonObject(MemberSerialization.OptIn)]
     public class SaveNumber
     {
-        [JsonProperty]
+    
         public int WeekOfPull { get; set; }
-        [JsonProperty]
+  
         public int FirstNumber { get; set; }
-        [JsonProperty]
+      
         public int SecondNumber { get; set; }
-        [JsonProperty]
+  
         public int ThirdNumber { get; set; }
-        [JsonProperty]
+      
         public int FourthNumber { get; set; }
-        [JsonProperty]
+     
         public int FifthNumber { get; set; }
-        [JsonProperty]
+    
         public string Message { get; set; }
-        [JsonProperty]
+    
         public List<int> Numbers { get; set; }
 
         public List<double> DifferentInPercentage;
@@ -44,6 +44,35 @@ namespace LotteryCore.Model
             FifthNumber = numbers[4];
             Message = message;
             WeekOfPull = generateAutomaticCurrentWeek ? StatisticHandler.GetWeeksInYear() : weekOfPull;
+
+        }
+
+        public SaveNumber(string[] datas)
+        {
+            DifferentInPercentage = new List<double>();
+            WeekOfPull = Convert.ToInt32(datas[0]);
+            Numbers = datas[7].Split(',').Select(Int32.Parse).ToList();
+            if (!String.IsNullOrEmpty(datas[1]))
+            {
+
+            
+            FirstNumber = Convert.ToInt32(datas[1]);
+            SecondNumber = Convert.ToInt32(datas[2]);
+            ThirdNumber = Convert.ToInt32(datas[3]);
+            FourthNumber = Convert.ToInt32(datas[4]);
+            FifthNumber = Convert.ToInt32(datas[5]);
+            }
+            else
+            {
+                FirstNumber = Numbers[0];
+                SecondNumber = Numbers[1];
+                ThirdNumber = Numbers[2];
+                FourthNumber = Numbers[3];
+                FifthNumber = Numbers[4];
+            }
+            Message = datas[6].ToString();
+
+            
 
         }
 

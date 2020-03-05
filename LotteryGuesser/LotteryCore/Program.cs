@@ -10,6 +10,11 @@ using System.Text;
 using System.Threading;
 using FluentEmail.Core;
 using FluentEmail.Mailgun;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Services;
+using Google.Apis.Sheets.v4;
+using Google.Apis.Sheets.v4.Data;
+using Google.Apis.Util.Store;
 using LotteryCore.Model;
 using LotteryGuesser.Model;
 using OfficeOpenXml;
@@ -18,17 +23,20 @@ namespace LotteryCore
 {
     class Program
     {
-        
 
+        
         static void Main(string[] args)
         {
+            var gsd = new GoogleSheetData();
+
+
             StatisticHandler.DownloadNumbersFromInternet("https://bet.szerencsejatek.hu/cmsfiles/otos.html");
             StatisticHandler.GenerateSections();
-            StatisticHandler.LoadNumbersFromJson("test.json");
+            StatisticHandler.LoadNumbersFromSheet(gsd.GetData());
             StatisticHandler.MakeStatisticFromEarlierWeek();
-            
-           
-            
+
+
+
 
             StatisticHandler.RunMethodWithEachTime(StatisticHandler.GenerateFromInterVal, 1, "By Interval");
             StatisticHandler.RunMethodWithEachTime(StatisticHandler.GenerateLottery, 2, "By Occurrence");
@@ -37,7 +45,7 @@ namespace LotteryCore
             StatisticHandler.RunMethodWithEachTime(StatisticHandler.GenerateNumbersFromSum, 2, "By Sums");
             StatisticHandler.UseEarlierWeekPercentageForNumbersDraw();
             StatisticHandler.RunMethodWithEachTime(StatisticHandler.CalcTheFiveMostCommonNumbers, 1, "By Distribution Based Current Draw");
-            
+
             //StatisticHandler.SaveCurrentNumbersToFileWithJson("test.json"); 
             Console.ReadKey();
         }
