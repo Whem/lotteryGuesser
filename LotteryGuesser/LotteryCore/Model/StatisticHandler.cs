@@ -49,6 +49,23 @@ namespace LotteryCore.Model
             }
         }
 
+        internal static void LoadNumbersFromSheet(List<string[]> getData)
+        {
+            SaveNumbers = new List<SaveNumber>();
+            if (getData != null && getData.Count > 0)
+            {
+
+                foreach (var row in getData)
+                {
+                    SaveNumbers.Add(new SaveNumber(row));
+                }
+            }
+            else
+            {
+                Console.WriteLine("No data found.");
+            }
+        }
+
         public static List<LotteryModel> GetLotteryCollection()
         {
             return lotteryCollection;
@@ -62,12 +79,7 @@ namespace LotteryCore.Model
         public static void AddNumbersToSaveFile(SaveNumber saveNumber)
         {
             SaveNumbers.Add(saveNumber);
-        }
-
-        public static void LoadNumbersFromJson(string path)
-        {
-            SaveNumbers =JsonConvert.DeserializeObject<List<SaveNumber>>(File.ReadAllText(path));
-        }
+        }        
 
         public static void GenerateSections()
         {
