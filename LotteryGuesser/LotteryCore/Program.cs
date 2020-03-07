@@ -26,9 +26,12 @@ namespace LotteryCore
             StatisticHandler.GenerateSections();
             StatisticHandler.LoadNumbersFromJson("test.json");
             StatisticHandler.MakeStatisticFromEarlierWeek();
+
+            StatisticHandler.RunMethodWithEachTimeAndGetTheBestNumbers(StatisticHandler.GenerateLottery, 1000, "By Interval for Several Times");
+            StatisticHandler.RunMethodWithEachTimeAndGetTheBestNumbers(StatisticHandler.GenereateRandom, 1000, "By Interval for Several Times");
+            StatisticHandler.RunMethodWithEachTimeAndGetTheBestNumbers(StatisticHandler.GenerateNumbersFromSum, 1000, "By Interval for Several Times");
             
-           
-            
+
 
             StatisticHandler.RunMethodWithEachTime(StatisticHandler.GenerateFromInterVal, 1, "By Interval");
             StatisticHandler.RunMethodWithEachTime(StatisticHandler.GenerateLottery, 2, "By Occurrence");

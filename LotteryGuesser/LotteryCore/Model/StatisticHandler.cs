@@ -45,6 +45,7 @@ namespace LotteryCore.Model
                     lotteryCollection.Add(new LotteryModel(list, index));
                     index++;
                 }
+                
             }
         }
 
@@ -123,6 +124,56 @@ namespace LotteryCore.Model
                 }
 
             }
+        }
+
+        public static void RunMethodWithEachTimeAndGetTheBestNumbers(Func<LotteryModel> action, int count, string message)
+        {
+            if (LotteryModels == null) LotteryModels = new List<LotteryModel>();
+            Dictionary<int,int> numbersDictionary = new Dictionary<int, int>();
+
+            Console.WriteLine(message);
+            int index = 0;
+            while (true)
+            {
+                var returnedModel = action();
+
+
+                if (IsValidLotteryNumbers(returnedModel))
+                {
+                    index++;
+                    returnedModel.Message = message;
+                    foreach (int returnedModelNumber in returnedModel.Numbers)
+                    {
+                        if (numbersDictionary.Count > 0 && numbersDictionary.ContainsKey(returnedModelNumber))
+                        {
+                            numbersDictionary[returnedModelNumber]++;
+                        }
+                        else
+                        {
+                            numbersDictionary.Add(returnedModelNumber,1);
+                        }
+                    }
+                    
+                   
+                }
+                
+                if (index == count)
+                {
+                    break;
+                }
+
+            }
+
+            var sortedDics = numbersDictionary.OrderByDescending(x => x.Value).Take(5);
+            LotteryModel resultLotteryModel = new LotteryModel();
+            foreach (KeyValuePair<int, int> keyValuePair in sortedDics)
+            {
+                resultLotteryModel.Numbers.Add(keyValuePair.Key);
+            }
+
+            
+            LotteryModels.Add(resultLotteryModel);
+            Console.WriteLine(resultLotteryModel);
         }
 
         public static LotteryModel CalcTheFiveMostCommonNumbers()
@@ -360,10 +411,26 @@ namespace LotteryCore.Model
             }
         }
 
+        public static void MakeCustomSaveNumbers()
+        {
+            
+            SaveNumbers.Add(new SaveNumber(new int[] { 39,42,46,51,75 }, "test",8,false));
+            SaveNumbers.Add(new SaveNumber(new int[] { 32,36,43,50,56}, "test", 8, false));
+            SaveNumbers.Add(new SaveNumber(new int[] {5,11,20,26,38 }, "test", 8, false));
+            SaveNumbers.Add(new SaveNumber(new int[] { 6,8,24,41,54}, "test", 8, false));
+            SaveNumbers.Add(new SaveNumber(new int[] { 19,26,28,53,77}, "test", 8, false));
+            SaveNumbers.Add(new SaveNumber(new int[] {33,41,42,63,84 }, "test", 8, false));
+            SaveCurrentNumbersToFileWithJson("test.json");
+        }
+
         public static void UseEarlierWeekPercentageForNumbersDraw()
         {
             var getLotteryDrawing = SaveNumbers.Where(x => x.WeekOfPull == lotteryCollection.Last().WeekOfLotteryDrawing).ToList();
-            
+            if (getLotteryDrawing.Count == 0)
+            {
+                Console.WriteLine("You haven't earlier week result");
+                return;
+            }
             Console.WriteLine("Calculated From earlier week");
             int index = 0;
             int end = LotteryModels.Count;
