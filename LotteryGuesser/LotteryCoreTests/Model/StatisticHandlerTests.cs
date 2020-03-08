@@ -3,6 +3,7 @@ using LotteryCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using LotteryCore.Tools;
 
 namespace LotteryCore.Model.Tests
 {
@@ -45,8 +46,9 @@ namespace LotteryCore.Model.Tests
         {
             try
             {
-                StatisticHandler.DownloadNumbersFromInternet("https://bet.szerencsejatek.hu/cmsfiles/otos.html");
-                Assert.IsFalse(StatisticHandler.GetLotteryCollection() == null || StatisticHandler.GetLotteryCollection().Count == 0);
+                var lh = new LotteryHandler();
+                lh.DownloadNumbersFromInternet("https://bet.szerencsejatek.hu/cmsfiles/otos.html");
+                Assert.IsFalse(lh.GetLotteryCollection() == null || lh.GetLotteryCollection().Count == 0);
 
             }
             catch (Exception e)
@@ -61,8 +63,9 @@ namespace LotteryCore.Model.Tests
         {
             try
             {
-                StatisticHandler.GenerateSections();
-                Assert.IsFalse(StatisticHandler.LotteryStatistic == null);
+                var lh = new LotteryHandler();
+                lh.GenerateSections();
+                Assert.IsFalse(lh.LotteryStatistic == null);
 
             }
             catch (Exception e)
@@ -95,8 +98,9 @@ namespace LotteryCore.Model.Tests
         {
             try
             {
-                StatisticHandler.GenerateSections();
-                Assert.IsFalse(StatisticHandler.GetLotteryStatistics() == null);
+                var lh = new LotteryHandler();
+                lh.GenerateSections();
+                Assert.IsFalse(lh.GetLotteryStatistics() == null);
             }
             catch (Exception e)
             {
@@ -108,15 +112,15 @@ namespace LotteryCore.Model.Tests
         [TestMethod()]
         public void RunMethodWithEachTimeTest()
         {
-            try
-            {
-                StatisticHandler.RunMethodWithEachTime(StatisticHandler.GenerateAverageStepLines,1, SaveNumber.TypesOfDrawn.Test);
-                Assert.IsFalse(StatisticHandler.LotteryModels.Count ==0 || StatisticHandler.LotteryModels == null);
-            }
-            catch (Exception e)
-            {
-                Assert.Fail(e.Message);
-            }
+            //try
+            //{
+            //    LotteryHandler.RunMethodWithEachTime(LotteryHandler.GenerateAverageStepLines,1, Enums.TypesOfDrawn.Test);
+            //    Assert.IsFalse(LotteryHandler.LotteryModels.Count ==0 || LotteryHandler.LotteryModels == null);
+            //}
+            //catch (Exception e)
+            //{
+            //    Assert.Fail(e.Message);
+            //}
         }
 
         [TestMethod()]

@@ -16,6 +16,7 @@ using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
 using Google.Apis.Util.Store;
 using LotteryCore.Model;
+using LotteryCore.Tools;
 using LotteryGuesser.Model;
 using OfficeOpenXml;
 
@@ -28,29 +29,22 @@ namespace LotteryCore
         static void Main(string[] args)
         {
             var gsd = new GoogleSheetData();
+            var lh = new LotteryHandler();
 
+            lh.DownloadNumbersFromInternet("https://bet.szerencsejatek.hu/cmsfiles/otos.html");
+            lh.GenerateSections();
+            lh.LoadNumbersFromSheet(gsd.GetData());
 
-            StatisticHandler.DownloadNumbersFromInternet("https://bet.szerencsejatek.hu/cmsfiles/otos.html");
-            StatisticHandler.GenerateSections();
-            StatisticHandler.LoadNumbersFromSheet(gsd.GetData());
-            
-            StatisticHandler.MakeStatisticFromEarlierWeek();
+            lh.MakeStatisticFromEarlierWeek();
 
-            StatisticHandler.RunMethodWithEachTimeAndGetTheBestNumbers(StatisticHandler.GenerateLottery, 1000, SaveNumber.TypesOfDrawn.ByIntervalForEachTimes);
-            StatisticHandler.RunMethodWithEachTimeAndGetTheBestNumbers(StatisticHandler.GenerateRandom, 1000, SaveNumber.TypesOfDrawn.ByIntervalForEachTimes);
-            StatisticHandler.RunMethodWithEachTimeAndGetTheBestNumbers(StatisticHandler.GenerateNumbersFromSum, 1000, SaveNumber.TypesOfDrawn.ByIntervalForEachTimes);
-            
+            lh.CalculateNumbers(Enums.TypesOfDrawn.All, Enums.GenerateType.EachByEach,2);
+            lh.CalculateNumbers(Enums.TypesOfDrawn.All, Enums.GenerateType.GetTheBest, 1000);
 
+           
+            lh.UseEarlierWeekPercentageForNumbersDraw( Enums.TypesOfDrawn.Calculated );
+            lh.CalculateNumbers(Enums.TypesOfDrawn.ByDistributionBasedCurrentDraw, Enums.GenerateType.Unique,1);
 
-            StatisticHandler.RunMethodWithEachTime(StatisticHandler.GenerateFromInterVal, 1, SaveNumber.TypesOfDrawn.ByInterval);
-            StatisticHandler.RunMethodWithEachTime(StatisticHandler.GenerateLottery, 2, SaveNumber.TypesOfDrawn.ByOccurrence);
-            StatisticHandler.RunMethodWithEachTime(StatisticHandler.GenerateAverageStepLines, 1,SaveNumber.TypesOfDrawn.ByAverageSteps);
-            StatisticHandler.RunMethodWithEachTime(StatisticHandler.GenerateRandom, 2, SaveNumber.TypesOfDrawn.ByAverageRandoms);
-            StatisticHandler.RunMethodWithEachTime(StatisticHandler.GenerateNumbersFromSum, 2, SaveNumber.TypesOfDrawn.BySums);
-            StatisticHandler.UseEarlierWeekPercentageForNumbersDraw( SaveNumber.TypesOfDrawn.Calculated );
-            StatisticHandler.RunMethodWithEachTime(StatisticHandler.CalcTheFiveMostCommonNumbers, 1, SaveNumber.TypesOfDrawn.ByDistributionBasedCurrentDraw);
-
-            //gsd.SaveNumbersToSheet();
+            //gsd.SaveNumbersToSheet(lh.LotteryModels);
             Console.ReadKey();
         }
     }

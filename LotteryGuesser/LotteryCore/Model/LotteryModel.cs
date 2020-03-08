@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using LotteryCore.Tools;
 
 namespace LotteryCore.Model
 {
@@ -27,7 +28,7 @@ namespace LotteryCore.Model
         public int FifthNumber { get; set; }
         public List<string> XlsxString { get; set; }
 
-        public SaveNumber.TypesOfDrawn Message { get; set; }
+        public Enums.TypesOfDrawn Message { get; set; }
 
         public List<int> Numbers
         {
@@ -163,14 +164,14 @@ namespace LotteryCore.Model
         public override string ToString()
         {
             //return string.Join(", ", new string[] { FirstNumber.ToString(), SecondNumber.ToString(), ThirdNumber.ToString(), FourthNumber.ToString(), FifthNumber.ToString() });
-            return string.Join(", ", Numbers.OrderBy(x => x)) + " Sum: " + Sum;
+            return string.Join(", ", Numbers.OrderBy(x => x));
         }
 
         public List<string> GetLotteryModelAsStrList()
         {
             
             List<string> concate = new List<string>
-                {StatisticHandler.GetWeeksInYear().ToString(CultureInfo.InvariantCulture)};
+                {LotteryHandler.GetWeeksInYear().ToString(CultureInfo.InvariantCulture)};
             concate.AddRange(Numbers.OrderBy(x => x).Select(x => x.ToString()));
             concate.Add(Message.ToString());
             concate.Add(String.Join(',', Numbers.OrderBy(x => x).Select(x => x.ToString())));

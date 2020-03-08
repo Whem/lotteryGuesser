@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using LotteryCore.Tools;
 using Newtonsoft.Json;
 
 namespace LotteryCore.Model
@@ -10,18 +11,7 @@ namespace LotteryCore.Model
     [JsonObject(MemberSerialization.OptIn)]
     public class SaveNumber
     {
-        public enum TypesOfDrawn
-        {
-            ByIntervalForEachTimes,
-            ByInterval,
-            ByOccurrence,
-            ByAverageSteps,
-            ByAverageRandoms,
-            BySums,
-            Calculated,
-            ByDistributionBasedCurrentDraw,
-            Test
-        }
+        
         public int WeekOfPull { get; set; }
   
         public int FirstNumber { get; set; }
@@ -34,7 +24,7 @@ namespace LotteryCore.Model
      
         public int FifthNumber { get; set; }
     
-        public TypesOfDrawn Message { get; set; }
+        public Enums.TypesOfDrawn Message { get; set; }
     
         public List<int> Numbers { get; set; }
 
@@ -62,7 +52,7 @@ namespace LotteryCore.Model
                 FifthNumber = Numbers[4];
             }
 
-            if (Enum.TryParse(datas[6], out TypesOfDrawn tDrawn))
+            if (Enum.TryParse(datas[6], out Enums.TypesOfDrawn tDrawn))
             {
                 Message = tDrawn;
             }

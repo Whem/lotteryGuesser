@@ -80,12 +80,12 @@ namespace LotteryCore.Model
            
         }
 
-        public void SaveNumbersToSheet()
+        public void SaveNumbersToSheet(List<LotteryModel> lotteryModels)
         {
             
  
             IList<IList<Object>> values = new List<IList<Object>>();
-            foreach (var lotteryModel in StatisticHandler.LotteryModels)
+            foreach (var lotteryModel in lotteryModels)
             {
                 values.Add(lotteryModel.GetLotteryModelAsStrList().Cast<object>().ToList());
             }
