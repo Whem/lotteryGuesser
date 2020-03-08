@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,19 +10,25 @@ using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
 using Google.Apis.Util.Store;
+using Newtonsoft.Json;
+
 namespace LotteryCore.Model
 {
     public class GoogleSheetData
     {
         List<string[]> datas;
-        
-        
+        SheetsService service;
+        String spreadsheetId = "1rPiOnFUYxrvZT8XT27n1cxSvsr5NBtRMDnhUH5LLbXM";
+        String range = "Numbers!A2:I";
+
         // If modifying these scopes, delete your previously saved credentials
         // at ~/.credentials/sheets.googleapis.com-dotnet-quickstart.json
-        static string[] Scopes = { SheetsService.Scope.SpreadsheetsReadonly };
-        static string ApplicationName = "Google Sheets API .NET Quickstart";
+        static string[] Scopes = { SheetsService.Scope.Spreadsheets };
+        static string ApplicationName = "LotteryGuesser";
         public GoogleSheetData()
         {
+            
+
             UserCredential credential;
 
             using (var stream =
@@ -40,15 +47,15 @@ namespace LotteryCore.Model
             }
 
             // Create Google Sheets API service.
-            var service = new SheetsService(new BaseClientService.Initializer()
+            
+            service = new SheetsService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = credential,
                 ApplicationName = ApplicationName,
+                
             });
 
-            // Define request parameters.
-            String spreadsheetId = "1rPiOnFUYxrvZT8XT27n1cxSvsr5NBtRMDnhUH5LLbXM";
-            String range = "Numbers!A2:I";
+           
             SpreadsheetsResource.ValuesResource.GetRequest request =
                     service.Spreadsheets.Values.Get(spreadsheetId, range);
 
@@ -62,7 +69,6 @@ namespace LotteryCore.Model
 
                 foreach (var row in data)
                 {
-                    var t = row.ToList();
                     datas.Add(row.Select(s => (string)s).ToArray());
                 }
             }
@@ -74,7 +80,42 @@ namespace LotteryCore.Model
            
         }
 
+        public void SaveNumbersToSheet()
+        {
+            
+ 
+            IList<IList<Object>> values = new List<IList<Object>>();
+            foreach (var lotteryModel in StatisticHandler.LotteryModels)
+            {
+                values.Add(lotteryModel.GetLotteryModelAsStrList().Cast<object>().ToList());
+            }
+
+
+            // How the input data should be interpreted.
+            SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum valueInputOption = SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum.USERENTERED;  // TODO: Update placeholder value.
+
+            // How the input data should be inserted.
+            SpreadsheetsResource.ValuesResource.AppendRequest.InsertDataOptionEnum insertDataOption = SpreadsheetsResource.ValuesResource.AppendRequest.InsertDataOptionEnum.OVERWRITE;  // TODO: Update placeholder value.
+
+            // TODO: Assign values to desired properties of `requestBody`:
+            var  requestBody = new ValueRange() { Values = values };
+
+            var request = service.Spreadsheets.Values.Append(requestBody, spreadsheetId, range);
+            request.ValueInputOption = valueInputOption;
+            request.InsertDataOption = insertDataOption;
+
+            // To execute asynchronously in an async method, replace `request.Execute()` as shown:
+            var response = request.Execute();
+            // Data.AppendValuesResponse response = await request.ExecuteAsync();
+
+            // TODO: Change code below to process the `response` object:
+            Console.WriteLine(JsonConvert.SerializeObject(response));
+
+            //var request =service.Spreadsheets.Values.Append(new ValueRange() {Values = values}, spreadsheetId,"A20");
+
        
+            //var response = request.Execute();
+        }
 
         public List<string[]> GetData()
         {

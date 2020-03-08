@@ -33,23 +33,24 @@ namespace LotteryCore
             StatisticHandler.DownloadNumbersFromInternet("https://bet.szerencsejatek.hu/cmsfiles/otos.html");
             StatisticHandler.GenerateSections();
             StatisticHandler.LoadNumbersFromSheet(gsd.GetData());
+            
             StatisticHandler.MakeStatisticFromEarlierWeek();
 
-            StatisticHandler.RunMethodWithEachTimeAndGetTheBestNumbers(StatisticHandler.GenerateLottery, 1000, "By Interval for Several Times");
-            StatisticHandler.RunMethodWithEachTimeAndGetTheBestNumbers(StatisticHandler.GenereateRandom, 1000, "By Interval for Several Times");
-            StatisticHandler.RunMethodWithEachTimeAndGetTheBestNumbers(StatisticHandler.GenerateNumbersFromSum, 1000, "By Interval for Several Times");
+            StatisticHandler.RunMethodWithEachTimeAndGetTheBestNumbers(StatisticHandler.GenerateLottery, 1000, SaveNumber.TypesOfDrawn.ByIntervalForEachTimes);
+            StatisticHandler.RunMethodWithEachTimeAndGetTheBestNumbers(StatisticHandler.GenerateRandom, 1000, SaveNumber.TypesOfDrawn.ByIntervalForEachTimes);
+            StatisticHandler.RunMethodWithEachTimeAndGetTheBestNumbers(StatisticHandler.GenerateNumbersFromSum, 1000, SaveNumber.TypesOfDrawn.ByIntervalForEachTimes);
             
 
 
-            StatisticHandler.RunMethodWithEachTime(StatisticHandler.GenerateFromInterVal, 1, "By Interval");
-            StatisticHandler.RunMethodWithEachTime(StatisticHandler.GenerateLottery, 2, "By Occurrence");
-            StatisticHandler.RunMethodWithEachTime(StatisticHandler.GenerateAvarageStepLines, 1, "By Avarage Steps");
-            StatisticHandler.RunMethodWithEachTime(StatisticHandler.GenereateRandom, 2, "By Avarage Randoms");
-            StatisticHandler.RunMethodWithEachTime(StatisticHandler.GenerateNumbersFromSum, 2, "By Sums");
-            StatisticHandler.UseEarlierWeekPercentageForNumbersDraw();
-            StatisticHandler.RunMethodWithEachTime(StatisticHandler.CalcTheFiveMostCommonNumbers, 1, "By Distribution Based Current Draw");
+            StatisticHandler.RunMethodWithEachTime(StatisticHandler.GenerateFromInterVal, 1, SaveNumber.TypesOfDrawn.ByInterval);
+            StatisticHandler.RunMethodWithEachTime(StatisticHandler.GenerateLottery, 2, SaveNumber.TypesOfDrawn.ByOccurrence);
+            StatisticHandler.RunMethodWithEachTime(StatisticHandler.GenerateAverageStepLines, 1,SaveNumber.TypesOfDrawn.ByAverageSteps);
+            StatisticHandler.RunMethodWithEachTime(StatisticHandler.GenerateRandom, 2, SaveNumber.TypesOfDrawn.ByAverageRandoms);
+            StatisticHandler.RunMethodWithEachTime(StatisticHandler.GenerateNumbersFromSum, 2, SaveNumber.TypesOfDrawn.BySums);
+            StatisticHandler.UseEarlierWeekPercentageForNumbersDraw( SaveNumber.TypesOfDrawn.Calculated );
+            StatisticHandler.RunMethodWithEachTime(StatisticHandler.CalcTheFiveMostCommonNumbers, 1, SaveNumber.TypesOfDrawn.ByDistributionBasedCurrentDraw);
 
-            //StatisticHandler.SaveCurrentNumbersToFileWithJson("test.json"); 
+            //gsd.SaveNumbersToSheet();
             Console.ReadKey();
         }
     }

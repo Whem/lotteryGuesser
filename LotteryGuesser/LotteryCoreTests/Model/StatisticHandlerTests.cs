@@ -71,28 +71,16 @@ namespace LotteryCore.Model.Tests
             }
         }
 
-        [TestMethod()]
-        public void AddNumbersToSaveFileTest()
-        {
-            try
-            {
-                StatisticHandler.AddNumbersToSaveFile(new SaveNumber(new int[]{1,2,3,4,5},"test"));
-                Assert.IsFalse(StatisticHandler.SaveNumbers.Count <1);
-            }
-            catch (Exception e)
-            {
-                Assert.Fail(e.Message);
-            }
-            
-        }
+        
 
         [TestMethod()]
         public void LoadNumbersFromJsonTest()
         {
             try
             {
-                StatisticHandler.LoadNumbersFromJson("test.json");
-                Assert.IsFalse(StatisticHandler.SaveNumbers == null);
+                var gsd = new GoogleSheetData();
+
+                Assert.IsFalse(gsd.GetData() == null);
             }
             catch (Exception e)
             {
@@ -122,7 +110,7 @@ namespace LotteryCore.Model.Tests
         {
             try
             {
-                StatisticHandler.RunMethodWithEachTime(StatisticHandler.GenerateAvarageStepLines,1,"Test");
+                StatisticHandler.RunMethodWithEachTime(StatisticHandler.GenerateAverageStepLines,1, SaveNumber.TypesOfDrawn.Test);
                 Assert.IsFalse(StatisticHandler.LotteryModels.Count ==0 || StatisticHandler.LotteryModels == null);
             }
             catch (Exception e)

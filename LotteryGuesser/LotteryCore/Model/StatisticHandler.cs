@@ -7,11 +7,14 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using LotteryCore.Tools;
 
 namespace LotteryCore.Model
 {
     public static class StatisticHandler
     {
+        public const string UserName = "Whem";
+
         public static LotteryStatistic LotteryStatistic;
 
         public static List<SaveNumber> SaveNumbers = new List<SaveNumber>();
@@ -19,8 +22,14 @@ namespace LotteryCore.Model
         static List<LotteryModel> lotteryCollection;
 
         static List<NumberSections> numberSections = new List<NumberSections>();
+        private static List<LotteryModel> _lotteryModels;
 
-        public static List<LotteryModel> LotteryModels { get; set; }
+        public static List<LotteryModel> LotteryModels
+        {
+            get => _lotteryModels;
+            set => _lotteryModels = value;
+        }
+
 
         public static void DownloadNumbersFromInternet(string link)
         {
@@ -109,22 +118,19 @@ namespace LotteryCore.Model
             }
         }
 
-        public static void RunMethodWithEachTime(Func<LotteryModel> action, int count, string message)
+        public static void RunMethodWithEachTime(Func<LotteryModel> action, int count, SaveNumber.TypesOfDrawn tDrawn)
         {
             if(LotteryModels == null)LotteryModels = new List<LotteryModel>();
-            Console.WriteLine(message);
+            Console.WriteLine(tDrawn.ToString());
             int index = 0;
             while (true)
             {
-                var returnedModel= action();
+                LotteryModel returnedModel= action();
 
-
-                if (IsValidLotteryNumbers(returnedModel))
+                if(returnedModel == null) continue;
+                if (LotteryModels.AddValueWithDetailsAndValidation(returnedModel.ValidationTuple(),tDrawn))
                 {
                     index++;
-                    returnedModel.Message = message;
-                    Console.WriteLine(returnedModel);
-                    LotteryModels.Add(returnedModel);
                 }
                 else
                 {
@@ -138,42 +144,30 @@ namespace LotteryCore.Model
             }
         }
 
-        public static void RunMethodWithEachTimeAndGetTheBestNumbers(Func<LotteryModel> action, int count, string message)
+        public static void RunMethodWithEachTimeAndGetTheBestNumbers(Func<LotteryModel> action, int count, SaveNumber.TypesOfDrawn tDrawn)
         {
-            if (LotteryModels == null) LotteryModels = new List<LotteryModel>();
             Dictionary<int,int> numbersDictionary = new Dictionary<int, int>();
-
-            Console.WriteLine(message);
+            
             int index = 0;
-            while (true)
+            while (index != count)
             {
                 var returnedModel = action();
 
 
-                if (IsValidLotteryNumbers(returnedModel))
-                {
-                    index++;
-                    returnedModel.Message = message;
-                    foreach (int returnedModelNumber in returnedModel.Numbers)
-                    {
-                        if (numbersDictionary.Count > 0 && numbersDictionary.ContainsKey(returnedModelNumber))
-                        {
-                            numbersDictionary[returnedModelNumber]++;
-                        }
-                        else
-                        {
-                            numbersDictionary.Add(returnedModelNumber,1);
-                        }
-                    }
-                    
-                   
-                }
-                
-                if (index == count)
-                {
-                    break;
-                }
+                if (returnedModel == null || !returnedModel.ValidationTuple().Item1) continue;
 
+                index++;
+                foreach (var returnedModelNumber in returnedModel.Numbers)
+                {
+                    if (numbersDictionary.Count > 0 && numbersDictionary.ContainsKey(returnedModelNumber))
+                    {
+                        numbersDictionary[returnedModelNumber]++;
+                    }
+                    else
+                    {
+                        numbersDictionary.Add(returnedModelNumber, 1);
+                    }
+                }
             }
 
             var sortedDics = numbersDictionary.OrderByDescending(x => x.Value).Take(5);
@@ -183,9 +177,7 @@ namespace LotteryCore.Model
                 resultLotteryModel.Numbers.Add(keyValuePair.Key);
             }
 
-            
-            LotteryModels.Add(resultLotteryModel);
-            Console.WriteLine(resultLotteryModel);
+            LotteryModels.AddValueWithDetailsAndValidation(resultLotteryModel.ValidationTuple(),tDrawn);
         }
 
         public static LotteryModel CalcTheFiveMostCommonNumbers()
@@ -202,21 +194,6 @@ namespace LotteryCore.Model
                 .OrderByDescending(n => n.MetricCount).Take(5).Select(x => x.MetricName).ToList()
             };
         }
-
-        public static void SaveCurrentNumbersToFileWithJson(string filePath)
-        {
-            foreach (LotteryModel lotteryModel in LotteryModels)
-            {
-                SaveNumbers.Add(new SaveNumber(lotteryModel.Numbers.OrderBy(x => x).ToArray(), lotteryModel.Message));
-            }
-
-            string json = JsonConvert.SerializeObject(SaveNumbers, Formatting.Indented);
-            using (var writer = File.CreateText(filePath))
-            {
-                writer.WriteLine(json); 
-            }
-        }
-
         public static LotteryModel GenerateFromInterVal()
         {
             
@@ -260,45 +237,27 @@ namespace LotteryCore.Model
 
         }
 
-        public static bool IsValidLotteryNumbers(LotteryModel lm)
-        {
-            if (lm == null) return false;
-            var duplicateKeys = lm.Numbers.GroupBy(x => x)
-                .Where(group => group.Count() > 1)
-                .Select(group => group.Key);
-
-            var hasOverRangedValue = lm.Numbers.Where(x => x > 90 || x < 1);
-         
-
-            return  !duplicateKeys.Any() && !hasOverRangedValue.Any();
-        }
-
         public static LotteryModel GenerateNumbersFromSum()
         {
             var getLastSum = lotteryCollection.Last().Sum;
-            LotteryModel getbeforeLastSumId;
+            LotteryModel getBeforeLastSumId;
             while (true)
             {
                 Random rnd = new Random();
-                var foundHelloWorld = lotteryCollection
+                var foundLastSum= lotteryCollection
                     .Select((v, i) => new { Index = i, Value = v })
                     .Where(x => x.Value.Sum == getLastSum)
                     .Select(x => x.Value.Id)
                     .ToList();
-                if (foundHelloWorld.Count > 2)
+                if (foundLastSum.Count > 2)
                 {
-                    var tek = rnd.Next(1, foundHelloWorld.Count - 1);
-                    getbeforeLastSumId = lotteryCollection.FirstOrDefault(x => x.Id == foundHelloWorld[tek] + 1);
-                    if (getbeforeLastSumId == null)
-                    {
-
-                    }
+                    var tek = rnd.Next(1, foundLastSum.Count - 1);
+                    getBeforeLastSumId = lotteryCollection.FirstOrDefault(x => x.Id == foundLastSum[tek] + 1);
+                   
                     break;
                 }
 
                 getLastSum++;
-
-
             }
 
 
@@ -310,7 +269,7 @@ namespace LotteryCore.Model
                 lm.AddNumber(rnd2.Next(1, 91));
             }
             
-            if (lm.Sum >= getbeforeLastSumId.Sum - 10 && lm.Sum <= getbeforeLastSumId.Sum + 10)
+            if (lm.Sum >= getBeforeLastSumId.Sum - 10 && lm.Sum <= getBeforeLastSumId.Sum + 10)
             {
                 return lm;
             }
@@ -318,7 +277,7 @@ namespace LotteryCore.Model
             return null;
         }
 
-        public static LotteryModel GenereateRandom()
+        public static LotteryModel GenerateRandom()
         {
                 LotteryModel lm = new LotteryModel();
                 for (int i = 0; i < 5; i++)
@@ -341,7 +300,7 @@ namespace LotteryCore.Model
                 return lm;
         }
 
-        public static LotteryModel GenerateAvarageStepLines()
+        public static LotteryModel GenerateAverageStepLines()
         {
            
                 Random random = new Random();
@@ -354,7 +313,7 @@ namespace LotteryCore.Model
                 lm.AddNumber(lm.Numbers.Last() + (int)Math.Round(LotteryStatistic.Avarage3to4, 0));
                 lm.AddNumber(lm.Numbers.Last() + (int)Math.Round(LotteryStatistic.Avarage4to5, 0));
                 
-                LotteryModels.Add(lm);
+                
                 return lm;
 
         }
@@ -423,54 +382,79 @@ namespace LotteryCore.Model
             }
         }
 
-        public static void MakeCustomSaveNumbers()
+       
+        public static void UseEarlierWeekPercentageForNumbersDraw(SaveNumber.TypesOfDrawn tDrawn)
         {
-            
-            SaveNumbers.Add(new SaveNumber(new int[] { 39,42,46,51,75 }, "test",8,false));
-            SaveNumbers.Add(new SaveNumber(new int[] { 32,36,43,50,56}, "test", 8, false));
-            SaveNumbers.Add(new SaveNumber(new int[] {5,11,20,26,38 }, "test", 8, false));
-            SaveNumbers.Add(new SaveNumber(new int[] { 6,8,24,41,54}, "test", 8, false));
-            SaveNumbers.Add(new SaveNumber(new int[] { 19,26,28,53,77}, "test", 8, false));
-            SaveNumbers.Add(new SaveNumber(new int[] {33,41,42,63,84 }, "test", 8, false));
-            SaveCurrentNumbersToFileWithJson("test.json");
-        }
-
-        public static void UseEarlierWeekPercentageForNumbersDraw()
-        {
-            var getLotteryDrawing = SaveNumbers.Where(x => x.WeekOfPull == lotteryCollection.Last().WeekOfLotteryDrawing).ToList();
+            List<SaveNumber> getLotteryDrawing = SaveNumbers.Where(x => x.WeekOfPull == lotteryCollection.Last().WeekOfLotteryDrawing).ToList();
             if (getLotteryDrawing.Count == 0)
             {
                 Console.WriteLine("You haven't earlier week result");
                 return;
             }
+
+
+
             Console.WriteLine("Calculated From earlier week");
-            int index = 0;
-            int end = LotteryModels.Count;
-            while (true)
+            var lmt = LotteryModels.Clone();
+           
+            foreach (LotteryModel lotteryModel in lmt)
             {
-                LotteryModel lm = new LotteryModel();
-                lm.Numbers = new List<int>();
-                lm.Message = "Calculated";
-                for (int j = 0; j < 5; j++)
+                
+                foreach (SaveNumber saveNumber in getLotteryDrawing)
                 {
-                    var rand = new Random();
-                    double calculatedNumber =
-                        LotteryModels[index].Numbers[j] * getLotteryDrawing[rand.Next(0, getLotteryDrawing.Count - 1)].DifferentInPercentage[j];
-                    lm.Numbers.Add((int)calculatedNumber);
-                }
-
-                if (IsValidLotteryNumbers(lm))
-                {
-                    index++;
-                    LotteryModels.Add(lm);
-                    Console.WriteLine(lm);
-                }
-
-                if (index == end)
-                {
-                    break;
+                    LotteryModel lm = new LotteryModel();
+                    if (saveNumber.Message != tDrawn) continue;
+                    for (int i = 0; i < 5; i++)
+                    {
+                        double calculatedNumber =
+                            lotteryModel.Numbers[i] * saveNumber.DifferentInPercentage[i];
+                        lm.Numbers.Add((int)calculatedNumber);
+                         
+                       
+                    }
+                    LotteryModels.AddValueWithDetails(lm, tDrawn);
                 }
             }
+
+            //int index = 0;
+            //int end = LotteryModels.Count;
+            //int errCounter = 0;
+            //while (true)
+            //{
+            //    LotteryModel lm = new LotteryModel();
+            //    lm.Numbers = new List<int>();
+            //    lm.Message = tDrawn;
+            //    for (int j = 0; j < 5; j++)
+            //    {
+            //        var rand = new Random();
+            //        double calculatedNumber =
+            //            LotteryModels[index].Numbers[j] * getLotteryDrawing[rand.Next(0, getLotteryDrawing.Count - 1)].DifferentInPercentage[j];
+            //        lm.Numbers.Add((int)calculatedNumber);
+            //    }
+
+            //    if (errCounter == 100)
+            //    {
+            //        index++;
+            //        errCounter = 0;
+            //    }
+
+            //    if (IsValidLotteryNumbers(lm))
+            //    {
+            //        index++;
+            //        errCounter = 0;
+            //        LotteryModels.Add(lm);
+            //        Console.WriteLine(lm);
+            //    }
+            //    else
+            //    {
+            //        errCounter++;
+            //    }
+
+            //    if (index == end)
+            //    {
+            //        break;
+            //    }
+            //}
         }
 
         // From https://en.wikipedia.org/wiki/ISO_week_date#Weeks_per_year:

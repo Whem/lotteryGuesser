@@ -10,7 +10,18 @@ namespace LotteryCore.Model
     [JsonObject(MemberSerialization.OptIn)]
     public class SaveNumber
     {
-    
+        public enum TypesOfDrawn
+        {
+            ByIntervalForEachTimes,
+            ByInterval,
+            ByOccurrence,
+            ByAverageSteps,
+            ByAverageRandoms,
+            BySums,
+            Calculated,
+            ByDistributionBasedCurrentDraw,
+            Test
+        }
         public int WeekOfPull { get; set; }
   
         public int FirstNumber { get; set; }
@@ -23,29 +34,11 @@ namespace LotteryCore.Model
      
         public int FifthNumber { get; set; }
     
-        public string Message { get; set; }
+        public TypesOfDrawn Message { get; set; }
     
         public List<int> Numbers { get; set; }
 
         public List<double> DifferentInPercentage;
-
-        public SaveNumber()
-        {
-            DifferentInPercentage = new List<double>();
-        }
-
-        public SaveNumber(int[] numbers, string message,int weekOfPull =0, bool generateAutomaticCurrentWeek = true)
-        {
-            Numbers = numbers.ToList();
-            FirstNumber = numbers[0];
-            SecondNumber = numbers[1];
-            ThirdNumber = numbers[2];
-            FourthNumber = numbers[3];
-            FifthNumber = numbers[4];
-            Message = message;
-            WeekOfPull = generateAutomaticCurrentWeek ? StatisticHandler.GetWeeksInYear() : weekOfPull;
-
-        }
 
         public SaveNumber(string[] datas)
         {
@@ -54,13 +47,11 @@ namespace LotteryCore.Model
             Numbers = datas[7].Split(',').Select(Int32.Parse).ToList();
             if (!String.IsNullOrEmpty(datas[1]))
             {
-
-            
-            FirstNumber = Convert.ToInt32(datas[1]);
-            SecondNumber = Convert.ToInt32(datas[2]);
-            ThirdNumber = Convert.ToInt32(datas[3]);
-            FourthNumber = Convert.ToInt32(datas[4]);
-            FifthNumber = Convert.ToInt32(datas[5]);
+                FirstNumber = Convert.ToInt32(datas[1]);
+                SecondNumber = Convert.ToInt32(datas[2]);
+                ThirdNumber = Convert.ToInt32(datas[3]);
+                FourthNumber = Convert.ToInt32(datas[4]);
+                FifthNumber = Convert.ToInt32(datas[5]);
             }
             else
             {
@@ -70,9 +61,15 @@ namespace LotteryCore.Model
                 FourthNumber = Numbers[3];
                 FifthNumber = Numbers[4];
             }
-            Message = datas[6].ToString();
+
+            if (Enum.TryParse(datas[6], out TypesOfDrawn tDrawn))
+            {
+                Message = tDrawn;
+            }
 
             
+
+
 
         }
 

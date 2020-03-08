@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace LotteryCore.Model
@@ -26,7 +27,7 @@ namespace LotteryCore.Model
         public int FifthNumber { get; set; }
         public List<string> XlsxString { get; set; }
 
-        public string Message { get; set; }
+        public SaveNumber.TypesOfDrawn Message { get; set; }
 
         public List<int> Numbers
         {
@@ -91,6 +92,18 @@ namespace LotteryCore.Model
             }
         }
 
+        public (bool, LotteryModel) ValidationTuple()
+        {
+            if (Numbers == null || Numbers.Count ==0) return (false,null);
+
+            var duplicateKeys = Numbers.GroupBy(x => x)
+                .Where(group => group.Count() > 1)
+                .Select(group => group.Key);
+
+            var hasOverRangedValue = Numbers.Where(x => x > 90 || x < 1);
+            return (!duplicateKeys.Any() && !hasOverRangedValue.Any(), this);
+        }
+
         public void GetSum()
         {
             Sum = Numbers.Sum();
@@ -152,6 +165,21 @@ namespace LotteryCore.Model
             //return string.Join(", ", new string[] { FirstNumber.ToString(), SecondNumber.ToString(), ThirdNumber.ToString(), FourthNumber.ToString(), FifthNumber.ToString() });
             return string.Join(", ", Numbers.OrderBy(x => x)) + " Sum: " + Sum;
         }
+
+        public List<string> GetLotteryModelAsStrList()
+        {
+            
+            List<string> concate = new List<string>
+                {StatisticHandler.GetWeeksInYear().ToString(CultureInfo.InvariantCulture)};
+            concate.AddRange(Numbers.OrderBy(x => x).Select(x => x.ToString()));
+            concate.Add(Message.ToString());
+            concate.Add(String.Join(',', Numbers.OrderBy(x => x).Select(x => x.ToString())));
+            concate.Add("Whem");
+            return concate;
+
+        }
+
+
 
         public object Clone()
         {
