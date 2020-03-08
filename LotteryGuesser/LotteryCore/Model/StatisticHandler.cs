@@ -85,6 +85,7 @@ namespace LotteryCore.Model
             return numberSections;
         }
 
+
         public static void AddNumbersToSaveFile(SaveNumber saveNumber)
         {
             SaveNumbers.Add(saveNumber);
@@ -240,7 +241,9 @@ namespace LotteryCore.Model
         public static LotteryModel GenerateNumbersFromSum()
         {
             var getLastSum = lotteryCollection.Last().Sum;
-            LotteryModel getBeforeLastSumId;
+
+            //find another same sum in list
+            LotteryModel getPenultimateSumId;
             while (true)
             {
                 Random rnd = new Random();
@@ -252,7 +255,7 @@ namespace LotteryCore.Model
                 if (foundLastSum.Count > 2)
                 {
                     var tek = rnd.Next(1, foundLastSum.Count - 1);
-                    getBeforeLastSumId = lotteryCollection.FirstOrDefault(x => x.Id == foundLastSum[tek] + 1);
+                    getPenultimateSumId = lotteryCollection.FirstOrDefault(x => x.Id == foundLastSum[tek] + 1);
                    
                     break;
                 }
@@ -269,7 +272,7 @@ namespace LotteryCore.Model
                 lm.AddNumber(rnd2.Next(1, 91));
             }
             
-            if (lm.Sum >= getBeforeLastSumId.Sum - 10 && lm.Sum <= getBeforeLastSumId.Sum + 10)
+            if (lm.Sum >= getPenultimateSumId.Sum - 10 && lm.Sum <= getPenultimateSumId.Sum + 10)
             {
                 return lm;
             }
