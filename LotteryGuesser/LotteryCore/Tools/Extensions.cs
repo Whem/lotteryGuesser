@@ -32,6 +32,10 @@ namespace LotteryCore.Tools
                 if (isShowNumberOnConsole) Console.WriteLine(lm.Item2);
                 
             }
+            else
+            {
+                Console.WriteLine("Van hasonló a listában");
+            }
             return true;
         }
     }

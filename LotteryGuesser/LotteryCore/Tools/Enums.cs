@@ -25,5 +25,14 @@ namespace LotteryCore.Tools
             GetTheBest,
             Unique
         }
+
+        public enum LotteryType
+        {
+            TheFiveNumberDraw = 5,
+            TheSixNumberDraw = 6,
+            TheSevenNumberDraw = 7,
+            EuroJackPot,
+            Custom,
+        }
     }
 }

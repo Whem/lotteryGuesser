@@ -28,14 +28,10 @@ namespace LotteryCore
         
         static void Main(string[] args)
         {
-            var gsd = new GoogleSheetData();
-            var lh = new LotteryHandler();
+          
+            var lh = new LotteryHandler(Enums.LotteryType.TheSevenNumberDraw, "Whem", true,true);
 
-            lh.DownloadNumbersFromInternet("https://bet.szerencsejatek.hu/cmsfiles/otos.html");
-            lh.GenerateSections();
-            lh.LoadNumbersFromSheet(gsd.GetData());
-
-            lh.MakeStatisticFromEarlierWeek();
+            
 
             lh.CalculateNumbers(Enums.TypesOfDrawn.All, Enums.GenerateType.EachByEach,2);
             lh.CalculateNumbers(Enums.TypesOfDrawn.All, Enums.GenerateType.GetTheBest, 1000);
@@ -44,7 +40,7 @@ namespace LotteryCore
             lh.UseEarlierWeekPercentageForNumbersDraw( Enums.TypesOfDrawn.Calculated );
             lh.CalculateNumbers(Enums.TypesOfDrawn.ByDistributionBasedCurrentDraw, Enums.GenerateType.Unique,1);
 
-            //gsd.SaveNumbersToSheet(lh.LotteryModels);
+            lh.SaveDataToGoogleSheet();
             Console.ReadKey();
         }
     }

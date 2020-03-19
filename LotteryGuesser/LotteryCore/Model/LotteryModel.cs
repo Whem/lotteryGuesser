@@ -8,10 +8,13 @@ namespace LotteryCore.Model
 {
     public class LotteryModel : ICloneable
     {
+       
+
         private int _sum;
         private List<int> _numbers;
 
         public int Id { get; set; }
+        public LotteryRule LotteryRule { get; }
 
         public int Year { get; set; }
 
@@ -19,13 +22,7 @@ namespace LotteryCore.Model
 
         public DateTime DateOfDrawing { get; set; }
 
-        public int FirstNumber { get; set; }
-
-        public int SecondNumber { get; set; }
-
-        public int ThirdNumber { get; set; }
-        public int FourthNumber { get; set; }
-        public int FifthNumber { get; set; }
+       
         public List<string> XlsxString { get; set; }
 
         public Enums.TypesOfDrawn Message { get; set; }
@@ -51,9 +48,29 @@ namespace LotteryCore.Model
 
         public List<int> RandomToGetNumber { get; set; }
 
-        public LotteryModel(List<string> htmlString, int id)
+        public LotteryModel(List<string> htmlString, int id, LotteryRule lotteryRule)
         {
+            int skipItems = 0;
+
+            switch (lotteryRule.LotteryType)
+            {
+                case Enums.LotteryType.TheSevenNumberDraw:
+                case Enums.LotteryType.TheFiveNumberDraw:
+                    skipItems = 11;
+                    break;
+                case Enums.LotteryType.TheSixNumberDraw:
+                    skipItems = 13;
+                    break;
+                case Enums.LotteryType.EuroJackPot:
+                    break;
+                case Enums.LotteryType.Custom:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(lotteryRule.LotteryType), lotteryRule.LotteryType, null);
+            }
+
             Id = id;
+            LotteryRule = lotteryRule;
             Numbers = new List<int>();
             RandomToGetNumber = new List<int>();
             XlsxString = htmlString;
@@ -63,22 +80,10 @@ namespace LotteryCore.Model
 
             DateOfDrawing = string.IsNullOrWhiteSpace(htmlString[2]) ? default(DateTime) : DateTime.Parse(htmlString[2]);
 
-            
-            FirstNumber = Convert.ToInt16(htmlString[11]);
-            SecondNumber = Convert.ToInt16(htmlString[12]);
-            ThirdNumber = Convert.ToInt16(htmlString[13]);
-            FourthNumber = Convert.ToInt16(htmlString[14]);
-            FifthNumber = Convert.ToInt16(htmlString[15]);
+            Numbers.AddRange(htmlString.Skip(skipItems).Take(lotteryRule.PiecesOfDrawNumber).ToList().Select(x => Convert.ToInt32(x)));
 
-            Numbers.Add(FirstNumber);
-            Numbers.Add(SecondNumber);
-            Numbers.Add(ThirdNumber);
-            Numbers.Add(FourthNumber);
-            Numbers.Add(FifthNumber);
-
-            
             GetSum();
-            SetNumbers();
+            
             GetAvareges();
             GetNumberWithRand();
         }
@@ -87,10 +92,6 @@ namespace LotteryCore.Model
         {
             Numbers.Add(number);
             GetSum();
-            if (Numbers.Count == 5)
-            {
-                SetNumbers();
-            }
         }
 
         public (bool, LotteryModel) ValidationTuple()
@@ -101,7 +102,7 @@ namespace LotteryCore.Model
                 .Where(group => group.Count() > 1)
                 .Select(group => group.Key);
 
-            var hasOverRangedValue = Numbers.Where(x => x > 90 || x < 1);
+            var hasOverRangedValue = Numbers.Where(x => x > LotteryRule.MaxNumber || x < LotteryRule.MinNumber);
             return (!duplicateKeys.Any() && !hasOverRangedValue.Any(), this);
         }
 
@@ -119,7 +120,7 @@ namespace LotteryCore.Model
                 {
 
                     Random rnd = new Random();
-                    if (rnd.Next(0, 91) == goalNumber)
+                    if (rnd.Next(LotteryRule.MinNumber-1,LotteryRule.MaxNumber+1) == goalNumber)
                     {
                         RandomToGetNumber.Add(indexOfRandom);
                         break;
@@ -129,58 +130,34 @@ namespace LotteryCore.Model
             }
         }
 
-        public LotteryModel()
+        public LotteryModel(LotteryRule lotteryRule)
         {
+            LotteryRule = lotteryRule;
             Numbers = new List<int>();
         }
 
-        public void SetNumbers()
-        {
-            FirstNumber = Numbers[0];
-            SecondNumber = Numbers[1];
-            ThirdNumber = Numbers[2];
-            FourthNumber = Numbers[3];
-            FifthNumber = Numbers[4];
-            GetAvareges();
-        }
+        
 
         public void GetAvareges()
         {
             Avarages = new List<double>();
             StepBetweenNumbers = new List<int>();
-            StepBetweenNumbers.Add(SecondNumber - FirstNumber);
-            StepBetweenNumbers.Add(ThirdNumber - SecondNumber);
-            StepBetweenNumbers.Add(FourthNumber - ThirdNumber);
-            StepBetweenNumbers.Add(FifthNumber - FourthNumber);
-            Avarages.Add((SecondNumber - FirstNumber) / 2);
-            Avarages.Add((ThirdNumber - SecondNumber) / 2);
-            Avarages.Add((FourthNumber - ThirdNumber) / 2);
-            Avarages.Add((FifthNumber - FourthNumber) / 2);
+            for (int i = 0; i < Numbers.Count-1; i++)
+            {
+                int overI = i + 1;
+                var currentDif = Numbers[overI] - Numbers[i];
 
-            Avarages.Add((FirstNumber + SecondNumber + ThirdNumber + FourthNumber + FifthNumber) / 5);
+                StepBetweenNumbers.Add(currentDif);
+                Avarages.Add(currentDif / 2);
+            }
+            Avarages.Add(Numbers.Average());
             Avarages.Add(StepBetweenNumbers.Average());
         }
 
         public override string ToString()
         {
-            //return string.Join(", ", new string[] { FirstNumber.ToString(), SecondNumber.ToString(), ThirdNumber.ToString(), FourthNumber.ToString(), FifthNumber.ToString() });
             return string.Join(", ", Numbers.OrderBy(x => x));
         }
-
-        public List<string> GetLotteryModelAsStrList()
-        {
-            
-            List<string> concate = new List<string>
-                {LotteryHandler.GetWeeksInYear().ToString(CultureInfo.InvariantCulture)};
-            concate.AddRange(Numbers.OrderBy(x => x).Select(x => x.ToString()));
-            concate.Add(Message.ToString());
-            concate.Add(String.Join(',', Numbers.OrderBy(x => x).Select(x => x.ToString())));
-            concate.Add("Whem");
-            return concate;
-
-        }
-
-
 
         public object Clone()
         {

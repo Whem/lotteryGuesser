@@ -15,8 +15,10 @@ namespace LotteryCore.Model
 {
     public class LotteryHandler
     {
-        public const string UserName = "Whem";
-
+        public Enums.LotteryType LotteryType { get; }
+        public GoogleSheetData gsd;
+        public  string UserName { get; set; }
+        private LotteryRule lotteryRule;
         public  LotteryStatistic LotteryStatistic;
 
         public  List<SaveNumber> SaveNumbers = new List<SaveNumber>();
@@ -30,6 +32,39 @@ namespace LotteryCore.Model
         {
             get => _lotteryModels;
             set => _lotteryModels = value;
+        }
+
+        public LotteryHandler(Enums.LotteryType lotteryType, string userName,bool isUseGoogleSheet,bool isUseEarlierStatistc, string customLotteryUrl = null)
+        {
+            LotteryType = lotteryType;
+            UserName = userName;
+            lotteryRule = new LotteryRule(lotteryType);
+            DownloadNumbersFromInternet(lotteryRule.DownloadLink);
+            GenerateSections();
+            if (isUseGoogleSheet)
+            {
+                gsd = new GoogleSheetData(UserName);
+                LoadNumbersFromSheet(gsd.GetData());
+            }
+            if(isUseEarlierStatistc) 
+                MakeStatisticFromEarlierWeek();
+
+        }
+
+        public void UseGoogleSheet(bool isUseGoogleSheet)
+        {
+            if (isUseGoogleSheet)
+            {
+                gsd = new GoogleSheetData(UserName);
+                LoadNumbersFromSheet(gsd.GetData());
+            }
+            else
+            {
+                gsd = null;
+                SaveNumbers = null;
+            }
+               
+           
         }
 
         public void CalculateNumbers(Enums.TypesOfDrawn tDrawn, Enums.GenerateType generateType, int count)
@@ -160,7 +195,7 @@ namespace LotteryCore.Model
                 table.Reverse();
                 foreach (List<string> list in table)
                 {
-                    lotteryCollection.Add(new LotteryModel(list, index));
+                    lotteryCollection.Add(new LotteryModel(list, index,lotteryRule));
                     index++;
                 }
                 
@@ -175,7 +210,7 @@ namespace LotteryCore.Model
 
                 foreach (var row in getData)
                 {
-                    if(row[6].ToString() != "Calculated")
+                    if(row[1].ToString() != "Calculated" && row[3] == UserName && row[4] == lotteryRule.LotteryType.ToString())
                         SaveNumbers.Add(new SaveNumber(row));
                 }
             }
@@ -183,6 +218,11 @@ namespace LotteryCore.Model
             {
                 Console.WriteLine("No data found.");
             }
+        }
+
+        public void SaveDataToGoogleSheet()
+        {
+            gsd.SaveNumbersToSheet(LotteryModels);
         }
 
         public  List<LotteryModel> GetLotteryCollection()
@@ -200,14 +240,14 @@ namespace LotteryCore.Model
             LotteryStatistic = new LotteryStatistic(lotteryCollection);
 
 
-            for (int i = 1; i < 91; i++)
+            for (int i = lotteryRule.MinNumber; i <= lotteryRule.MaxNumber; i++)
             {
                 var actualNumberSection = new NumberSections(i);
                 int loti = 1;
                 foreach (var t in lotteryCollection)
                 {
                     int index = t.Numbers.FindIndex(a => a == i);
-                    if (index < 5 && index >= 0 && loti < lotteryCollection.Count)
+                    if (index < lotteryRule.MaxNumber && index >= 0 && loti < lotteryCollection.Count)
                     {
                         actualNumberSection.FindTheNextNumber(lotteryCollection[loti].Numbers[index]);
 
@@ -249,8 +289,8 @@ namespace LotteryCore.Model
                 }
             }
 
-            var sortedDics = numbersDictionary.OrderByDescending(x => x.Value).Take(5);
-            LotteryModel resultLotteryModel = new LotteryModel();
+            var sortedDics = numbersDictionary.OrderByDescending(x => x.Value).Take(lotteryRule.PiecesOfDrawNumber);
+            LotteryModel resultLotteryModel = new LotteryModel(lotteryRule);
             foreach (KeyValuePair<int, int> keyValuePair in sortedDics)
             {
                 resultLotteryModel.Numbers.Add(keyValuePair.Key);
@@ -261,7 +301,7 @@ namespace LotteryCore.Model
 
         public  LotteryModel CalcTheFiveMostCommonNumbers()
         {
-            return new LotteryModel()
+            return new LotteryModel(lotteryRule)
             {
                 Numbers = LotteryModels.SelectMany(x => x.Numbers).ToList().GroupBy(n => n)
                 .Select(n => new
@@ -270,16 +310,16 @@ namespace LotteryCore.Model
                         MetricCount = n.Count()
                     }
                 )
-                .OrderByDescending(n => n.MetricCount).Take(5).Select(x => x.MetricName).ToList()
+                .OrderByDescending(n => n.MetricCount).Take(lotteryRule.PiecesOfDrawNumber).Select(x => x.MetricName).ToList()
             };
         }
         public  LotteryModel ByIntervalExecute()
         {
             
-                var acutal = numberSections.Where(x => x.ActualNumber == lotteryCollection.Last().FirstNumber);
+                var acutal = numberSections.Where(x => x.ActualNumber == lotteryCollection.Last().Numbers.First());
 
-                LotteryModel lm = new LotteryModel();
-                for (int i = 0; i < 5; i++)
+                LotteryModel lm = new LotteryModel(lotteryRule);
+                for (int i = 0; i < lotteryRule.PiecesOfDrawNumber; i++)
                 {
                     int maxcoount = 0;
                     List<IOrderedEnumerable<SpecifyNumber>> spec = acutal.Select(x => x.SpecifyNumberList.OrderByDescending(xy => xy.Pieces)).ToList();
@@ -342,11 +382,10 @@ namespace LotteryCore.Model
 
 
             
-            LotteryModel lm = new LotteryModel();
-            Random rnd2 = new Random();
-            for (int i = 0; i < 5; i++)
+            LotteryModel lm = new LotteryModel(lotteryRule);
+            for (int i = 0; i < lotteryRule.PiecesOfDrawNumber; i++)
             {
-                lm.AddNumber(rnd2.Next(1, 91));
+                lm.AddNumber(GetRandomNumber());
             }
             
             if (lm.Sum >= getPenultimateSumId.Sum - 10 && lm.Sum <= getPenultimateSumId.Sum + 10)
@@ -358,18 +397,16 @@ namespace LotteryCore.Model
         }
         public LotteryModel ByAverageRandomsExecute()
         {
-                LotteryModel lm = new LotteryModel();
-                for (int i = 0; i < 5; i++)
+                LotteryModel lm = new LotteryModel(lotteryRule);
+                for (int i = 0; i < lotteryRule.PiecesOfDrawNumber; i++)
                 {
                     var goal = LotteryStatistic.AvarageRandom[i];
                     int id = 0;
                     while (true)
                     {
-                        Random rnd = new Random();
-                        var number = rnd.Next(1, 91);
                         if (id == (int)goal)
                         {
-                            lm.AddNumber(number);
+                            lm.AddNumber(GetRandomNumber());
                             break;
                         }
                         id++;
@@ -380,34 +417,40 @@ namespace LotteryCore.Model
         }
         public  LotteryModel ByAverageStepsExecute()
         {
-           
-                Random random = new Random();
-                int start2 = random.Next(1, 90);
-                LotteryModel lm = new LotteryModel();
+
+
+                int start2 = GetRandomNumber();
+                LotteryModel lm = new LotteryModel(lotteryRule);
                 lm.AddNumber(start2);
 
-                lm.AddNumber(lm.Numbers.Last() + (int)Math.Round(LotteryStatistic.Avarage1to2, 0));
-                lm.AddNumber(lm.Numbers.Last() + (int)Math.Round(LotteryStatistic.Avarage2to3, 0));
-                lm.AddNumber(lm.Numbers.Last() + (int)Math.Round(LotteryStatistic.Avarage3to4, 0));
-                lm.AddNumber(lm.Numbers.Last() + (int)Math.Round(LotteryStatistic.Avarage4to5, 0));
-                
+                foreach (double d in LotteryStatistic.AvarageStepByStep)
+                {
+                    lm.AddNumber(lm.Numbers.Last() + (int)Math.Round(d, 0));
+                }
                 
                 return lm;
 
         }
+
+        public int GetRandomNumber()
+        {
+            Random random = new Random();
+            return random.Next(lotteryRule.MinNumber, lotteryRule.MaxNumber+1);
+        }
+
         public  LotteryModel ByOccurrenceExecute()
         {
-                LotteryModel lm = new LotteryModel();
+                LotteryModel lm = new LotteryModel(lotteryRule);
 
 
 
-                var getSections = numberSections.Last(x => lotteryCollection.Last().FirstNumber == x.ActualNumber);
+                var getSections = numberSections.Last(x => lotteryCollection.Last().Numbers.First() == x.ActualNumber);
                 Random random = new Random();
                 SpecifyNumber generateNumber = null;
                 int start2 = random.Next(0, getSections.SpecifyNumberList.Count);
                 generateNumber = (SpecifyNumber)getSections.SpecifyNumberList[start2].Clone();
                 lm.AddNumber(generateNumber.NextNumber);
-                for (int k = 0; k < 4; k++)
+                for (int k = 0; k < lotteryRule.PiecesOfDrawNumber-1; k++)
                 {
 
                     getSections = numberSections.First(x => lm.Numbers.Last() == x.ActualNumber);
@@ -423,7 +466,7 @@ namespace LotteryCore.Model
                         }
                         else
                         {
-                            start2 = random.Next(0, 90);
+                            start2 = GetRandomNumber();
                             generateNumber = new SpecifyNumber(start2);
                         }
 
@@ -446,7 +489,7 @@ namespace LotteryCore.Model
         {
             var getLotteryDrawing =  SaveNumbers.Where(x=> x.WeekOfPull ==lotteryCollection.Last().WeekOfLotteryDrawing).ToList();
             var lastDrawning = lotteryCollection.Last();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < lotteryRule.PiecesOfDrawNumber; i++)
             {
                 for (int j = 0; j < getLotteryDrawing.Count(); j++)
                 {
@@ -478,9 +521,9 @@ namespace LotteryCore.Model
                 
                 foreach (SaveNumber saveNumber in getLotteryDrawing)
                 {
-                    LotteryModel lm = new LotteryModel();
+                    LotteryModel lm = new LotteryModel(lotteryRule);
                     if (saveNumber.Message != lotteryModel.Message) continue;
-                    for (int i = 0; i < 5; i++)
+                    for (int i = 0; i < lotteryRule.PiecesOfDrawNumber; i++)
                     {
                         double calculatedNumber =
                             lotteryModel.Numbers[i] * saveNumber.DifferentInPercentage[i];
@@ -488,7 +531,7 @@ namespace LotteryCore.Model
                          
                        
                     }
-                    LotteryModels.AddValueWithDetails(lm, tDrawn);
+                    LotteryModels.AddValueWithDetailsAndValidation(lm.ValidationTuple(), tDrawn);
                 }
             }
         }
@@ -503,6 +546,18 @@ namespace LotteryCore.Model
         //
         // All other week-numbering years are short years and have 52 weeks.
 
+        /// <summary>
+        /// From https://en.wikipedia.org/wiki/ISO_week_date#Weeks_per_year:
+        ///
+        /// The long years, with 53 weeks in them, can be described by any of the following equivalent definitions:
+        ///
+        /// - Any year starting on Thursday and any leap year starting on Wednesday.
+        /// - Any year ending on Thursday and any leap year ending on Friday.
+        /// - Years in which 1 January and 31 December (in common years) or either (in leap years) are Thursdays.
+        ///
+        /// All other week-numbering years are short years and have 52 weeks.
+        /// </summary>
+        /// <returns></returns>
         public static int GetWeeksInYear()
         {
             DateTime inputDate = DateTime.Now;

@@ -6,10 +6,8 @@ namespace LotteryCore.Model
 {
     public class LotteryStatistic
     {
-        public double Avarage1to2 { get; set; }
-        public double Avarage2to3 { get; set; }
-        public double Avarage3to4 { get; set; }
-        public double Avarage4to5 { get; set; }
+        public List<double> AvarageStepByStep { get; set; }
+        
 
         public List<double> AvarageRandom { get; set; }
 
@@ -22,20 +20,17 @@ namespace LotteryCore.Model
             AvarageRandom = new List<double>();
             SameDraw = new List<LotteryModel>();
             IntervallNumbers = new List<IntervallNumber>();
-            Avarage1to2 = lotteryModels.Select(x => x.Avarages[0]).Average();
-            Avarage2to3 = lotteryModels.Select(x => x.Avarages[1]).Average();
-            Avarage3to4 = lotteryModels.Select(x => x.Avarages[2]).Average();
-            Avarage4to5 = lotteryModels.Select(x => x.Avarages[3]).Average();
-
-            AvarageRandom.Add(lotteryModels.Select(x=> x.RandomToGetNumber[0]).Average());
-            AvarageRandom.Add(lotteryModels.Select(x => x.RandomToGetNumber[1]).Average());
-            AvarageRandom.Add(lotteryModels.Select(x => x.RandomToGetNumber[2]).Average());
-            AvarageRandom.Add(lotteryModels.Select(x => x.RandomToGetNumber[3]).Average());
-            AvarageRandom.Add(lotteryModels.Select(x => x.RandomToGetNumber[4]).Average());
+            AvarageStepByStep = new List<double>();
+            
+            for (int i = 0; i < lotteryModels[0].LotteryRule.PiecesOfDrawNumber; i++)
+            {
+                if(lotteryModels[0].LotteryRule.PiecesOfDrawNumber-1 >i)
+                    AvarageStepByStep.Add(lotteryModels.Select(x => x.Avarages[i]).Average());
+                AvarageRandom.Add(lotteryModels.Select(x => x.RandomToGetNumber[i]).Average());
+            }
 
             foreach (LotteryModel lotteryModel in lotteryModels)
-            {
-                var strings = lotteryModel.ToString();
+            {               
                 SameDraw.AddRange(lotteryModels.Where( x=> x.Sum == lotteryModel.Sum && x.Id != lotteryModel.Id ).ToList());
             }
 

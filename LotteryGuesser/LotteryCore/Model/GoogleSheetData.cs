@@ -16,6 +16,7 @@ namespace LotteryCore.Model
 {
     public class GoogleSheetData
     {
+        public string UserName { get; }
         List<string[]> datas;
         SheetsService service;
         String spreadsheetId = "1rPiOnFUYxrvZT8XT27n1cxSvsr5NBtRMDnhUH5LLbXM";
@@ -25,9 +26,10 @@ namespace LotteryCore.Model
         // at ~/.credentials/sheets.googleapis.com-dotnet-quickstart.json
         static string[] Scopes = { SheetsService.Scope.Spreadsheets };
         static string ApplicationName = "LotteryGuesser";
-        public GoogleSheetData()
+        public GoogleSheetData(string userName)
         {
-            
+            UserName = userName;
+
 
             UserCredential credential;
 
@@ -79,7 +81,18 @@ namespace LotteryCore.Model
            
            
         }
+        public List<string> GetLotteryModelAsStrList(LotteryModel lm)
+        {
 
+            List<string> concate = new List<string>
+                {LotteryHandler.GetWeeksInYear().ToString(CultureInfo.InvariantCulture)};
+            concate.Add(lm.Message.ToString());
+            concate.Add(String.Join(',', lm.Numbers.OrderBy(x => x).Select(x => x.ToString())));
+            concate.Add(UserName);
+            concate.Add(lm.LotteryRule.LotteryType.ToString());
+            return concate;
+
+        }
         public void SaveNumbersToSheet(List<LotteryModel> lotteryModels)
         {
             
@@ -87,7 +100,9 @@ namespace LotteryCore.Model
             IList<IList<Object>> values = new List<IList<Object>>();
             foreach (var lotteryModel in lotteryModels)
             {
-                values.Add(lotteryModel.GetLotteryModelAsStrList().Cast<object>().ToList());
+                values.Add(GetLotteryModelAsStrList(lotteryModel).Cast<object>().ToList());
+               
+
             }
 
 

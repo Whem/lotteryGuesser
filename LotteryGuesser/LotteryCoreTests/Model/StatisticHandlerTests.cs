@@ -11,12 +11,15 @@ namespace LotteryCore.Model.Tests
     public class StatisticHandlerTests
     {
         public List<LotteryModel> TestLotteryModels;
+        public LotteryRule TestLotteryRule;
 
         public StatisticHandlerTests()
         {
+            TestLotteryRule = new LotteryRule(Enums.LotteryType.TheFiveNumberDraw);
+
             TestLotteryModels = new List<LotteryModel>
             {
-                new LotteryModel()
+                new LotteryModel(TestLotteryRule)
                 {
                     Numbers = new List<int>()
                     {
@@ -27,7 +30,7 @@ namespace LotteryCore.Model.Tests
                         6
                     }
                 },
-                new LotteryModel()
+                new LotteryModel(TestLotteryRule)
                 {
                     Numbers = new List<int>()
                     {
@@ -46,8 +49,7 @@ namespace LotteryCore.Model.Tests
         {
             try
             {
-                var lh = new LotteryHandler();
-                lh.DownloadNumbersFromInternet("https://bet.szerencsejatek.hu/cmsfiles/otos.html");
+                var lh = new LotteryHandler(Enums.LotteryType.TheFiveNumberDraw, "Whem", true, true);
                 Assert.IsFalse(lh.GetLotteryCollection() == null || lh.GetLotteryCollection().Count == 0);
 
             }
@@ -63,8 +65,7 @@ namespace LotteryCore.Model.Tests
         {
             try
             {
-                var lh = new LotteryHandler();
-                lh.GenerateSections();
+                var lh = new LotteryHandler(Enums.LotteryType.TheFiveNumberDraw, "Whem", true, true);
                 Assert.IsFalse(lh.LotteryStatistic == null);
 
             }
@@ -81,9 +82,10 @@ namespace LotteryCore.Model.Tests
         {
             try
             {
-                var gsd = new GoogleSheetData();
+                var lh = new LotteryHandler(Enums.LotteryType.TheFiveNumberDraw, "Whem", true, true);
+                
 
-                Assert.IsFalse(gsd.GetData() == null);
+                Assert.IsFalse(lh.gsd.GetData() == null);
             }
             catch (Exception e)
             {
@@ -98,8 +100,8 @@ namespace LotteryCore.Model.Tests
         {
             try
             {
-                var lh = new LotteryHandler();
-                lh.GenerateSections();
+                var lh = new LotteryHandler(Enums.LotteryType.TheSixNumberDraw, "Whem", true, true);
+                
                 Assert.IsFalse(lh.GetLotteryStatistics() == null);
             }
             catch (Exception e)
@@ -112,15 +114,16 @@ namespace LotteryCore.Model.Tests
         [TestMethod()]
         public void RunMethodWithEachTimeTest()
         {
-            //try
-            //{
-            //    LotteryHandler.RunMethodWithEachTime(LotteryHandler.GenerateAverageStepLines,1, Enums.TypesOfDrawn.Test);
-            //    Assert.IsFalse(LotteryHandler.LotteryModels.Count ==0 || LotteryHandler.LotteryModels == null);
-            //}
-            //catch (Exception e)
-            //{
-            //    Assert.Fail(e.Message);
-            //}
+            try
+            {
+                var lh = new LotteryHandler(Enums.LotteryType.TheSixNumberDraw, "Whem", true, true);
+                lh.CalculateNumbers(Enums.TypesOfDrawn.All, Enums.GenerateType.EachByEach, 2);
+                Assert.IsFalse(lh.LotteryModels.Count == 0 || lh.LotteryModels == null);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
         }
 
         [TestMethod()]
