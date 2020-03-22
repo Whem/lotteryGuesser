@@ -1,17 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using LotteryCore.Tools;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="LotteryModel.cs" company="Whem">
+//   Lottery
+// </copyright>
+// <summary>
+//   Defines the LotteryModel type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-namespace LotteryCore.Model
+namespace LotteryLib.Model
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using LotteryLib.Tools;
+
+    /// <summary>
+    /// The lottery model.
+    /// </summary>
     public class LotteryModel : ICloneable
     {
-       
+        /// <summary>
+        /// The sum.
+        /// </summary>
+        private int sum;
 
-        private int _sum;
-        private List<int> _numbers;
+        /// <summary>
+        /// The numbers.
+        /// </summary>
+        private List<int> numbers;
 
         public int Id { get; set; }
         public LotteryRule LotteryRule { get; }
@@ -29,10 +46,10 @@ namespace LotteryCore.Model
 
         public List<int> Numbers
         {
-            get { return _numbers; }
+            get { return this.numbers; }
             set
             {
-                _numbers = value;
+                this.numbers = value;
                
             }
         }
@@ -42,8 +59,8 @@ namespace LotteryCore.Model
         public List<int> StepBetweenNumbers { get; set; }
 
         public int Sum {
-            get => _sum;
-            set => _sum = value; }
+            get => this.sum;
+            set => this.sum = value; }
 
 
         public List<int> RandomToGetNumber { get; set; }
@@ -60,10 +77,6 @@ namespace LotteryCore.Model
                     break;
                 case Enums.LotteryType.TheSixNumberDraw:
                     skipItems = 13;
-                    break;
-                case Enums.LotteryType.EuroJackPot:
-                    break;
-                case Enums.LotteryType.Custom:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(lotteryRule.LotteryType), lotteryRule.LotteryType, null);

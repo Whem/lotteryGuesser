@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
@@ -12,8 +11,10 @@ using Google.Apis.Sheets.v4.Data;
 using Google.Apis.Util.Store;
 using Newtonsoft.Json;
 
-namespace LotteryCore.Model
+namespace LotteryLib.Model
 {
+    using System.Collections.ObjectModel;
+
     public class GoogleSheetData
     {
         public string UserName { get; }
@@ -93,18 +94,23 @@ namespace LotteryCore.Model
             return concate;
 
         }
-        public void SaveNumbersToSheet(List<LotteryModel> lotteryModels)
+
+        /// <summary>
+        /// The save numbers to sheet.
+        /// </summary>
+        /// <param name="lotteryModels">
+        /// The lottery models.
+        /// </param>
+        /// <returns>
+        /// The <see cref="AppendValuesResponse"/>.
+        /// </returns>
+        public AppendValuesResponse SaveNumbersToSheet(List<LotteryModel> lotteryModels)
         {
-            
- 
-            IList<IList<Object>> values = new List<IList<Object>>();
+            IList<IList<object>> values = new List<IList<object>>();
             foreach (var lotteryModel in lotteryModels)
             {
                 values.Add(GetLotteryModelAsStrList(lotteryModel).Cast<object>().ToList());
-               
-
             }
-
 
             // How the input data should be interpreted.
             SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum valueInputOption = SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum.USERENTERED;  // TODO: Update placeholder value.
@@ -113,7 +119,7 @@ namespace LotteryCore.Model
             SpreadsheetsResource.ValuesResource.AppendRequest.InsertDataOptionEnum insertDataOption = SpreadsheetsResource.ValuesResource.AppendRequest.InsertDataOptionEnum.OVERWRITE;  // TODO: Update placeholder value.
 
             // TODO: Assign values to desired properties of `requestBody`:
-            var  requestBody = new ValueRange() { Values = values };
+            var requestBody = new ValueRange() { Values = values };
 
             var request = service.Spreadsheets.Values.Append(requestBody, spreadsheetId, range);
             request.ValueInputOption = valueInputOption;
@@ -121,17 +127,19 @@ namespace LotteryCore.Model
 
             // To execute asynchronously in an async method, replace `request.Execute()` as shown:
             var response = request.Execute();
-            // Data.AppendValuesResponse response = await request.ExecuteAsync();
-
+           
             // TODO: Change code below to process the `response` object:
             Console.WriteLine(JsonConvert.SerializeObject(response));
 
-            //var request =service.Spreadsheets.Values.Append(new ValueRange() {Values = values}, spreadsheetId,"A20");
-
-       
-            //var response = request.Execute();
+            return response;
         }
 
+        /// <summary>
+        /// The get data.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="List"/>.
+        /// </returns>
         public List<string[]> GetData()
         {
             return datas;

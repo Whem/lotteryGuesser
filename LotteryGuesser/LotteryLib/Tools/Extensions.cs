@@ -1,13 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using LotteryCore.Model;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Extensions.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   The extensions.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-namespace LotteryCore.Tools
+namespace LotteryLib.Tools
 {
-    static class Extensions
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using LotteryLib.Model;
+
+    /// <summary>
+    /// The extensions.
+    /// </summary>
+    public static class Extensions
     {
+        /// <summary>
+        /// The clone.
+        /// </summary>
+        /// <param name="listToClone">
+        /// The list to clone.
+        /// </param>
+        /// <typeparam name="T">
+        /// </typeparam>
+        /// <returns>
+        /// The <see cref="IList"/>.
+        /// </returns>
         public static IList<T> Clone<T>(this IList<T> listToClone) where T : ICloneable
         {
             return listToClone.Select(item => (T)item.Clone()).ToList();

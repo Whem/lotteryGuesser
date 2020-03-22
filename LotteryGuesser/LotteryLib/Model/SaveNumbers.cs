@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using LotteryCore.Tools;
+using LotteryLib.Tools;
 using Newtonsoft.Json;
 
-namespace LotteryCore.Model
+namespace LotteryLib.Model
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class SaveNumber
