@@ -4,18 +4,29 @@ using Avalonia.Markup.Xaml;
 
 namespace LotteryDesktopApp.Views
 {
-    public class MainWindow : Window
+    using System.Reactive.Disposables;
+
+    using Avalonia.ReactiveUI;
+
+    using LotteryDesktopApp.ViewModels;
+
+    using ReactiveUI;
+
+    using Splat;
+
+    public class MainWindow : ReactiveWindow<MainWindowViewModel>
     {
         public MainWindow()
         {
+            Locator.CurrentMutable.InitializeReactiveUI();
             InitializeComponent();
-#if DEBUG
-            this.AttachDevTools();
-#endif
+            ViewModel = new MainWindowViewModel();
+            
         }
 
         private void InitializeComponent()
         {
+            this.WhenActivated(disposables => { });
             AvaloniaXamlLoader.Load(this);
         }
     }

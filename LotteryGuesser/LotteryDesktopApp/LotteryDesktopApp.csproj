@@ -14,9 +14,29 @@
     <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.9.0" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.9.0" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.0" />
+    <AvaloniaResource Remove="Ucs\LoginUc.xaml" />
+    <AvaloniaResource Remove="Ucs\LotteryUcs.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Ucs\LoginUc.xaml" />
+    <None Remove="Ucs\LotteryUcs.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="0.9.4" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.9.4" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.4" />
+    <PackageReference Include="ReactiveUI" Version="11.2.3" />
+    <PackageReference Include="ReactiveUI.Fody" Version="11.2.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Ucs\LoginUc.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Ucs\LotteryUcs.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LotteryLib\LotteryLib.csproj" />

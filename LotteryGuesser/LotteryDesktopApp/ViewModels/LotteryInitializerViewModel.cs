@@ -4,9 +4,7 @@ using System.Text;
 
 namespace LotteryDesktopApp.ViewModels
 {
-    using ReactiveUI;
-
-    public class ViewModelBase : ReactiveObject
+    class LotteryInitializerViewModel
     {
     }
 }

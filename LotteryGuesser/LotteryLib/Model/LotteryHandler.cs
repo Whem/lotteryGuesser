@@ -604,10 +604,10 @@ namespace LotteryLib.Model
         public void UseEarlierWeekPercentageForNumbersDraw(Enums.TypesOfDrawn typesOfDrawn)
         {
             List<SaveNumber> getLotteryDrawing = this.SaveNumbers.Where(x => x.WeekOfPull == this.lotteryCollection.Last().WeekOfLotteryDrawing).ToList();
-            if (getLotteryDrawing.Count == 0)
-            {
-                throw new InvalidOperationException("You haven't earlier week result");
-            }
+            //if (getLotteryDrawing.Count == 0)
+            //{
+            //    throw new InvalidOperationException("You haven't earlier week result");
+            //}
 
             if (LotteryModels == null) throw new InvalidOperationException("You didn't generate numbers from which I can calculate");
                 Console.WriteLine("Calculated From earlier week");

@@ -6,6 +6,15 @@ using Avalonia.ReactiveUI;
 
 namespace LotteryDesktopApp
 {
+    using Avalonia.Threading;
+
+    using LotteryDesktopApp.Ucs;
+    using LotteryDesktopApp.ViewModels;
+
+    using ReactiveUI;
+
+    using Splat;
+
     class Program
     {
         // Initialization code. Don't use any Avalonia, third-party APIs or any
@@ -16,9 +25,18 @@ namespace LotteryDesktopApp
 
         // Avalonia configuration, don't remove; also used by visual designer.
         public static AppBuilder BuildAvaloniaApp()
-            => AppBuilder.Configure<App>()
+        {
+            // Router uses Splat.Locator to resolve views for view models, so we need to register our views.
+            
+            Locator.CurrentMutable.Register(() => new LoginUc(), typeof(IViewFor<LoginViewModel>));
+
+            RxApp.MainThreadScheduler = AvaloniaScheduler.Instance;
+
+            return AppBuilder
+                .Configure<App>()
+                .UseReactiveUI()
                 .UsePlatformDetect()
-                .LogToDebug()
-                .UseReactiveUI();
+                .LogToDebug();
+        }
     }
 }
