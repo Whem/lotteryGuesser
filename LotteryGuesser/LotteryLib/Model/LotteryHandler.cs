@@ -16,6 +16,12 @@ namespace LotteryLib.Model
     using System.Net;
     using System.Reflection;
 
+    using Encog.Engine.Network.Activation;
+    using Encog.ML.Data.Basic;
+    using Encog.Neural.Networks;
+    using Encog.Neural.Networks.Layers;
+    using Encog.Neural.Networks.Training.Propagation.Resilient;
+
     using Google.Apis.Sheets.v4.Data;
 
     using LotteryLib.Tools;
@@ -38,7 +44,7 @@ namespace LotteryLib.Model
         /// <summary>
         /// The lottery collection.
         /// </summary>
-        private List<LotteryModel> lotteryCollection;
+        public List<LotteryModel> lotteryCollection;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LotteryHandler"/> class.
@@ -230,6 +236,7 @@ namespace LotteryLib.Model
                 case Enums.TypesOfDrawn.ByAverageRandoms:
                 case Enums.TypesOfDrawn.BySums:
                 case Enums.TypesOfDrawn.Calculated:
+                case Enums.TypesOfDrawn.ByMachineLearning:
                     switch (generateType)
                     {
                         case Enums.GenerateType.EachByEach:
@@ -394,6 +401,153 @@ namespace LotteryLib.Model
                 .Select(x => x.MetricName).ToList()
             };
         }
+
+        public LotteryModel ByMachineLearningExecute()
+        {
+            try
+            {
+                if (this.lotteryRule.LotteryType != Enums.LotteryType.TheFiveNumberDraw) return null; //TODO: Make this for 6 and custom lottery draw
+                LotteryModel lm = new LotteryModel(lotteryRule);
+                var dbl = new List<LotteryResult>();
+                foreach (LotteryModel lotteryModel in this.lotteryCollection)
+                {
+                    var res = new LotteryResult(
+                        lotteryModel.Numbers[0],
+                        lotteryModel.Numbers[1],
+                        lotteryModel.Numbers[2],
+                        lotteryModel.Numbers[3],
+                        lotteryModel.Numbers[4]
+                    );
+
+                    dbl.Add(res);
+                }
+
+                dbl.Reverse();
+                var deep = 20;
+                var network = new BasicNetwork();
+                network.AddLayer(
+                new BasicLayer(null, true, 5 * deep));
+                network.AddLayer(
+                new BasicLayer(
+                new ActivationSigmoid(), true, 4 * 5 * deep));
+                network.AddLayer(
+                new BasicLayer(
+                new ActivationSigmoid(), true, 4 * 5 * deep));
+                network.AddLayer(
+                new BasicLayer(
+                new ActivationLinear(), true, 5));
+                network.Structure.FinalizeStructure();
+                var learningInput = new double[deep][];
+                for (int i = 0; i < deep; ++i)
+                {
+                    learningInput[i] = new double[deep * 5];
+                    for (int j = 0, k = 0; j < deep; ++j)
+                    {
+                        var idx = 2 * deep - i - j;
+                        LotteryResult data = dbl[idx];
+                        learningInput[i][k++] = (double)data.V1;
+                        learningInput[i][k++] = (double)data.V2;
+                        learningInput[i][k++] = (double)data.V3;
+                        learningInput[i][k++] = (double)data.V4;
+                        learningInput[i][k++] = (double)data.V5;
+                    }
+                }
+                var learningOutput = new double[deep][];
+                for (int i = 0; i < deep; ++i)
+                {
+                    var idx = deep - 1 - i;
+                    var data = dbl[idx];
+                    learningOutput[i] = new double[5]
+                    {
+                        (double)data.V1,
+                        (double)data.V2,
+                        (double)data.V3,
+                        (double)data.V4,
+                        (double)data.V5
+                    };
+                }
+                var trainingSet = new BasicMLDataSet(
+                learningInput,
+                learningOutput);
+
+                var train = new ResilientPropagation(
+                network, trainingSet);
+                train.NumThreads = Environment.ProcessorCount;
+                START:
+                network.Reset();
+                RETRY:
+                var step = 0;
+                do
+                {
+                    train.Iteration();
+                    Console.WriteLine("Train Error: {0}", train.Error);
+                    ++step;
+                }
+                while (train.Error > 0.001 && step < 20);
+                var passedCount = 0;
+                for (var i = 0; i < deep; ++i)
+                {
+                    var should =
+                    new LotteryResult(learningOutput[i]);
+                    var inputn = new BasicMLData(5 * deep);
+                    Array.Copy(
+                    learningInput[i],
+                    inputn.Data,
+                    inputn.Data.Length);
+                    var comput =
+                    new LotteryResult(
+                    ((BasicMLData)network.
+                    Compute(inputn)).Data);
+                    var passed = should.ToString() == comput.ToString();
+                    if (passed)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        ++passedCount;
+                    }
+                }
+
+                var input = new BasicMLData(5 * deep);
+                for (int i = 0, k = 0; i < deep; ++i)
+                {
+                    var idx = deep - 1 - i;
+                    var data = dbl[idx];
+                    input.Data[k++] = (double)data.V1;
+                    input.Data[k++] = (double)data.V2;
+                    input.Data[k++] = (double)data.V3;
+                    input.Data[k++] = (double)data.V4;
+                    input.Data[k++] = (double)data.V5;
+                }
+                var perfect = dbl[0];
+                LotteryResult predict = new LotteryResult(
+                ((BasicMLData)network.Compute(input)).Data);
+                Console.WriteLine("Predict: {0}", predict);
+                
+                if (predict.IsOut())
+                    goto START;
+
+                var t = passedCount < (deep * (double)9 / (double)10);
+                var isvalid = predict.IsValid();
+
+                if (t ||
+                  !isvalid)
+                    goto RETRY;
+                
+                lm.AddNumber(predict.V1);
+                lm.AddNumber(predict.V2);
+                lm.AddNumber(predict.V3);
+                lm.AddNumber(predict.V4);
+                lm.AddNumber(predict.V5);
+
+                return lm;
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.ToString());
+                return null;
+            }
+        }
+
+
 
         /// <summary>
         /// The by interval execute.

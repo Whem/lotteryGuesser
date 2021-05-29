@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:design="clr-namespace:LotteryGuesserXamarin.ViewModel;assembly=LotteryGuesserXamarin"
+             x:Class="LotteryGuesserXamarin.View.Contents.LoginView"
+             BindingContext="{x:Static design:ViewModelLocator.Login}">
+  <ContentView.Content>
+      <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+          <Label Text="User Name" />
+          <Entry Text="{Binding CommonService.UserName}"></Entry>
+          <Label Text="Lottery type"></Label>
+          <Picker ItemsSource="{Binding LotteryTypes}" SelectedItem="{Binding SelectedLotteryType}"></Picker>
+          <Label Text="Is it use google datas?"></Label>
+          <CheckBox IsChecked="{Binding IsUseGoogleSheet}"></CheckBox>
+            <Label Text="Is it use earlier weeks datas?"></Label>
+          <CheckBox IsChecked="{Binding IsUseEarlierWeekDatas}"></CheckBox>
+          <Button Text="Start" Command="{Binding NextCommand}"></Button>
+      </StackLayout>
+  </ContentView.Content>
+</ContentView>

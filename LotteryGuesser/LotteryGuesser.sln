@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LotteryLib", "LotteryLib\Lo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LotteryLibTests", "LotteryLibTests\LotteryLibTests.csproj", "{ED8B70C3-3848-4F15-85F2-4EDAB67D346E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LotteryDesktopApp", "LotteryDesktopApp\LotteryDesktopApp.csproj", "{7DEE69DE-ACAC-4BC1-A66B-1B777BD4DC99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LotteryDesktopApp", "LotteryDesktopApp\LotteryDesktopApp.csproj", "{7DEE69DE-ACAC-4BC1-A66B-1B777BD4DC99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MlLottery", "MlLottery\MlLottery.csproj", "{F33B22AA-A030-4AC2-8E69-5C5111E7672B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{7DEE69DE-ACAC-4BC1-A66B-1B777BD4DC99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DEE69DE-ACAC-4BC1-A66B-1B777BD4DC99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DEE69DE-ACAC-4BC1-A66B-1B777BD4DC99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F33B22AA-A030-4AC2-8E69-5C5111E7672B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F33B22AA-A030-4AC2-8E69-5C5111E7672B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F33B22AA-A030-4AC2-8E69-5C5111E7672B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F33B22AA-A030-4AC2-8E69-5C5111E7672B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

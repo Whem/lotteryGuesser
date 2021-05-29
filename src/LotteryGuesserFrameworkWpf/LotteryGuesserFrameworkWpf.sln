@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30104.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LotteryGuesserFrameworkWpf", "LotteryGuesserFrameworkWpf\LotteryGuesserFrameworkWpf.csproj", "{5DCF6C11-CA30-4F03-A678-5AEA163D5C4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LotteryGuesserFrameworkLib", "LotteryGuesserFrameworkLib\LotteryGuesserFrameworkLib.csproj", "{D7A65C7F-AE6D-4A39-AC43-989A3DEB11A8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5DCF6C11-CA30-4F03-A678-5AEA163D5C4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DCF6C11-CA30-4F03-A678-5AEA163D5C4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DCF6C11-CA30-4F03-A678-5AEA163D5C4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DCF6C11-CA30-4F03-A678-5AEA163D5C4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7A65C7F-AE6D-4A39-AC43-989A3DEB11A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7A65C7F-AE6D-4A39-AC43-989A3DEB11A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7A65C7F-AE6D-4A39-AC43-989A3DEB11A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7A65C7F-AE6D-4A39-AC43-989A3DEB11A8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FF150C23-0D93-4A4E-BD5F-EE47CE8D2086}
+	EndGlobalSection
+EndGlobal

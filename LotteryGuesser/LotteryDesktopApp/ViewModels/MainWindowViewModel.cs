@@ -39,7 +39,7 @@ namespace LotteryDesktopApp.ViewModels
             Lottery.UseEarlierWeekPercentageForNumbersDraw(Enums.TypesOfDrawn.Calculated);
             Lottery.CalculateNumbers(Enums.TypesOfDrawn.ByDistributionBasedCurrentDraw, Enums.GenerateType.Unique, 1);
 
-            //Lottery.SaveDataToGoogleSheet();
+            Lottery.SaveDataToGoogleSheet();
         }
 
         private void LotteryHandlerOnLotteryModelEvent(object sender, LotteryModel e)

@@ -1,0 +1,14 @@
+C:\work\lotteryGuesser\LotteryGuesser\.vs\LotteryGuesser\v16\lut\0\b\LotteryUI\Debug\netcoreapp3.1\LotteryUI.exe
+C:\work\lotteryGuesser\LotteryGuesser\.vs\LotteryGuesser\v16\lut\0\b\LotteryUI\Debug\netcoreapp3.1\credentials.json
+C:\work\lotteryGuesser\LotteryGuesser\.vs\LotteryGuesser\v16\lut\0\b\LotteryUI\Debug\netcoreapp3.1\LotteryUI.deps.json
+C:\work\lotteryGuesser\LotteryGuesser\.vs\LotteryGuesser\v16\lut\0\b\LotteryUI\Debug\netcoreapp3.1\LotteryUI.runtimeconfig.json
+C:\work\lotteryGuesser\LotteryGuesser\.vs\LotteryGuesser\v16\lut\0\b\LotteryUI\Debug\netcoreapp3.1\LotteryUI.runtimeconfig.dev.json
+C:\work\lotteryGuesser\LotteryGuesser\.vs\LotteryGuesser\v16\lut\0\b\LotteryUI\Debug\netcoreapp3.1\LotteryUI.dll
+C:\work\lotteryGuesser\LotteryGuesser\.vs\LotteryGuesser\v16\lut\0\b\LotteryUI\Debug\netcoreapp3.1\LotteryUI.pdb
+C:\work\lotteryGuesser\LotteryGuesser\.vs\LotteryGuesser\v16\lut\0\i\LotteryUI\Debug\netcoreapp3.1\LotteryUI.AssemblyInfoInputs.cache
+C:\work\lotteryGuesser\LotteryGuesser\.vs\LotteryGuesser\v16\lut\0\i\LotteryUI\Debug\netcoreapp3.1\LotteryUI.AssemblyInfo.cs
+C:\work\lotteryGuesser\LotteryGuesser\.vs\LotteryGuesser\v16\lut\0\i\LotteryUI\Debug\netcoreapp3.1\LotteryUI.csproj.CopyComplete
+C:\work\lotteryGuesser\LotteryGuesser\.vs\LotteryGuesser\v16\lut\0\i\LotteryUI\Debug\netcoreapp3.1\LotteryUI.dll
+C:\work\lotteryGuesser\LotteryGuesser\.vs\LotteryGuesser\v16\lut\0\i\LotteryUI\Debug\netcoreapp3.1\LotteryUI.pdb
+C:\work\lotteryGuesser\LotteryGuesser\.vs\LotteryGuesser\v16\lut\0\i\LotteryUI\Debug\netcoreapp3.1\LotteryUI.genruntimeconfig.cache
+C:\work\lotteryGuesser\LotteryGuesser\.vs\LotteryGuesser\v16\lut\0\i\LotteryUI\Debug\netcoreapp3.1\LotteryUI.csprojAssemblyReference.cache

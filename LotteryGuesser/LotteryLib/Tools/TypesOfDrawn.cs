@@ -55,6 +55,11 @@ namespace LotteryLib.Tools
             ByDistributionBasedCurrentDraw,
 
             /// <summary>
+            /// The by machine learning.
+            /// </summary>
+            ByMachineLearning,
+
+            /// <summary>
             /// The all.
             /// </summary>
             All
