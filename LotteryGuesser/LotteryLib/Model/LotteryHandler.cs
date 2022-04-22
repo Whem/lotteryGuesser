@@ -237,6 +237,7 @@ namespace LotteryLib.Model
                 case Enums.TypesOfDrawn.BySums:
                 case Enums.TypesOfDrawn.Calculated:
                 case Enums.TypesOfDrawn.ByMachineLearning:
+                    if(typesOfDrawn == Enums.TypesOfDrawn.ByMachineLearning && lotteryRule.LotteryType != Enums.LotteryType.TheFiveNumberDraw) break;
                     switch (generateType)
                     {
                         case Enums.GenerateType.EachByEach:
@@ -246,14 +247,21 @@ namespace LotteryLib.Model
                         case Enums.GenerateType.GetTheBest:
                             this.RunMethodWithEachTimeAndGetTheBestNumbers(mi, count, typesOfDrawn);
                             break;
+                        case Enums.GenerateType.Unique:
+                            break;
+                        case Enums.GenerateType.MostCommonSeries:
+                            RunMethodWithEachTimeAndGetTheMostCommonSeries(mi, count, typesOfDrawn);
+                            break;
                         default:
                             throw new ArgumentOutOfRangeException(nameof(generateType), generateType, null);
                     }
 
                     break;
                 case Enums.TypesOfDrawn.All:
+                    
                     foreach (Enums.TypesOfDrawn drawn in (Enums.TypesOfDrawn[])Enum.GetValues(typeof(Enums.TypesOfDrawn)))
                     {
+                        if (drawn == Enums.TypesOfDrawn.ByMachineLearning && lotteryRule.LotteryType != Enums.LotteryType.TheFiveNumberDraw) continue;
                         MethodInfo mis = this.GetType().GetMethod(drawn.ToString() + "Execute");
                         if (mis != null)
                         {
@@ -264,6 +272,11 @@ namespace LotteryLib.Model
                                     break;
                                 case Enums.GenerateType.GetTheBest:
                                     RunMethodWithEachTimeAndGetTheBestNumbers(mis, count, drawn);
+                                    break;
+                                case Enums.GenerateType.Unique:
+                                    break;
+                                case Enums.GenerateType.MostCommonSeries:
+                                    RunMethodWithEachTimeAndGetTheMostCommonSeries(mis, count, drawn);
                                     break;
                                 default:
                                     throw new ArgumentOutOfRangeException(nameof(generateType), generateType, null);
@@ -376,7 +389,47 @@ namespace LotteryLib.Model
                 resultLotteryModel.Numbers.Add(keyValuePair.Key);
             }
 
-            if (LotteryModels.AddValueWithDetailsAndValidation(resultLotteryModel.ValidationTuple(), typesOfDrawn))
+            if (LotteryModels.AddValueWithDetailsAndValidation(resultLotteryModel.ValidationTuple(), typesOfDrawn, Enums.GenerateType.GetTheBest))
+            {
+                OnLotteryModelEvent(resultLotteryModel);
+            }
+        }
+
+
+        public void RunMethodWithEachTimeAndGetTheMostCommonSeries(MethodInfo action, int count, Enums.TypesOfDrawn typesOfDrawn)
+        {
+            if (LotteryModels == null) LotteryModels = new List<LotteryModel>();
+            Dictionary<string, int> numbersDictionary = new Dictionary<string, int>();
+            Console.WriteLine($"{typesOfDrawn} {count} Times");
+            int index = 0;
+            while (index != count)
+            {
+                LotteryModel returnedModel = (LotteryModel)action.Invoke(this, null);
+                if (returnedModel == null || !returnedModel.ValidationTuple().Item1) continue;
+
+                index++;
+
+                if (numbersDictionary.Count > 0 && numbersDictionary.ContainsKey(returnedModel.ToString()))
+                {
+                    numbersDictionary[returnedModel.ToString()]++;
+                }
+                else
+                {
+                    numbersDictionary.Add(returnedModel.ToString(), 1);
+                }
+                
+            }
+
+            KeyValuePair<string, int> sortedDic = numbersDictionary.OrderByDescending(x => x.Value).ToList()[0];
+            LotteryModel resultLotteryModel = new LotteryModel(lotteryRule);
+            var numbers = sortedDic.Key.Split(", ");
+            foreach (string number in numbers)
+            {
+                resultLotteryModel.Numbers.Add(Convert.ToInt32(number));
+            }
+           
+
+            if (LotteryModels.AddValueWithDetailsAndValidation(resultLotteryModel.ValidationTuple(), typesOfDrawn, Enums.GenerateType.MostCommonSeries))
             {
                 OnLotteryModelEvent(resultLotteryModel);
             }
@@ -781,7 +834,7 @@ namespace LotteryLib.Model
                         lm.Numbers.Add((int)calculatedNumber);
                     }
 
-                    LotteryModels.AddValueWithDetailsAndValidation(lm.ValidationTuple(), typesOfDrawn);
+                    LotteryModels.AddValueWithDetailsAndValidation(lm.ValidationTuple(), typesOfDrawn, Enums.GenerateType.Calculate);
                 }
             }
         }
@@ -853,7 +906,7 @@ namespace LotteryLib.Model
                 var returnedModel = (LotteryModel)invoke.Invoke(this, null);
 
                 if (returnedModel == null) continue;
-                if (LotteryModels.AddValueWithDetailsAndValidation(returnedModel.ValidationTuple(), typesOfDrawn))
+                if (LotteryModels.AddValueWithDetailsAndValidation(returnedModel.ValidationTuple(), typesOfDrawn, Enums.GenerateType.EachByEach))
                 {
                     index++;
                     OnLotteryModelEvent(returnedModel);

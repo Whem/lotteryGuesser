@@ -32,7 +32,11 @@ namespace LotteryLib.Tools
             /// <summary>
             /// The unique.
             /// </summary>
-            Unique
+            Unique,
+
+            MostCommonSeries,
+
+            Calculate,
         }
 
         /// <summary>

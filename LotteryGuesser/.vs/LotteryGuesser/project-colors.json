@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "7dee69de-acac-4bc1-a66b-1b777bd4dc99": {
+      "ProjectGuid": "7dee69de-acac-4bc1-a66b-1b777bd4dc99",
+      "DisplayName": "LotteryDesktopApp",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}

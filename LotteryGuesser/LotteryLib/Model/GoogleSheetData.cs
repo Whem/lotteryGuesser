@@ -91,6 +91,7 @@ namespace LotteryLib.Model
             concate.Add(String.Join(',', lm.Numbers.OrderBy(x => x).Select(x => x.ToString())));
             concate.Add(UserName);
             concate.Add(lm.LotteryRule.LotteryType.ToString());
+            concate.Add(lm.GenerateType.ToString());
             return concate;
 
         }

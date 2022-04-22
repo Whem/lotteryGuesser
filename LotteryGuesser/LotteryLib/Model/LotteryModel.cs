@@ -44,6 +44,8 @@ namespace LotteryLib.Model
 
         public Enums.TypesOfDrawn Message { get; set; }
 
+        public Enums.GenerateType GenerateType { get; set; }
+
         public List<int> Numbers
         {
             get { return this.numbers; }

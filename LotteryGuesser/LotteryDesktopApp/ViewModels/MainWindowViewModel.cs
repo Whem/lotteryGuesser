@@ -27,13 +27,14 @@ namespace LotteryDesktopApp.ViewModels
         {
            // GoNext = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new LoginViewModel(this)));
 
-            Lottery = new LotteryHandler(Enums.LotteryType.TheFiveNumberDraw, "Whem", true, true);
+            Lottery = new LotteryHandler(Enums.LotteryType.TheSixNumberDraw, "Whem", true, true);
             LotteryHandler.LotteryModelEvent += LotteryHandlerOnLotteryModelEvent;
 
 
 
             Lottery.CalculateNumbers(Enums.TypesOfDrawn.All, Enums.GenerateType.EachByEach, 2);
             Lottery.CalculateNumbers(Enums.TypesOfDrawn.All, Enums.GenerateType.GetTheBest, 1000);
+            Lottery.CalculateNumbers(Enums.TypesOfDrawn.All, Enums.GenerateType.MostCommonSeries, 1000);
 
 
             Lottery.UseEarlierWeekPercentageForNumbersDraw(Enums.TypesOfDrawn.Calculated);

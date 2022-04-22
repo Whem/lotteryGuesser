@@ -43,13 +43,14 @@ namespace LotteryLib.Tools
 
             if (isShowNumberOnConsole) Console.WriteLine(lm);
         }
-        public static bool AddValueWithDetailsAndValidation(this List<LotteryModel> theList, (bool, LotteryModel) lm, Enums.TypesOfDrawn tDrawn, bool isShowNumberOnConsole = true)
+        public static bool AddValueWithDetailsAndValidation(this List<LotteryModel> theList, (bool, LotteryModel) lm, Enums.TypesOfDrawn tDrawn, Enums.GenerateType generateType, bool isShowNumberOnConsole = true)
         {
             if(theList == null) theList = new List<LotteryModel>();
             if (!lm.Item1 || lm.Item2 == null) return false;
             if (!theList.Any(x => x.Numbers.SequenceEqual(lm.Item2.Numbers)))
             {
                 lm.Item2.Message = tDrawn;
+                lm.Item2.GenerateType = generateType;
                 theList.Add(lm.Item2);
 
                 if (isShowNumberOnConsole) Console.WriteLine(lm.Item2);
