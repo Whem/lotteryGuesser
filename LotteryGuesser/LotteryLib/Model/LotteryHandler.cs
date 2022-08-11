@@ -261,7 +261,7 @@ namespace LotteryLib.Model
                     
                     foreach (Enums.TypesOfDrawn drawn in (Enums.TypesOfDrawn[])Enum.GetValues(typeof(Enums.TypesOfDrawn)))
                     {
-                        if (drawn == Enums.TypesOfDrawn.ByMachineLearning && lotteryRule.LotteryType != Enums.LotteryType.TheFiveNumberDraw) continue;
+                        if (drawn == Enums.TypesOfDrawn.ByMachineLearning) continue;
                         MethodInfo mis = this.GetType().GetMethod(drawn.ToString() + "Execute");
                         if (mis != null)
                         {
@@ -274,6 +274,7 @@ namespace LotteryLib.Model
                                     RunMethodWithEachTimeAndGetTheBestNumbers(mis, count, drawn);
                                     break;
                                 case Enums.GenerateType.Unique:
+                                    RunMethodWithEachTime(mis, count, drawn);
                                     break;
                                 case Enums.GenerateType.MostCommonSeries:
                                     RunMethodWithEachTimeAndGetTheMostCommonSeries(mis, count, drawn);

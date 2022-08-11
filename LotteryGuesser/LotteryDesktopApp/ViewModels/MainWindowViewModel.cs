@@ -27,7 +27,7 @@ namespace LotteryDesktopApp.ViewModels
         {
            // GoNext = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new LoginViewModel(this)));
 
-            Lottery = new LotteryHandler(Enums.LotteryType.TheSixNumberDraw, "Whem", true, true);
+            Lottery = new LotteryHandler(Enums.LotteryType.TheFiveNumberDraw, "Whem", true, true);
             LotteryHandler.LotteryModelEvent += LotteryHandlerOnLotteryModelEvent;
 
 
@@ -39,6 +39,7 @@ namespace LotteryDesktopApp.ViewModels
 
             Lottery.UseEarlierWeekPercentageForNumbersDraw(Enums.TypesOfDrawn.Calculated);
             Lottery.CalculateNumbers(Enums.TypesOfDrawn.ByDistributionBasedCurrentDraw, Enums.GenerateType.Unique, 1);
+            Lottery.CalculateNumbers(Enums.TypesOfDrawn.ByMachineLearning, Enums.GenerateType.Unique, 1);
 
             Lottery.SaveDataToGoogleSheet();
         }
