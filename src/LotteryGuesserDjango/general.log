@@ -1,0 +1,1802 @@
+Watching for file changes with StatReloader
+G:\work\github\lotteryGuesser\src\LotteryGuesserV2\LotteryGuesserV2\settings.py changed, reloading.
+Watching for file changes with StatReloader
+G:\work\github\lotteryGuesser\src\LotteryGuesserV2\LotteryGuesserV2\settings.py changed, reloading.
+Watching for file changes with StatReloader
+G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\models.py changed, reloading.
+Watching for file changes with StatReloader
+G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\models.py changed, reloading.
+Watching for file changes with StatReloader
+G:\work\github\lotteryGuesser\src\LotteryGuesserV2\LotteryGuesserV2\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Not Found: /api/schema/swagger-ui/
+Not Found: /api/schema/swagger-ui/
+Not Found: /favicon.ico
+G:\work\github\lotteryGuesser\src\LotteryGuesserV2\LotteryGuesserV2\settings.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Not Found: /api/schema/swagger-ui/
+G:\work\github\lotteryGuesser\src\LotteryGuesserV2\LotteryGuesserV2\settings.py changed, reloading.
+Watching for file changes with StatReloader
+G:\work\github\lotteryGuesser\src\LotteryGuesserV2\LotteryGuesserV2\settings.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Not Found: /api/schema/swagger-ui/
+Not Found: /api/schema/swagger-ui/
+Not Found: /api/schema/swagger-ui/
+Watching for file changes with StatReloader
+Unauthorized: /lottery_admin/lottery_admin/lottery_type
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/otos.html HTTP/1.1" 200 707838
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/otos.html HTTP/1.1" 200 707838
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_admin/lottery_admin/lottery_type_fill
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_admin\views.py", line 87, in post
+    response = requests.get(item.url)
+AttributeError: 'NoneType' object has no attribute 'url'
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_admin/lottery_admin/lottery_type_fill
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_admin\views.py", line 83, in post
+    item = lg_lottery_type.objects.filter(id=serializer.validated_data["id"]).first()
+KeyError: 'id'
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/otos.html HTTP/1.1" 200 707838
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Bad Request: /lottery_admin/lottery_admin/lottery_type
+Bad Request: /lottery_admin/lottery_admin/lottery_type
+Bad Request: /lottery_admin/lottery_admin/lottery_type
+Bad Request: /lottery_admin/lottery_admin/lottery_type
+G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_admin\serializers.py changed, reloading.
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/otos.html HTTP/1.1" 200 None
+Internal Server Error: /lottery_admin/lottery_admin/lottery_type_fill
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_admin\views.py", line 88, in post
+    download_numbers_from_internet(item)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_admin\signals.py", line 23, in download_numbers_from_internet
+    draw_date = datetime.strptime(draw_date_str, '%Y.%m.%d').date()
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\_strptime.py", line 568, in _strptime_datetime
+    tt, fraction, gmtoff_fraction = _strptime(data_string, format)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\_strptime.py", line 349, in _strptime
+    raise ValueError("time data %r does not match format %r" %
+ValueError: time data '' does not match format '%Y.%m.%d'
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/otos.html HTTP/1.1" 200 None
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/otos.html HTTP/1.1" 200 707838
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_admin/lottery_admin/lottery_type_fill
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+sqlite3.OperationalError: no such table: lg_lottery_type
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_admin\views.py", line 84, in post
+    item = lg_lottery_type.objects.filter(id=serializer.validated_data["lottery_type_id"]).first()
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\query.py", line 1057, in first
+    for obj in queryset[:1]:
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\query.py", line 398, in __iter__
+    self._fetch_all()
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\sql\compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+django.db.utils.OperationalError: no such table: lg_lottery_type
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_admin/lottery_admin/lottery_type_fill
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+sqlite3.OperationalError: no such table: lg_lottery_type
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_admin\views.py", line 84, in post
+    item = lg_lottery_type.objects.filter(id=serializer.validated_data["lottery_type_id"]).first()
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\query.py", line 1057, in first
+    for obj in queryset[:1]:
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\query.py", line 398, in __iter__
+    self._fetch_all()
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\sql\compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+django.db.utils.OperationalError: no such table: lg_lottery_type
+Internal Server Error: /lottery_admin/lottery_admin/lottery_type_fill
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+sqlite3.OperationalError: no such table: lg_lottery_type
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_admin\views.py", line 84, in post
+    item = lg_lottery_type.objects.filter(id=serializer.validated_data["lottery_type_id"]).first()
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\query.py", line 1057, in first
+    for obj in queryset[:1]:
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\query.py", line 398, in __iter__
+    self._fetch_all()
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\sql\compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+django.db.utils.OperationalError: no such table: lg_lottery_type
+Internal Server Error: /lottery_admin/lottery_admin/lottery_type_fill
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+sqlite3.OperationalError: no such table: lg_lottery_type
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_admin\views.py", line 84, in post
+    item = lg_lottery_type.objects.filter(id=serializer.validated_data["lottery_type_id"]).first()
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\query.py", line 1057, in first
+    for obj in queryset[:1]:
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\query.py", line 398, in __iter__
+    self._fetch_all()
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\sql\compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+django.db.utils.OperationalError: no such table: lg_lottery_type
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/otos.html HTTP/1.1" 200 707838
+Internal Server Error: /lottery_admin/lottery_admin/lottery_type_fill
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_admin\views.py", line 88, in post
+    download_numbers_from_internet(item)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_admin\signals.py", line 21, in download_numbers_from_internet
+    year = int(columns[2].text.strip())
+ValueError: invalid literal for int() with base 10: ''
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/otos.html HTTP/1.1" 200 707838
+Internal Server Error: /lottery_admin/lottery_admin/lottery_type_fill
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_admin\views.py", line 88, in post
+    download_numbers_from_internet(item)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_admin\signals.py", line 21, in download_numbers_from_internet
+    year = int(columns[2].text.strip())
+ValueError: invalid literal for int() with base 10: ''
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/otos.html HTTP/1.1" 200 None
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/otos.html HTTP/1.1" 200 None
+G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\models.py changed, reloading.
+Watching for file changes with StatReloader
+G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_admin\signals.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Not Found: /lottery_admin/lottery_admin/lottery_type
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/otos.html HTTP/1.1" 200 707838
+G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_admin\serializers.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/otos.html HTTP/1.1" 200 707838
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 35, in get
+    algorithm = serializer.validated_data["algorithm"]
+KeyError: 'algorithm'
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 35, in get
+    algorithm = serializer.validated_data["algorithm"]
+KeyError: 'algorithm'
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\indexes\base.py", line 3802, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas\_libs\index.pyx", line 138, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 165, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 5745, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 5753, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'number1'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 38, in get
+    result =pandas_prediction(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 18, in pandas_prediction
+    current_number = row[f'number{i}']
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\series.py", line 981, in __getitem__
+    return self._get_value(key)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\series.py", line 1089, in _get_value
+    loc = self.index.get_loc(label)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\indexes\base.py", line 3804, in get_loc
+    raise KeyError(key) from err
+KeyError: 'number1'
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\indexes\base.py", line 3802, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas\_libs\index.pyx", line 138, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 165, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 5745, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 5753, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'number1'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 38, in get
+    result =pandas_prediction(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 18, in pandas_prediction
+    current_number = row[f'number{i}']
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\series.py", line 981, in __getitem__
+    return self._get_value(key)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\series.py", line 1089, in _get_value
+    loc = self.index.get_loc(label)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\indexes\base.py", line 3804, in get_loc
+    raise KeyError(key) from err
+KeyError: 'number1'
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 38, in get
+    result =pandas_prediction(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 21, in pandas_prediction
+    current_number = row[f'number{i}']
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\series.py", line 981, in __getitem__
+    return self._get_value(key)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\series.py", line 1089, in _get_value
+    loc = self.index.get_loc(label)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\indexes\range.py", line 395, in get_loc
+    raise KeyError(key)
+KeyError: 'number1'
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 38, in get
+    result =pandas_prediction(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 21, in pandas_prediction
+    current_number = row[f'number{i}']
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\series.py", line 981, in __getitem__
+    return self._get_value(key)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\series.py", line 1089, in _get_value
+    loc = self.index.get_loc(label)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\indexes\range.py", line 395, in get_loc
+    raise KeyError(key)
+KeyError: 'number1'
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 38, in get
+    result =pandas_prediction(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 21, in pandas_prediction
+    current_number = row[f'number{i}']
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\series.py", line 981, in __getitem__
+    return self._get_value(key)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\series.py", line 1089, in _get_value
+    loc = self.index.get_loc(label)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\indexes\range.py", line 395, in get_loc
+    raise KeyError(key)
+KeyError: 'number1'
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 38, in get
+    result =pandas_prediction(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 26, in pandas_prediction
+    next_number = next_row[f'number{j}']
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\series.py", line 981, in __getitem__
+    return self._get_value(key)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\series.py", line 1089, in _get_value
+    loc = self.index.get_loc(label)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\indexes\range.py", line 395, in get_loc
+    raise KeyError(key)
+KeyError: 'number1'
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/otos.html HTTP/1.1" 200 None
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/otos.html HTTP/1.1" 200 707838
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 49, in get
+    result =sum_prediction(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 105, in sum_prediction
+    next_sum = predict_next_sum(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 98, in predict_next_sum
+    last_sum = queryset[-1] if queryset else None
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\query.py", line 429, in __getitem__
+    raise ValueError("Negative indexing is not supported.")
+ValueError: Negative indexing is not supported.
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 49, in get
+    result =sum_prediction(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 105, in sum_prediction
+    next_sum = predict_next_sum(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 98, in predict_next_sum
+    last_sum = queryset[-1] if queryset else None
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\query.py", line 429, in __getitem__
+    raise ValueError("Negative indexing is not supported.")
+ValueError: Negative indexing is not supported.
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 49, in get
+    result =sum_prediction(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 105, in sum_prediction
+    next_sum = predict_next_sum(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 98, in predict_next_sum
+    last_sum = queryset[-1] if queryset else None
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\query.py", line 429, in __getitem__
+    raise ValueError("Negative indexing is not supported.")
+ValueError: Negative indexing is not supported.
+G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py changed, reloading.
+Watching for file changes with StatReloader
+G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py changed, reloading.
+Watching for file changes with StatReloader
+G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py changed, reloading.
+Watching for file changes with StatReloader
+G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 48, in get
+    result =predict_next_draw_with_ml(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 146, in predict_next_draw_with_ml
+    model.fit(X_train, y_train)
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\sklearn\base.py", line 1152, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\sklearn\ensemble\_forest.py", line 390, in fit
+    y, expanded_class_weight = self._validate_y_class_weight(y)
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\sklearn\ensemble\_forest.py", line 749, in _validate_y_class_weight
+    check_classification_targets(y)
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\sklearn\utils\multiclass.py", line 216, in check_classification_targets
+    raise ValueError(
+ValueError: Unknown label type: unknown. Maybe you are trying to fit a classifier, which expects discrete classes on a regression target with continuous values.
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+TypeError: float() argument must be a string or a real number, not 'list'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 48, in get
+    result =predict_next_draw_with_ml(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 146, in predict_next_draw_with_ml
+    model.fit(X_train, y_train)
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\sklearn\base.py", line 1152, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\sklearn\ensemble\_forest.py", line 393, in fit
+    y = np.ascontiguousarray(y, dtype=DOUBLE)
+ValueError: setting an array element with a sequence.
+G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 48, in get
+    result =predict_next_draw_with_ml(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 140, in predict_next_draw_with_ml
+    X = df.drop('lottery_type_number', axis=1)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\util\_decorators.py", line 331, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\frame.py", line 5399, in drop
+    return super().drop(
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\util\_decorators.py", line 331, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\generic.py", line 4505, in drop
+    obj = obj._drop_axis(labels, axis, level=level, errors=errors)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\generic.py", line 4546, in _drop_axis
+    new_axis = axis.drop(labels, errors=errors)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\indexes\base.py", line 6934, in drop
+    raise KeyError(f"{list(labels[mask])} not found in axis")
+KeyError: "['lottery_type_number'] not found in axis"
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 46, in get
+    result =sklearn_predict(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 176, in sklearn_predict
+    predicted_numbers = predict_next_draw(lottery_type, model)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 160, in predict_next_draw
+    predicted_number = model.predict([feature_vector])[0]
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\sklearn\ensemble\_forest.py", line 984, in predict
+    X = self._validate_X_predict(X)
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\sklearn\ensemble\_forest.py", line 599, in _validate_X_predict
+    X = self._validate_data(X, dtype=DTYPE, accept_sparse="csr", reset=False)
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\sklearn\base.py", line 626, in _validate_data
+    self._check_n_features(X, reset=reset)
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\sklearn\base.py", line 415, in _check_n_features
+    raise ValueError(
+ValueError: X has 5 features, but RandomForestRegressor is expecting 1 features as input.
+G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py changed, reloading.
+Watching for file changes with StatReloader
+G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py changed, reloading.
+Watching for file changes with StatReloader
+G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 46, in get
+    result =sklearn_predict(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 179, in sklearn_predict
+    predicted_numbers = predict_next_draw(lottery_type, model)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 163, in predict_next_draw
+    feature_vector = [latest_features[i]]  # Assuming single-feature model
+IndexError: list index out of range
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 46, in get
+    result =sklearn_predict(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 179, in sklearn_predict
+    predicted_numbers = predict_next_draw(lottery_type, model)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 163, in predict_next_draw
+    feature_vector = [latest_features[i]]  # Assuming single-feature model
+IndexError: list index out of range
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 46, in get
+    result =sklearn_predict(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 179, in sklearn_predict
+    predicted_numbers = predict_next_draw(lottery_type, model)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 163, in predict_next_draw
+    feature_vector = [latest_features[i]]  # Assuming single-feature model
+IndexError: list index out of range
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 46, in get
+    result =sklearn_predict(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 180, in sklearn_predict
+    predicted_numbers = predict_next_draw(lottery_type, model)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 164, in predict_next_draw
+    feature_vector = [latest_features[i]]  # Assuming single-feature model
+IndexError: list index out of range
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Bad Request: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 46, in get
+    result =sklearn_predict(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 183, in sklearn_predict
+    predicted_numbers = predict_next_draw(lottery_type, model)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 164, in predict_next_draw
+    predicted_number = model.predict([feature_vector])[0]
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\sklearn\ensemble\_forest.py", line 984, in predict
+    X = self._validate_X_predict(X)
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\sklearn\ensemble\_forest.py", line 599, in _validate_X_predict
+    X = self._validate_data(X, dtype=DTYPE, accept_sparse="csr", reset=False)
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\sklearn\base.py", line 605, in _validate_data
+    out = check_array(X, input_name="X", **check_params)
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\sklearn\utils\validation.py", line 976, in check_array
+    raise ValueError(
+ValueError: Found array with 0 feature(s) (shape=(1, 0)) while a minimum of 1 is required by RandomForestRegressor.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 46, in get
+    result =sklearn_predict(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 185, in sklearn_predict
+    predicted_numbers = predict_next_draw(lottery_type, model)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 169, in predict_next_draw
+    predictions = model.predict([features])
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\sklearn\ensemble\_forest.py", line 984, in predict
+    X = self._validate_X_predict(X)
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\sklearn\ensemble\_forest.py", line 599, in _validate_X_predict
+    X = self._validate_data(X, dtype=DTYPE, accept_sparse="csr", reset=False)
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\sklearn\base.py", line 626, in _validate_data
+    self._check_n_features(X, reset=reset)
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\sklearn\base.py", line 415, in _check_n_features
+    raise ValueError(
+ValueError: X has 5 features, but RandomForestRegressor is expecting 1 features as input.
+G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py changed, reloading.
+Watching for file changes with StatReloader
+G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Watching for file changes with StatReloader
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Bad Request: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Watching for file changes with StatReloader
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Watching for file changes with StatReloader
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Watching for file changes with StatReloader
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 46, in get
+    result =sklearn_predict(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 172, in sklearn_predict
+    predicted_draw = predict_next_draw(model, latest_features)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 156, in predict_next_draw
+    predicted_draw = model.predict(latest_features.reshape(5, -1))
+ValueError: cannot reshape array of size 4 into shape (5,newaxis)
+Watching for file changes with StatReloader
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 46, in get
+    result =sklearn_predict(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 172, in sklearn_predict
+    predicted_draw = predict_next_draw(model, latest_features)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 156, in predict_next_draw
+    predicted_draw = model.predict(latest_features.reshape(4, -1))
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\keras\src\utils\traceback_utils.py", line 70, in error_handler
+    raise e.with_traceback(filtered_tb) from None
+  File "C:\Users\birek\AppData\Local\Temp\__autograph_generated_file02mlne71.py", line 15, in tf__predict_function
+    retval_ = ag__.converted_call(ag__.ld(step_function), (ag__.ld(self), ag__.ld(iterator)), None, fscope)
+ValueError: in user code:
+
+    File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\keras\src\engine\training.py", line 2416, in predict_function  *
+        return step_function(self, iterator)
+    File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\keras\src\engine\training.py", line 2401, in step_function  **
+        outputs = model.distribute_strategy.run(run_step, args=(data,))
+    File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\keras\src\engine\training.py", line 2389, in run_step  **
+        outputs = model.predict_step(data)
+    File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\keras\src\engine\training.py", line 2357, in predict_step
+        return self(x, training=False)
+    File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\keras\src\utils\traceback_utils.py", line 70, in error_handler
+        raise e.with_traceback(filtered_tb) from None
+    File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\keras\src\engine\input_spec.py", line 280, in assert_input_compatibility
+        raise ValueError(
+
+    ValueError: Exception encountered when calling layer 'sequential' (type Sequential).
+    
+    Input 0 of layer "dense" is incompatible with the layer: expected axis -1 of input shape to have value 4, but received input with shape (None, 1)
+    
+    Call arguments received by layer 'sequential' (type Sequential):
+      • inputs=tf.Tensor(shape=(None, 1), dtype=int32)
+      • training=False
+      • mask=None
+
+Watching for file changes with StatReloader
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 46, in get
+    result =sklearn_predict(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 172, in sklearn_predict
+    predicted_draw = predict_next_draw(model, latest_features)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 156, in predict_next_draw
+    predicted_draw = model.predict(latest_features)
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\keras\src\utils\traceback_utils.py", line 70, in error_handler
+    raise e.with_traceback(filtered_tb) from None
+  File "C:\Users\birek\AppData\Local\Temp\__autograph_generated_file8_c3s7_q.py", line 15, in tf__predict_function
+    retval_ = ag__.converted_call(ag__.ld(step_function), (ag__.ld(self), ag__.ld(iterator)), None, fscope)
+ValueError: in user code:
+
+    File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\keras\src\engine\training.py", line 2416, in predict_function  *
+        return step_function(self, iterator)
+    File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\keras\src\engine\training.py", line 2401, in step_function  **
+        outputs = model.distribute_strategy.run(run_step, args=(data,))
+    File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\keras\src\engine\training.py", line 2389, in run_step  **
+        outputs = model.predict_step(data)
+    File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\keras\src\engine\training.py", line 2357, in predict_step
+        return self(x, training=False)
+    File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\keras\src\utils\traceback_utils.py", line 70, in error_handler
+        raise e.with_traceback(filtered_tb) from None
+    File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\keras\src\engine\input_spec.py", line 253, in assert_input_compatibility
+        raise ValueError(
+
+    ValueError: Exception encountered when calling layer 'sequential' (type Sequential).
+    
+    Input 0 of layer "dense" is incompatible with the layer: expected min_ndim=2, found ndim=1. Full shape received: (None,)
+    
+    Call arguments received by layer 'sequential' (type Sequential):
+      • inputs=tf.Tensor(shape=(None,), dtype=int32)
+      • training=False
+      • mask=None
+
+Watching for file changes with StatReloader
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Watching for file changes with StatReloader
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Watching for file changes with StatReloader
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Watching for file changes with StatReloader
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 46, in get
+    result =predict_next_draw_with_ml(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 148, in predict_next_draw_with_ml
+    X, y = prepare_data(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 140, in prepare_data
+    X = df.drop('number', axis=1)  # features
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\util\_decorators.py", line 331, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\frame.py", line 5399, in drop
+    return super().drop(
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\util\_decorators.py", line 331, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\generic.py", line 4505, in drop
+    obj = obj._drop_axis(labels, axis, level=level, errors=errors)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\generic.py", line 4546, in _drop_axis
+    new_axis = axis.drop(labels, errors=errors)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\indexes\base.py", line 6934, in drop
+    raise KeyError(f"{list(labels[mask])} not found in axis")
+KeyError: "['number'] not found in axis"
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 46, in get
+    result =predict_next_draw_with_ml(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 148, in predict_next_draw_with_ml
+    X, y = prepare_data(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 140, in prepare_data
+    X = df.drop('number', axis=1)  # features
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\util\_decorators.py", line 331, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\frame.py", line 5399, in drop
+    return super().drop(
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\util\_decorators.py", line 331, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\generic.py", line 4505, in drop
+    obj = obj._drop_axis(labels, axis, level=level, errors=errors)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\generic.py", line 4546, in _drop_axis
+    new_axis = axis.drop(labels, errors=errors)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\indexes\base.py", line 6934, in drop
+    raise KeyError(f"{list(labels[mask])} not found in axis")
+KeyError: "['number'] not found in axis"
+G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 46, in get
+    result =predict_next_draw_with_ml(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 148, in predict_next_draw_with_ml
+    X, y = prepare_data(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 139, in prepare_data
+    df = pd.DataFrame(np.array(queryset), columns=[f'numbers'])
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\frame.py", line 722, in __init__
+    mgr = ndarray_to_mgr(
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\internals\construction.py", line 349, in ndarray_to_mgr
+    _check_values_indices_shape_match(values, index, columns)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\internals\construction.py", line 420, in _check_values_indices_shape_match
+    raise ValueError(f"Shape of passed values is {passed}, indices imply {implied}")
+ValueError: Shape of passed values is (3480, 5), indices imply (3480, 1)
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 46, in get
+    result =predict_next_draw_with_ml(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 148, in predict_next_draw_with_ml
+    X, y = prepare_data(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 139, in prepare_data
+    df = pd.DataFrame(np.array(queryset), columns=[f'numbers'])
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\frame.py", line 722, in __init__
+    mgr = ndarray_to_mgr(
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\internals\construction.py", line 349, in ndarray_to_mgr
+    _check_values_indices_shape_match(values, index, columns)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\internals\construction.py", line 420, in _check_values_indices_shape_match
+    raise ValueError(f"Shape of passed values is {passed}, indices imply {implied}")
+ValueError: Shape of passed values is (3480, 5), indices imply (3480, 1)
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 46, in get
+    result =predict_next_draw_with_ml(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 148, in predict_next_draw_with_ml
+    X, y = prepare_data(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 139, in prepare_data
+    df = pd.DataFrame(np.array(queryset), columns=[f'numbers'])
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\frame.py", line 722, in __init__
+    mgr = ndarray_to_mgr(
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\internals\construction.py", line 349, in ndarray_to_mgr
+    _check_values_indices_shape_match(values, index, columns)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\internals\construction.py", line 420, in _check_values_indices_shape_match
+    raise ValueError(f"Shape of passed values is {passed}, indices imply {implied}")
+ValueError: Shape of passed values is (3480, 5), indices imply (3480, 1)
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 46, in get
+    result =predict_next_draw_with_ml(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 154, in predict_next_draw_with_ml
+    model.fit(X_train, y_train)
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\sklearn\base.py", line 1152, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\sklearn\ensemble\_forest.py", line 348, in fit
+    X, y = self._validate_data(
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\sklearn\base.py", line 622, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\sklearn\utils\validation.py", line 1146, in check_X_y
+    X = check_array(
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\sklearn\utils\validation.py", line 795, in check_array
+    dtype_orig = np.result_type(*dtypes_orig)
+  File "<__array_function__ internals>", line 200, in result_type
+ValueError: at least one array or dtype is required
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 46, in get
+    result =predict_next_draw_with_ml(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\signals.py", line 154, in predict_next_draw_with_ml
+    model.fit(X_train, y_train)
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\sklearn\base.py", line 1152, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\sklearn\ensemble\_forest.py", line 348, in fit
+    X, y = self._validate_data(
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\sklearn\base.py", line 622, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\sklearn\utils\validation.py", line 1146, in check_X_y
+    X = check_array(
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\sklearn\utils\validation.py", line 795, in check_array
+    dtype_orig = np.result_type(*dtypes_orig)
+  File "<__array_function__ internals>", line 200, in result_type
+ValueError: at least one array or dtype is required
+Watching for file changes with StatReloader
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 47, in get
+    result =main_predict(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\keras.py", line 73, in main_predict
+    train_data, val_data, max_value = load_data(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\keras.py", line 16, in load_data
+    data = np.loadtxt(winning_numbers, dtype='int64', delimiter=',', skiprows=1)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\numpy\lib\npyio.py", line 1356, in loadtxt
+    arr = _read(fname, dtype=dtype, comment=comment, delimiter=delimiter,
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\numpy\lib\npyio.py", line 999, in _read
+    arr = _load_from_filelike(
+TypeError: non-string returned while reading data
+Watching for file changes with StatReloader
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Watching for file changes with StatReloader
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\lottery_handler\views.py", line 47, in get
+    result =main_predict(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\keras.py", line 90, in main_predict
+    predicted_numbers = predict_numbers(model, last_data, num_features)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserV2\algorithms\keras.py", line 52, in predict_numbers
+    predictions = model.predict(val_data)
+  File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\keras\src\utils\traceback_utils.py", line 70, in error_handler
+    raise e.with_traceback(filtered_tb) from None
+  File "C:\Users\birek\AppData\Local\Temp\__autograph_generated_filema837y08.py", line 15, in tf__predict_function
+    retval_ = ag__.converted_call(ag__.ld(step_function), (ag__.ld(self), ag__.ld(iterator)), None, fscope)
+ValueError: in user code:
+
+    File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\keras\src\engine\training.py", line 2416, in predict_function  *
+        return step_function(self, iterator)
+    File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\keras\src\engine\training.py", line 2401, in step_function  **
+        outputs = model.distribute_strategy.run(run_step, args=(data,))
+    File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\keras\src\engine\training.py", line 2389, in run_step  **
+        outputs = model.predict_step(data)
+    File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\keras\src\engine\training.py", line 2357, in predict_step
+        return self(x, training=False)
+    File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\keras\src\utils\traceback_utils.py", line 70, in error_handler
+        raise e.with_traceback(filtered_tb) from None
+    File "C:\Users\birek\PycharmProjects\djangoglobal\venv\lib\site-packages\keras\src\engine\input_spec.py", line 235, in assert_input_compatibility
+        raise ValueError(
+
+    ValueError: Exception encountered when calling layer 'sequential' (type Sequential).
+    
+    Input 0 of layer "lstm" is incompatible with the layer: expected ndim=3, found ndim=2. Full shape received: (None, 64)
+    
+    Call arguments received by layer 'sequential' (type Sequential):
+      • inputs=tf.Tensor(shape=(None,), dtype=int32)
+      • training=False
+      • mask=None
+
+Watching for file changes with StatReloader
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Watching for file changes with StatReloader
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Unauthorized: /lottery_handler/lottery_handle/lottery_alogrithm
+Bad Request: /lottery_handler/lottery_handle/lottery_alogrithm
+Bad Request: /lottery_handler/lottery_handle/lottery_alogrithm
+Watching for file changes with StatReloader
+G:\work\github\lotteryGuesser\src\LotteryGuesserDjango\lottery_handler\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+sqlite3.OperationalError: no such column: lg_lottery_type.draw_day
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserDjango\lottery_handler\views.py", line 29, in get
+    lottery_type = lg_lottery_type.objects.filter(id=lottery_type_id).first()
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\query.py", line 1057, in first
+    for obj in queryset[:1]:
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\query.py", line 398, in __iter__
+    self._fetch_all()
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\models\sql\compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+django.db.utils.OperationalError: no such column: lg_lottery_type.draw_day
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserDjango\lottery_handler\views.py", line 33, in get
+    algorithm = serializer.validated_data["algorithms"]
+KeyError: 'algorithms'
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Traceback (most recent call last):
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserDjango\lottery_handler\views.py", line 35, in get
+    result = call_get_numbers_dynamically(lottery_type)
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserDjango\lottery_handler\signals.py", line 20, in call_get_numbers_dynamically
+    module = importlib.import_module(f"processors.{file}")
+  File "C:\Users\birek\AppData\Local\Programs\Python\Python310\lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "G:\work\github\lotteryGuesser\src\LotteryGuesserDjango\processors\keras_prediction.py", line 2, in <module>
+    from keras_prediction import layers
+ModuleNotFoundError: No module named 'keras_prediction'
+Watching for file changes with StatReloader
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Bad Request: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Watching for file changes with StatReloader
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+G:\work\github\lotteryGuesser\src\LotteryGuesserDjango\processors\random_walk_prediction.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
