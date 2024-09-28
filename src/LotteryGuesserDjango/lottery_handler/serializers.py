@@ -9,9 +9,14 @@ class GetLotteryNumbersWithAlgorithm(serializers.Serializer):
 
 
 class LotteryNumbers(serializers.Serializer):
-    numbers = serializers.ListField(child=serializers.IntegerField())
-    algorithms = serializers.CharField()
+    numbers = serializers.JSONField()
+    algorithm = serializers.CharField()
+    score = serializers.FloatField()
 
 
 class LotteryAlgorithmSerializer(serializers.Serializer):
     algorithm_type = serializers.CharField()
+
+class PostCalculateLotteryNumbersSerializer(serializers.Serializer):
+    winning_numbers = serializers.ListField(child=serializers.IntegerField())
+    lottery_type_id = serializers.IntegerField()

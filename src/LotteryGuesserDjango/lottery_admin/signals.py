@@ -22,7 +22,11 @@ def download_numbers_from_internet(lottery_item):
         if len(columns) > lottery_item.skip_items:
             year = int(columns[0].text.strip())
             week = int(columns[1].text.strip())
-            numbers = [int(columns[i].text) for i in range(lottery_item.skip_items, len(columns))]
+            try:
+                numbers = [int(columns[i].text) for i in range(lottery_item.skip_items, len(columns))[:lottery_item.pieces_of_draw_numbers]]
+            except Exception as e:
+                print(f"Error converting numbers to integers: {e}")
+
 
             # Calculating statistics
             sum_of_numbers = sum(numbers)
@@ -31,6 +35,11 @@ def download_numbers_from_internet(lottery_item):
             mode_of_numbers = statistics.mode(numbers)
             standard_deviation_of_numbers = statistics.stdev(numbers)
 
+
+            existing_winner_number = lg_lottery_winner_number.objects.filter(lottery_type=lottery_item, lottery_type_number_year=year, lottery_type_number_week=week).first()
+
+            if existing_winner_number is not None:
+                continue
 
             # Create an instance of lg_lottery_winner_number
             winner_number = lg_lottery_winner_number(

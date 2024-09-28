@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     #apps
     'algorithms',
     'user',
+    'lottery_handler',
 ]
 
 LOCALE_PATHS = [

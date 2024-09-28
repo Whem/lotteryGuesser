@@ -41,8 +41,3 @@ class lg_lottery_winner_number(models.Model):
 
     class Meta:
         db_table = "lg_lottery_winner_number"
-
-
-
-
-

@@ -7,11 +7,13 @@ from rest_framework.views import APIView
 from LotteryGuesserV2.pagination import CustomPagination
 from algorithms.models import lg_lottery_type, lg_lottery_winner_number
 
-from lottery_handler.serializers import GetLotteryNumbersWithAlgorithm, LotteryNumbers, LotteryAlgorithmSerializer
+from lottery_handler.serializers import *
 from lottery_handler.signals import list_processor_files, call_get_numbers_dynamically
+import json
+import importlib
+import os
 
-
-class LotteryNumbersApiView(APIView,CustomPagination):
+class LotteryNumbersApiView(APIView, CustomPagination):
     permission_classes = (AllowAny,)
     pagination_class = CustomPagination
 
@@ -30,19 +32,30 @@ class LotteryNumbersApiView(APIView,CustomPagination):
         if lottery_type is None:
             return JsonResponse({"error": "Item not found"}, status=404)
 
-
         response = []
-        result = call_get_numbers_dynamically(lottery_type)
 
-        for key, value in result.items():
+        try:
+            results = call_get_numbers_dynamically(lottery_type)
 
-            data = {
-                "numbers": value,
-                'algorithms': key
-            }
-            response_serializer = LotteryNumbers(data=data)
-            response_serializer.is_valid(raise_exception=True)
-            response.append(response_serializer.data)
+            # Lekérjük az összes algoritmus score-ját
+            algorithm_scores = {score.algorithm_name: score.current_score for score in lg_algorithm_score.objects.all()}
+
+            for result in results:
+                data = {
+                    "numbers": result.lottery_type_number,
+                    'algorithm': result.lottery_algorithm,
+                    'score': algorithm_scores.get(result.lottery_algorithm, 0)  # Ha nincs score, 0-t adunk
+                }
+                response_serializer = LotteryNumbers(data=data)
+                response_serializer.is_valid(raise_exception=True)
+                response.append(response_serializer.data)
+
+            # Rendezzük az eredményeket score alapján csökkenő sorrendben
+            response.sort(key=lambda x: x['score'], reverse=True)
+
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
         results = self.paginate_queryset(response, request, view=self)
         return self.get_paginated_response(results)
 
@@ -68,5 +81,121 @@ class LotteryAlgorithmsApiView(APIView):
             response_serializer.is_valid(raise_exception=True)
             response.append(response_serializer.data)
         return JsonResponse(response, safe=False)
+
+
+from rest_framework.views import APIView
+from rest_framework.permissions import AllowAny
+from django.http import JsonResponse
+from drf_spectacular.utils import extend_schema
+from .serializers import PostCalculateLotteryNumbersSerializer, LotteryNumbers
+from .models import  lg_algorithm_score, lg_prediction_history, lg_generated_lottery_draw
+import json
+import os
+import importlib
+from django.utils import timezone
+import statistics
+
+
+class CalculateLotteryNumbersView(APIView):
+    permission_classes = (AllowAny,)
+
+    @extend_schema(
+        summary="Calculate Lottery Numbers",
+        request=PostCalculateLotteryNumbersSerializer,
+        responses={
+            200: LotteryNumbers(many=True), })
+    def post(self, request):
+        data = json.loads(request.body)
+        lottery_type_id = data.get('lottery_type_id')
+        winning_numbers = data.get('winning_numbers')
+
+        if not lottery_type_id or not winning_numbers:
+            return JsonResponse({"error": "Missing lottery_type_id or winning_numbers"}, status=400)
+
+        lottery_type = lg_lottery_type.objects.get(id=lottery_type_id)
+
+        algorithms = self.evaluate_algorithms(lottery_type, winning_numbers)
+
+        return JsonResponse({"ranked_algorithms": algorithms})
+
+    def evaluate_algorithms(self, lottery_type, winning_numbers):
+        algorithms = []
+        processors_dir = "processors"
+
+        for filename in os.listdir(processors_dir):
+            if filename.endswith(".py") and not filename.startswith("__"):
+                module_name = filename[:-3]
+                print(f"Calling get_numbers function in {module_name} module...")
+                module = importlib.import_module(f"processors.{module_name}")
+
+
+                if hasattr(module, 'get_numbers'):
+                    try:
+                        predicted_numbers = module.get_numbers(lottery_type)
+                        score = self.calculate_score(predicted_numbers, winning_numbers)
+
+                        # Mentjük az előrejelzést a lg_prediction_history-ba
+                        lg_prediction_history.objects.create(
+                            algorithm_name=module_name,
+                            predicted_numbers=predicted_numbers,
+                            actual_numbers=winning_numbers,
+                            score=score
+                        )
+
+                        # Generált lottószámok mentése
+                        self.save_generated_lottery_draw(lottery_type, predicted_numbers, module_name)
+
+                        # Frissítjük az algoritmus pontszámát
+                        self.update_algorithm_score(module_name)
+
+                        current_score = lg_algorithm_score.objects.get(algorithm_name=module_name).current_score
+                        algorithms.append({"name": module_name, "score": current_score})
+                    except Exception as e:
+                        print(f"Error calling get_numbers function in {module_name} module: {e}")
+
+        # Rendezzük az algoritmusokat pontszám szerint csökkenő sorrendbe
+        ranked_algorithms = sorted(algorithms, key=lambda x: x['score'], reverse=True)
+
+        return ranked_algorithms
+
+    def calculate_score(self, predicted_numbers, winning_numbers):
+        correct_numbers = set(predicted_numbers) & set(winning_numbers)
+        base_score = len(correct_numbers) * 10  # Minden helyes találat 10 pontot ér
+
+        # Bónusz pontok a helyes pozíciókért
+        position_bonus = sum(5 for i, num in enumerate(predicted_numbers) if num == winning_numbers[i])
+
+        return base_score + position_bonus
+
+    def update_algorithm_score(self, algorithm_name):
+        new_score = self.calculate_moving_average_score(algorithm_name)
+        algorithm_score, created = lg_algorithm_score.objects.get_or_create(algorithm_name=algorithm_name)
+        algorithm_score.current_score = new_score
+        algorithm_score.total_predictions += 1
+        algorithm_score.save()
+
+    def calculate_moving_average_score(self, algorithm_name, window_size=10):
+        latest_predictions = lg_prediction_history.objects.filter(algorithm_name=algorithm_name).order_by(
+            '-prediction_date')[:window_size]
+        if not latest_predictions:
+            return 0.0
+
+        total_score = sum(pred.score for pred in latest_predictions)
+        return total_score / len(latest_predictions)
+
+    def save_generated_lottery_draw(self, lottery_type, predicted_numbers, algorithm_name):
+        current_date = timezone.now()
+        lg_generated_lottery_draw.objects.create(
+            lottery_type=lottery_type,
+            lottery_type_number=predicted_numbers,
+            lottery_type_number_year=current_date.year,
+            lottery_type_number_week=current_date.isocalendar()[1],
+            sum=sum(predicted_numbers),
+            average=statistics.mean(predicted_numbers),
+            median=statistics.median(predicted_numbers),
+            mode=statistics.mode(predicted_numbers),
+            standard_deviation=statistics.stdev(predicted_numbers),
+            lottery_algorithm=algorithm_name
+        )
 
 

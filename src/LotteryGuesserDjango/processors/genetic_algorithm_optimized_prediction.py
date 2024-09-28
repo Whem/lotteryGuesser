@@ -7,7 +7,7 @@ def get_numbers(lottery_type_instance):
     def evaluate(individual):
         # Define evaluation function based on historical data
         # This function should return a fitness score for an individual set of lottery numbers
-        pass
+        return (random.uniform(0, 1),)
 
     creator.create("FitnessMax", base.Fitness, weights=(1.0,))
     creator.create("Individual", list, fitness=creator.FitnessMax)

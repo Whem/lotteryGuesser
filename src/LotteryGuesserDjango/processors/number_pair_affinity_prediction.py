@@ -1,23 +1,41 @@
-from collections import Counter
+from collections import defaultdict
+import random
+from typing import List, Dict, Tuple
+from algorithms.models import lg_lottery_winner_number, lg_lottery_type
 
-from algorithms.models import lg_lottery_winner_number
+
+def get_numbers(lottery_type_instance: lg_lottery_type) -> List[int]:
+    past_draws = lg_lottery_winner_number.objects.filter(lottery_type=lottery_type_instance).values_list(
+        'lottery_type_number', flat=True)
+
+    pair_affinities = calculate_pair_affinities(past_draws)
+    predicted_numbers = generate_numbers_from_affinities(pair_affinities, lottery_type_instance)
+
+    return sorted(set(predicted_numbers))[:lottery_type_instance.pieces_of_draw_numbers]
 
 
-def get_numbers(lottery_type_instance):
-    past_draws = lg_lottery_winner_number.objects.filter(lottery_type=lottery_type_instance).values_list('lottery_type_number', flat=True)
-    pair_affinity = Counter()
-
+def calculate_pair_affinities(past_draws: List[List[int]]) -> Dict[Tuple[int, int], int]:
+    pair_counts = defaultdict(int)
     for draw in past_draws:
-        sorted_draw = sorted(draw)
-        for i in range(len(sorted_draw) - 1):
-            for j in range(i + 1, len(sorted_draw)):
-                pair_affinity[(sorted_draw[i], sorted_draw[j])] += 1
+        for i in range(len(draw)):
+            for j in range(i + 1, len(draw)):
+                pair = tuple(sorted([draw[i], draw[j]]))
+                pair_counts[pair] += 1
+    return pair_counts
 
-    most_common_pairs = [pair for pair, _ in pair_affinity.most_common()]
-    predicted_numbers = set()
-    for pair in most_common_pairs:
-        predicted_numbers.update(pair)
-        if len(predicted_numbers) >= lottery_type_instance.pieces_of_draw_numbers:
+
+def generate_numbers_from_affinities(pair_affinities: Dict[Tuple[int, int], int],
+                                     lottery_type_instance: lg_lottery_type) -> List[int]:
+    predicted_numbers = []
+    sorted_pairs = sorted(pair_affinities.items(), key=lambda x: x[1], reverse=True)
+
+    for pair, _ in sorted_pairs:
+        predicted_numbers.extend(pair)
+        if len(set(predicted_numbers)) >= lottery_type_instance.pieces_of_draw_numbers:
             break
 
-    return sorted(predicted_numbers)[:lottery_type_instance.pieces_of_draw_numbers]
+    while len(set(predicted_numbers)) < lottery_type_instance.pieces_of_draw_numbers:
+        new_number = random.randint(lottery_type_instance.min_number, lottery_type_instance.max_number)
+        predicted_numbers.append(new_number)
+
+    return predicted_numbers
