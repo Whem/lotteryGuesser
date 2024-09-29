@@ -6234,3 +6234,31 @@ CmdStan args: ['C:\\Users\\birku\\PycharmProjects\\GlobalDjango\\venv\\Lib\\site
 Chain [1] start processing
 Chain [1] done processing
 Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Unauthorized: /lottery_handler/lottery_handle/lottery_numbers
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+CACHEDIR=C:\Users\szabi\.matplotlib
+font search path [WindowsPath('C:/Users/szabi/AppData/Local/Programs/Python/Python310/lib/site-packages/matplotlib/mpl-data/fonts/ttf'), WindowsPath('C:/Users/szabi/AppData/Local/Programs/Python/Python310/lib/site-packages/matplotlib/mpl-data/fonts/afm'), WindowsPath('C:/Users/szabi/AppData/Local/Programs/Python/Python310/lib/site-packages/matplotlib/mpl-data/fonts/pdfcorefonts')]
+generated new fontManager
+Importing plotly failed. Interactive plots will not work.
+cmd: where.exe tbb.dll
+cwd: None
+Adding TBB (C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\prophet\stan_model\cmdstan-2.33.1\stan\lib\stan_math\lib\tbb) to PATH
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpffh4wb0r\16wz0l35.json
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpffh4wb0r\ml1dl5df.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\szabi\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=86461', 'data', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpffh4wb0r\\16wz0l35.json', 'init=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpffh4wb0r\\ml1dl5df.json', 'output', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpffh4wb0r\\prophet_modelwx5d7ils\\prophet_model-20240929135850.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
