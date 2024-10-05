@@ -49,3 +49,13 @@ pandas
 prophet
 statsmodels
 xgboost
+PyWavelets
+EMD-signal
+pyssa
+pyunicorn
+gudhi
+pyts
+gplearn
+networkx
+mlxtend
+lightgbm

@@ -6262,3 +6262,764 @@ running CmdStan, num_threads: None
 CmdStan args: ['C:\\Users\\szabi\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=86461', 'data', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpffh4wb0r\\16wz0l35.json', 'init=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpffh4wb0r\\ml1dl5df.json', 'output', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpffh4wb0r\\prophet_modelwx5d7ils\\prophet_model-20240929135850.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
 Chain [1] start processing
 Chain [1] done processing
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/otos.html HTTP/1.1" 200 718261
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Using proactor: IocpProactor
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\processors\complex_network_lottery_predictor.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\processors\complex_network_lottery_predictor.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\processors\complex_network_lottery_predictor.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Using proactor: IocpProactor
+Watching for file changes with StatReloader
+Using proactor: IocpProactor
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\processors\quantum_annealing_topological_predictor.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\processors\quantum_neuroplasticity_resonance_predictor.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\processors\geomagnetic_ionosphere_perturbation_predictor.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\processors\geomagnetic_ionosphere_perturbation_predictor.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+CACHEDIR=C:\Users\birku\.matplotlib
+Using fontManager instance from C:\Users\birku\.matplotlib\fontlist-v390.json
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+Energy ratio -- PASSED
+IMF -- 11
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+FINISHED -- RANGE
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+CACHEDIR=C:\Users\birku\.matplotlib
+Using fontManager instance from C:\Users\birku\.matplotlib\fontlist-v390.json
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+Energy ratio -- PASSED
+IMF -- 11
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+FINISHED -- RANGE
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Importing plotly failed. Interactive plots will not work.
+cmd: where.exe tbb.dll
+cwd: None
+Adding TBB (C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\prophet\stan_model\cmdstan-2.33.1\stan\lib\stan_math\lib\tbb) to PATH
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp8fvl99qp\t0dzbj9a.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp8fvl99qp\6chquovb.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\PycharmProjects\\GlobalDjango\\venv\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=42617', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp8fvl99qp\\t0dzbj9a.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp8fvl99qp\\6chquovb.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp8fvl99qp\\prophet_modellureggqx\\prophet_model-20241005170519.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/otos.html HTTP/1.1" 200 718261
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+Energy ratio -- PASSED
+IMF -- 11
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+FINISHED -- RANGE
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp8fvl99qp\9sydmju0.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp8fvl99qp\tkfv9bwd.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\PycharmProjects\\GlobalDjango\\venv\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=81424', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp8fvl99qp\\9sydmju0.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp8fvl99qp\\tkfv9bwd.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp8fvl99qp\\prophet_modelkdwu79j7\\prophet_model-20241005171854.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+CACHEDIR=C:\Users\birku\.matplotlib
+Using fontManager instance from C:\Users\birku\.matplotlib\fontlist-v390.json
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+CACHEDIR=C:\Users\birku\.matplotlib
+Using fontManager instance from C:\Users\birku\.matplotlib\fontlist-v390.json
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+CACHEDIR=C:\Users\birku\.matplotlib
+Using fontManager instance from C:\Users\birku\.matplotlib\fontlist-v390.json
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+CACHEDIR=C:\Users\birku\.matplotlib
+Using fontManager instance from C:\Users\birku\.matplotlib\fontlist-v390.json
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\processors\som_prediction.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+GPR modell tréning kezdete.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+CACHEDIR=C:\Users\birku\.matplotlib
+Using fontManager instance from C:\Users\birku\.matplotlib\fontlist-v390.json
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+Energy ratio -- PASSED
+IMF -- 11
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+FINISHED -- RANGE
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Importing plotly failed. Interactive plots will not work.
+cmd: where.exe tbb.dll
+cwd: None
+Adding TBB (C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\prophet\stan_model\cmdstan-2.33.1\stan\lib\stan_math\lib\tbb) to PATH
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp7pg5cw4m\_8iix9px.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp7pg5cw4m\e629r8uv.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\PycharmProjects\\GlobalDjango\\venv\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=31149', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp7pg5cw4m\\_8iix9px.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp7pg5cw4m\\e629r8uv.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp7pg5cw4m\\prophet_model3ndnrezq\\prophet_model-20241005184227.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
