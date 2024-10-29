@@ -31,6 +31,8 @@ def get_numbers(lottery_type_instance, num_iterations=100, random_state=42):
         if isinstance(draw, list) and len(draw) == total_numbers
     ]
 
+
+
     if len(past_draws) < 20:
         # Ha nincs elég adat, visszaadjuk a legkisebb 'total_numbers' számot
         selected_numbers = list(range(min_num, min_num + total_numbers))

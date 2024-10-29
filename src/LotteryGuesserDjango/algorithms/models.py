@@ -23,6 +23,10 @@ class lg_lottery_type(models.Model):
     pieces_of_draw_numbers = models.IntegerField(null=True)
     draw_day = models.CharField(max_length=50, choices=draw_day_choices, null=True)
     draw_time = models.TimeField(null=True)
+    has_additional_numbers = models.BooleanField(default=False)
+    additional_min_number = models.IntegerField(null=True)
+    additional_max_number = models.IntegerField(null=True)
+    additional_numbers_count = models.IntegerField(null=True)
 
     class Meta:
         db_table = "lg_lottery_type"
@@ -33,6 +37,7 @@ class lg_lottery_winner_number(models.Model):
     lottery_type_number = models.JSONField()
     lottery_type_number_year = models.IntegerField(null=True)
     lottery_type_number_week = models.IntegerField(null=True)
+    additional_numbers = models.JSONField(null=True)
     sum = models.IntegerField(null=True)
     average = models.IntegerField(null=True)
     median = models.IntegerField(null=True)

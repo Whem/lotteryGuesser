@@ -5,14 +5,24 @@ from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 
 from LotteryGuesserV2.pagination import CustomPagination
-from algorithms.models import lg_lottery_type, lg_lottery_winner_number
-
+from algorithms.models import *
+from lottery_handler.models import *
 from lottery_handler.serializers import *
 from lottery_handler.signals import list_processor_files, call_get_numbers_dynamically
 import json
 import importlib
 import os
+import random
+from typing import List, Set
+from collections import Counter
+from itertools import combinations
+import statistics
+import numpy as np
+import time
 
+import traceback
+from contextlib import contextmanager
+from django.utils import timezone
 class LotteryNumbersApiView(APIView, CustomPagination):
     permission_classes = (AllowAny,)
     pagination_class = CustomPagination
@@ -114,7 +124,8 @@ class CalculateLotteryNumbersView(APIView):
 
         lottery_type = lg_lottery_type.objects.get(id=lottery_type_id)
 
-        algorithms = self.evaluate_algorithms(lottery_type, winning_numbers)
+        for x in range(6):
+            algorithms = self.evaluate_algorithms(lottery_type, winning_numbers)
 
         return JsonResponse({"ranked_algorithms": algorithms})
 
@@ -128,13 +139,21 @@ class CalculateLotteryNumbersView(APIView):
                 print(f"Calling get_numbers function in {module_name} module...")
                 module = importlib.import_module(f"processors.{module_name}")
 
-
                 if hasattr(module, 'get_numbers'):
                     try:
+                        # Start performance measurement
+                        start_time = time.time()
+
+                        # Execute prediction
                         predicted_numbers = module.get_numbers(lottery_type)
+
+                        # End performance measurement
+                        execution_time = (time.time() - start_time) * 1000  # Convert to milliseconds
+
+                        # Calculate score
                         score = self.calculate_score(predicted_numbers, winning_numbers)
 
-                        # Mentjük az előrejelzést a lg_prediction_history-ba
+                        # Save prediction history
                         lg_prediction_history.objects.create(
                             algorithm_name=module_name,
                             predicted_numbers=predicted_numbers,
@@ -142,16 +161,62 @@ class CalculateLotteryNumbersView(APIView):
                             score=score
                         )
 
-                        # Generált lottószámok mentése
+                        # Save performance history
+                        lg_performance_history.objects.create(
+                            algorithm_name=module_name,
+                            execution_time=execution_time,
+                            success=True
+                        )
+
+                        # Update performance metrics
+                        performance, created = lg_algorithm_performance.objects.get_or_create(
+                            algorithm_name=module_name,
+                            defaults={
+                                'average_execution_time': execution_time,
+                                'fastest_execution': execution_time,
+                                'slowest_execution': execution_time,
+                                'total_executions': 1,
+                                'last_execution_time': execution_time
+                            }
+                        )
+
+                        if not created:
+                            # Update average execution time
+                            total_time = (
+                                                     performance.average_execution_time * performance.total_executions) + execution_time
+                            performance.total_executions += 1
+                            performance.average_execution_time = total_time / performance.total_executions
+
+                            # Update fastest/slowest times
+                            performance.fastest_execution = min(performance.fastest_execution, execution_time)
+                            performance.slowest_execution = max(performance.slowest_execution, execution_time)
+
+                            # Update last execution time
+                            performance.last_execution_time = execution_time
+                            performance.save()
+
+                        # Save generated lottery draw
                         self.save_generated_lottery_draw(lottery_type, predicted_numbers, module_name)
 
-                        # Frissítjük az algoritmus pontszámát
+                        # Update algorithm score
                         self.update_algorithm_score(module_name)
 
                         current_score = lg_algorithm_score.objects.get(algorithm_name=module_name).current_score
-                        algorithms.append({"name": module_name, "score": current_score})
+                        algorithms.append({
+                            "name": module_name,
+                            "score": current_score,
+                            "execution_time": execution_time
+                        })
+
                     except Exception as e:
                         print(f"Error calling get_numbers function in {module_name} module: {e}")
+                        # Log error in performance history
+                        lg_performance_history.objects.create(
+                            algorithm_name=module_name,
+                            execution_time=0,
+                            success=False,
+                            error_message=str(e)
+                        )
 
         # Rendezzük az algoritmusokat pontszám szerint csökkenő sorrendbe
         ranked_algorithms = sorted(algorithms, key=lambda x: x['score'], reverse=True)

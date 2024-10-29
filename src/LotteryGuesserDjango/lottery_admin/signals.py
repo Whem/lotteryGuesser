@@ -24,6 +24,7 @@ def download_numbers_from_internet(lottery_item):
             week = int(columns[1].text.strip())
             try:
                 numbers = [int(columns[i].text) for i in range(lottery_item.skip_items, len(columns))[:lottery_item.pieces_of_draw_numbers]]
+                additional_numbers = [int(columns[i].text) for i in range(lottery_item.skip_items, len(columns))[lottery_item.pieces_of_draw_numbers:]]
             except Exception as e:
                 print(f"Error converting numbers to integers: {e}")
 
@@ -51,8 +52,8 @@ def download_numbers_from_internet(lottery_item):
                 average=average_of_numbers,
                 median=median_of_numbers,
                 mode=mode_of_numbers,
-                standard_deviation=standard_deviation_of_numbers
-
+                standard_deviation=standard_deviation_of_numbers,
+                additional_numbers=additional_numbers if lottery_item.has_additional_numbers else None
             )
             winner_number.save()
             lottery_collection.append(winner_number)

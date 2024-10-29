@@ -45,3 +45,30 @@ class lg_prediction_history(models.Model):
             models.Index(fields=['algorithm_name', 'prediction_date']),
         ]
         db_table = "lg_prediction_history"
+
+
+class lg_algorithm_performance(models.Model):
+    """Overall performance metrics for each algorithm"""
+    algorithm_name = models.CharField(max_length=100, unique=True)
+    average_execution_time = models.FloatField(default=0.0)  # milliseconds
+    total_executions = models.IntegerField(default=0)
+    fastest_execution = models.FloatField(default=0.0)  # milliseconds
+    slowest_execution = models.FloatField(default=0.0)  # milliseconds
+    last_execution_time = models.FloatField(default=0.0)  # milliseconds
+    last_updated = models.DateTimeField(auto_now=True)
+    memory_usage = models.FloatField(default=0.0)  # MB
+
+    class Meta:
+        db_table = "lg_algorithm_performance"
+
+
+class lg_performance_history(models.Model):
+    """Historical performance metrics for each algorithm execution"""
+    algorithm_name = models.CharField(max_length=100)
+    execution_date = models.DateTimeField(default=timezone.now)
+    execution_time = models.FloatField()  # milliseconds
+    success = models.BooleanField(default=True)
+    error_message = models.TextField(null=True, blank=True)
+
+    class Meta:
+        db_table = "lg_performance_history"
