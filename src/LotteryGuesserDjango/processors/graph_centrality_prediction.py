@@ -1,108 +1,169 @@
 # graph_centrality_prediction.py
-
 import numpy as np
 import networkx as nx
 from collections import Counter
-from algorithms.models import lg_lottery_winner_number
+from typing import List, Tuple, Dict
+from algorithms.models import lg_lottery_winner_number, lg_lottery_type
 
-def get_numbers(lottery_type_instance):
-    """
-    Generál lottószámokat Graph Centrality alapú elemzéssel.
 
-    Paraméterek:
-    - lottery_type_instance: Az lg_lottery_type modell egy példánya.
+def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
+    """Graph centrality predictor for combined lottery types."""
+    main_numbers = generate_number_set(
+        lottery_type_instance,
+        lottery_type_instance.min_number,
+        lottery_type_instance.max_number,
+        lottery_type_instance.pieces_of_draw_numbers,
+        True
+    )
 
-    Visszatérési érték:
-    - Egy rendezett lista a megjósolt lottószámokról.
-    """
-    min_num = int(lottery_type_instance.min_number)
-    max_num = int(lottery_type_instance.max_number)
-    total_numbers = int(lottery_type_instance.pieces_of_draw_numbers)
+    additional_numbers = []
+    if lottery_type_instance.has_additional_numbers:
+        additional_numbers = generate_number_set(
+            lottery_type_instance,
+            lottery_type_instance.additional_min_number,
+            lottery_type_instance.additional_max_number,
+            lottery_type_instance.additional_numbers_count,
+            False
+        )
 
-    # Lekérjük a múltbeli nyerőszámokat
-    past_draws_queryset = lg_lottery_winner_number.objects.filter(
-        lottery_type=lottery_type_instance
-    ).order_by('id').values_list('lottery_type_number', flat=True)
+    return main_numbers, additional_numbers
 
-    past_draws = [
-        [int(num) for num in draw] for draw in past_draws_queryset
-        if isinstance(draw, list) and len(draw) == total_numbers
-    ]
+
+def generate_number_set(
+        lottery_type_instance: lg_lottery_type,
+        min_num: int,
+        max_num: int,
+        required_numbers: int,
+        is_main: bool
+) -> List[int]:
+    """Generate numbers using graph centrality analysis."""
+    past_draws = get_historical_data(lottery_type_instance, is_main)
 
     if len(past_draws) < 20:
-        # Ha nincs elég adat, visszaadjuk a legkisebb 'total_numbers' számot
-        selected_numbers = list(range(min_num, min_num + total_numbers))
-        return selected_numbers
+        return list(range(min_num, min_num + required_numbers))
 
-    # Transition Graph Létrehozása
+    # Build transition graph
+    G = build_transition_graph(past_draws, min_num, max_num)
+
+    # Get predicted numbers
+    predicted_numbers = analyze_graph_centrality(G, required_numbers)
+
+    # Ensure valid numbers
+    predicted_numbers = validate_numbers(
+        predicted_numbers,
+        past_draws,
+        min_num,
+        max_num,
+        required_numbers
+    )
+
+    return sorted(predicted_numbers)
+
+
+def get_historical_data(lottery_type_instance: lg_lottery_type, is_main: bool) -> List[List[int]]:
+    """Get historical lottery data."""
+    past_draws = list(lg_lottery_winner_number.objects.filter(
+        lottery_type=lottery_type_instance
+    ).order_by('id'))
+
+    if is_main:
+        return [draw.lottery_type_number for draw in past_draws
+                if isinstance(draw.lottery_type_number, list)]
+    else:
+        return [draw.additional_numbers for draw in past_draws
+                if hasattr(draw, 'additional_numbers') and
+                isinstance(draw.additional_numbers, list)]
+
+
+def build_transition_graph(past_draws: List[List[int]], min_num: int, max_num: int) -> nx.DiGraph:
+    """Build transition graph from historical data."""
     G = nx.DiGraph()
     G.add_nodes_from(range(min_num, max_num + 1))
 
     for draw in past_draws:
         for i in range(len(draw) - 1):
-            src = draw[i]
-            dest = draw[i + 1]
+            src, dest = draw[i], draw[i + 1]
             if G.has_edge(src, dest):
                 G[src][dest]['weight'] += 1
             else:
                 G.add_edge(src, dest, weight=1)
 
-    # Ellenőrizzük, hogy a gráf erősen kapcsolt-e
+    return G
+
+
+def analyze_graph_centrality(G: nx.DiGraph, required_numbers: int) -> List[int]:
+    """Analyze graph centrality measures."""
+    # Check connectivity
     if not nx.is_strongly_connected(G):
-        # Ha nem, válasszuk a legnagyobb erősen kapcsolt komponens
         largest_cc = max(nx.strongly_connected_components(G), key=len)
         G_sub = G.subgraph(largest_cc).copy()
     else:
         G_sub = G
 
-    # Ellenőrizzük, hogy a kiválasztott subgraph megfelelő méretű-e
     if len(G_sub) < 2:
-        # Ha túl kicsi, használjuk csak a PageRank-et
-        pagerank = nx.pagerank(G, weight='weight')
-        sorted_numbers = sorted(pagerank.items(), key=lambda x: x[1], reverse=True)
-        predicted_numbers = [num for num, rank in sorted_numbers[:total_numbers]]
-    else:
-        # Központi Mérőszámok Számítása
-        try:
-            eigen_centrality = nx.eigenvector_centrality_numpy(G_sub, weight='weight')
-        except nx.PowerIterationFailedConvergence:
-            # Növeljük az iterációk számát és csökkentsük a toleranciát
-            eigen_centrality = nx.eigenvector_centrality(
-                G_sub, weight='weight', max_iter=1000, tol=1e-06
-            )
+        return analyze_pagerank_only(G, required_numbers)
 
-        # PageRank Számítása
-        pagerank = nx.pagerank(G, weight='weight')
+    return analyze_combined_centrality(G_sub, G, required_numbers)
 
-        # Kombinált Központi Mérőszámok
-        combined_centrality = {}
-        for node in G_sub.nodes():
-            eigen_norm = eigen_centrality.get(node, 0)
-            pagerank_norm = pagerank.get(node, 0)
-            combined_centrality[node] = 0.5 * eigen_norm + 0.5 * pagerank_norm
 
-        # Számok Rangsorolása a Kombinált Centrality alapján
-        sorted_numbers = sorted(combined_centrality.items(), key=lambda x: x[1], reverse=True)
-        predicted_numbers = [num for num, centrality in sorted_numbers[:total_numbers]]
+def analyze_pagerank_only(G: nx.DiGraph, required_numbers: int) -> List[int]:
+    """Analyze using PageRank when graph is too small."""
+    pagerank = nx.pagerank(G, weight='weight')
+    sorted_numbers = sorted(pagerank.items(), key=lambda x: x[1], reverse=True)
+    return [num for num, rank in sorted_numbers[:required_numbers]]
 
-    # Biztosítjuk, hogy a számok egyediek és az érvényes tartományba esnek
-    predicted_numbers = [
+
+def analyze_combined_centrality(G_sub: nx.DiGraph, G: nx.DiGraph, required_numbers: int) -> List[int]:
+    """Analyze using combined centrality measures."""
+    try:
+        eigen_centrality = nx.eigenvector_centrality_numpy(G_sub, weight='weight')
+    except nx.PowerIterationFailedConvergence:
+        eigen_centrality = nx.eigenvector_centrality(
+            G_sub,
+            weight='weight',
+            max_iter=1000,
+            tol=1e-06
+        )
+
+    pagerank = nx.pagerank(G, weight='weight')
+
+    combined_centrality = {}
+    for node in G_sub.nodes():
+        eigen_norm = eigen_centrality.get(node, 0)
+        pagerank_norm = pagerank.get(node, 0)
+        combined_centrality[node] = 0.5 * eigen_norm + 0.5 * pagerank_norm
+
+    sorted_numbers = sorted(
+        combined_centrality.items(),
+        key=lambda x: x[1],
+        reverse=True
+    )
+    return [num for num, _ in sorted_numbers[:required_numbers]]
+
+
+def validate_numbers(
+        predicted_numbers: List[int],
+        past_draws: List[List[int]],
+        min_num: int,
+        max_num: int,
+        required_numbers: int
+) -> List[int]:
+    """Validate and fill missing numbers."""
+    valid_numbers = [
         int(num) for num in predicted_numbers
         if min_num <= num <= max_num
     ]
 
-    # Ha kevesebb számunk van, mint szükséges, kiegészítjük a leggyakoribb számokkal
-    if len(predicted_numbers) < total_numbers:
-        all_numbers = [number for draw in past_draws for number in draw]
+    if len(valid_numbers) < required_numbers:
+        all_numbers = [num for draw in past_draws for num in draw]
         number_counts = Counter(all_numbers)
-        sorted_common_numbers = [num for num, count in number_counts.most_common() if num not in predicted_numbers]
+        common_numbers = [
+            num for num, _ in number_counts.most_common()
+            if num not in valid_numbers
+        ]
 
-        for num in sorted_common_numbers:
-            predicted_numbers.append(num)
-            if len(predicted_numbers) == total_numbers:
-                break
+        valid_numbers.extend(
+            common_numbers[:required_numbers - len(valid_numbers)]
+        )
 
-    # Végső rendezés
-    predicted_numbers = predicted_numbers[:total_numbers]
-    predicted_numbers.sort()
-    return predicted_numbers
+    return valid_numbers[:required_numbers]

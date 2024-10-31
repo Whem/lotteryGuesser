@@ -1,90 +1,202 @@
 # wave_signal_pattern_prediction.py
 # Advanced signal processing and wave analysis for lottery prediction
-# Combines digital signal processing, wavelet analysis and frequency domain patterns
+# Combines digital signal processing, wavelet analysis, and frequency domain patterns
 
-import numpy as np
+import random
+import math
 from typing import List, Set, Dict, Tuple
-from collections import Counter, defaultdict
-from algorithms.models import lg_lottery_winner_number, lg_lottery_type
-import statistics
+from collections import defaultdict
+import numpy as np
 from scipy import signal
 from scipy.fft import fft, ifft
-import random
-from scipy.signal import find_peaks
-import math
+from scipy.signal import find_peaks, savgol_filter
+from algorithms.models import lg_lottery_winner_number, lg_lottery_type
+import statistics
 
 
-def get_numbers(lottery_type_instance: lg_lottery_type) -> List[int]:
+def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
     """
-    Wave and signal based pattern prediction algorithm.
-    Utilizes signal processing techniques to identify patterns in number sequences.
+    Generates lottery numbers based on wave and signal pattern prediction.
+
+    This function generates both main numbers and additional numbers (if applicable) by analyzing
+    historical lottery draws using advanced signal processing techniques, including wave pattern analysis,
+    frequency domain analysis, and signal peak detection. It prioritizes numbers based on identified
+    patterns and fills any remaining slots with weighted random selections.
+
+    Parameters:
+    - lottery_type_instance: An instance of lg_lottery_type model.
+
+    Returns:
+    - A tuple containing two lists:
+        - main_numbers: A sorted list of predicted main lottery numbers.
+        - additional_numbers: A sorted list of predicted additional lottery numbers (if applicable).
     """
-    # Get historical data for analysis
-    past_draws = list(lg_lottery_winner_number.objects.filter(
-        lottery_type=lottery_type_instance
-    ).values_list('lottery_type_number', flat=True).order_by('-id')[:200])
-
-    past_draws = [draw for draw in past_draws if isinstance(draw, list)]
-
-    if not past_draws:
-        return generate_random_numbers(lottery_type_instance)
-
-    required_numbers = lottery_type_instance.pieces_of_draw_numbers
-    candidates = set()
-
-    # 1. Wave Pattern Analysis
-    wave_numbers = analyze_wave_patterns(
-        past_draws,
-        lottery_type_instance.min_number,
-        lottery_type_instance.max_number
-    )
-    candidates.update(wave_numbers[:required_numbers // 3])
-
-    # 2. Frequency Domain Analysis
-    frequency_numbers = analyze_frequency_domain(
-        past_draws,
-        lottery_type_instance.min_number,
-        lottery_type_instance.max_number
-    )
-    candidates.update(frequency_numbers[:required_numbers // 3])
-
-    # 3. Signal Peak Detection
-    peak_numbers = detect_signal_peaks(
-        past_draws,
-        lottery_type_instance.min_number,
-        lottery_type_instance.max_number
-    )
-    candidates.update(peak_numbers[:required_numbers // 3])
-
-    # Fill remaining slots using wave-based probability
-    while len(candidates) < required_numbers:
-        weights = calculate_wave_probabilities(
-            past_draws,
-            lottery_type_instance.min_number,
-            lottery_type_instance.max_number,
-            candidates
+    try:
+        # Generate main numbers
+        main_numbers = generate_numbers(
+            lottery_type_instance=lottery_type_instance,
+            number_field='lottery_type_number',
+            min_num=int(lottery_type_instance.min_number),
+            max_num=int(lottery_type_instance.max_number),
+            total_numbers=int(lottery_type_instance.pieces_of_draw_numbers)
         )
 
-        available_numbers = set(range(
-            lottery_type_instance.min_number,
-            lottery_type_instance.max_number + 1
-        )) - candidates
+        additional_numbers = []
+        if lottery_type_instance.has_additional_numbers:
+            # Generate additional numbers
+            additional_numbers = generate_numbers(
+                lottery_type_instance=lottery_type_instance,
+                number_field='additional_numbers',
+                min_num=int(lottery_type_instance.additional_min_number),
+                max_num=int(lottery_type_instance.additional_max_number),
+                total_numbers=int(lottery_type_instance.additional_numbers_count)
+            )
 
-        if available_numbers:
-            number_weights = [weights.get(num, 1.0) for num in available_numbers]
-            selected = random.choices(list(available_numbers), weights=number_weights, k=1)[0]
-            candidates.add(selected)
+        return main_numbers, additional_numbers
 
-    return sorted(list(candidates))[:required_numbers]
+    except Exception as e:
+        # Log the error (consider using a proper logging system)
+        print(f"Error in get_numbers: {str(e)}")
+        # Fall back to random number generation
+        min_num = int(lottery_type_instance.min_number)
+        max_num = int(lottery_type_instance.max_number)
+        total_numbers = int(lottery_type_instance.pieces_of_draw_numbers)
+        main_numbers = generate_random_numbers(min_num, max_num, total_numbers)
+
+        additional_numbers = []
+        if lottery_type_instance.has_additional_numbers:
+            additional_min_num = int(lottery_type_instance.additional_min_number)
+            additional_max_num = int(lottery_type_instance.additional_max_number)
+            additional_total_numbers = int(lottery_type_instance.additional_numbers_count)
+            additional_numbers = generate_random_numbers(additional_min_num, additional_max_num, additional_total_numbers)
+
+        return main_numbers, additional_numbers
+
+
+def generate_numbers(
+    lottery_type_instance: lg_lottery_type,
+    number_field: str,
+    min_num: int,
+    max_num: int,
+    total_numbers: int
+) -> List[int]:
+    """
+    Generates a list of lottery numbers using wave and signal pattern prediction.
+
+    This helper function encapsulates the logic for generating numbers, allowing reuse for both
+    main and additional numbers. It performs the following steps:
+    1. Retrieves and preprocesses historical lottery data.
+    2. Analyzes wave patterns to identify potential number candidates.
+    3. Analyzes the frequency domain to identify dominant number trends.
+    4. Detects significant signal peaks to identify number patterns.
+    5. Fills any remaining slots with weighted random selections based on wave-based probabilities.
+
+    Parameters:
+    - lottery_type_instance: The lottery type instance.
+    - number_field: The field name in lg_lottery_winner_number to retrieve past numbers
+                    ('lottery_type_number' or 'additional_numbers').
+    - min_num: Minimum number in the lottery range.
+    - max_num: Maximum number in the lottery range.
+    - total_numbers: Number of numbers to generate.
+
+    Returns:
+    - A sorted list of predicted lottery numbers.
+    """
+    try:
+        # Retrieve past winning numbers
+        past_draws_queryset = lg_lottery_winner_number.objects.filter(
+            lottery_type=lottery_type_instance
+        ).order_by('-id')[:200].values_list(number_field, flat=True)
+
+        past_draws = [
+            draw for draw in past_draws_queryset
+            if isinstance(draw, list)
+        ]
+
+        if not past_draws:
+            # If no past draws are available, generate random numbers
+            return generate_random_numbers(min_num, max_num, total_numbers)
+
+        required_numbers = total_numbers
+        candidates = set()
+
+        # 1. Wave Pattern Analysis
+        wave_numbers = analyze_wave_patterns(
+            past_draws=past_draws,
+            min_num=min_num,
+            max_num=max_num
+        )
+        candidates.update(wave_numbers[:required_numbers // 3])
+
+        # 2. Frequency Domain Analysis
+        frequency_numbers = analyze_frequency_domain(
+            past_draws=past_draws,
+            min_num=min_num,
+            max_num=max_num
+        )
+        candidates.update(frequency_numbers[:required_numbers // 3])
+
+        # 3. Signal Peak Detection
+        peak_numbers = detect_signal_peaks(
+            past_draws=past_draws,
+            min_num=min_num,
+            max_num=max_num
+        )
+        candidates.update(peak_numbers[:required_numbers // 3])
+
+        # 4. Fill remaining slots using wave-based probability
+        while len(candidates) < required_numbers:
+            weights = calculate_wave_probabilities(
+                past_draws=past_draws,
+                min_num=min_num,
+                max_num=max_num,
+                excluded_numbers=candidates
+            )
+
+            available_numbers = set(range(min_num, max_num + 1)) - candidates
+
+            if available_numbers:
+                number_weights = [weights.get(num, 1.0) for num in available_numbers]
+                selected = random.choices(list(available_numbers), weights=number_weights, k=1)[0]
+                candidates.add(selected)
+            else:
+                break  # No more available numbers to select
+
+        # Ensure uniqueness and correct count
+        selected_numbers = sorted(list(candidates))[:required_numbers]
+
+        # If still not enough, fill with random numbers
+        if len(selected_numbers) < required_numbers:
+            remaining_slots = required_numbers - len(selected_numbers)
+            remaining_numbers = list(set(range(min_num, max_num + 1)) - set(selected_numbers))
+            selected_numbers.extend(random.sample(remaining_numbers, remaining_slots))
+
+        return sorted(selected_numbers)
+
+    except Exception as e:
+        # Log the error (consider using a proper logging system)
+        print(f"Error in generate_numbers: {str(e)}")
+        # Fall back to random number generation
+        return generate_random_numbers(min_num, max_num, total_numbers)
 
 
 def analyze_wave_patterns(past_draws: List[List[int]], min_num: int, max_num: int) -> List[int]:
-    """Analyze wave patterns in the number sequence."""
+    """
+    Analyze wave patterns in the number sequences to identify potential number candidates.
+
+    Parameters:
+    - past_draws: A list of past lottery number draws.
+    - min_num: Minimum number in the lottery range.
+    - max_num: Maximum number in the lottery range.
+
+    Returns:
+    - A list of numbers sorted by their wave pattern scores in descending order.
+    """
     wave_scores = defaultdict(float)
 
-    # Convert draws to continuous signals
+    # Convert draws to continuous signals per position
     signals = []
-    for i in range(len(past_draws[0])):  # For each position
+    for i in range(len(past_draws[0])):  # For each number position
         position_signal = []
         for draw in past_draws:
             if i < len(draw):
@@ -103,11 +215,10 @@ def analyze_wave_patterns(past_draws: List[List[int]], min_num: int, max_num: in
         }
 
         for window_name, window in windows.items():
-            # Apply window function
-            windowed_signal = np.array(signal_data) * window
-
-            # Analyze wave characteristics
             try:
+                # Apply window function
+                windowed_signal = np.array(signal_data) * window
+
                 # Find local maxima and minima
                 peaks, _ = find_peaks(windowed_signal)
                 valleys, _ = find_peaks(-windowed_signal)
@@ -118,15 +229,21 @@ def analyze_wave_patterns(past_draws: List[List[int]], min_num: int, max_num: in
                     valley_period = np.mean(np.diff(valleys))
 
                     # Predict next peak and valley
-                    next_peak = signal_data[peaks[-1]] + peak_period
-                    next_valley = signal_data[valleys[-1]] + valley_period
+                    next_peak_pos = int(peaks[-1] + peak_period)
+                    next_valley_pos = int(valleys[-1] + valley_period)
 
-                    if min_num <= next_peak <= max_num:
-                        wave_scores[int(next_peak)] += 1.0
-                    if min_num <= next_valley <= max_num:
-                        wave_scores[int(next_valley)] += 0.8
+                    # Ensure the predicted positions are within bounds
+                    if next_peak_pos < len(signal_data):
+                        next_peak = windowed_signal[next_peak_pos]
+                        if min_num <= next_peak <= max_num:
+                            wave_scores[int(next_peak)] += 1.0
 
-                # Analyze wave envelope
+                    if next_valley_pos < len(signal_data):
+                        next_valley = windowed_signal[next_valley_pos]
+                        if min_num <= next_valley <= max_num:
+                            wave_scores[int(next_valley)] += 0.8
+
+                # Analyze wave envelope using Hilbert transform
                 envelope = np.abs(signal.hilbert(windowed_signal))
                 if len(envelope) > 0:
                     trend = np.polyfit(np.arange(len(envelope)), envelope, 2)
@@ -135,17 +252,29 @@ def analyze_wave_patterns(past_draws: List[List[int]], min_num: int, max_num: in
                         wave_scores[int(next_value)] += 1.2
 
             except Exception as e:
-                print(f"Wave analysis error: {e}")
+                print(f"Wave analysis error in window '{window_name}': {e}")
                 continue
 
-    return sorted(wave_scores.keys(), key=wave_scores.get, reverse=True)
+    # Sort numbers by their wave scores in descending order
+    sorted_wave_numbers = sorted(wave_scores.keys(), key=lambda x: wave_scores[x], reverse=True)
+    return sorted_wave_numbers
 
 
 def analyze_frequency_domain(past_draws: List[List[int]], min_num: int, max_num: int) -> List[int]:
-    """Analyze frequency domain characteristics of the number sequence."""
+    """
+    Analyze frequency domain characteristics of the number sequences to identify potential number candidates.
+
+    Parameters:
+    - past_draws: A list of past lottery number draws.
+    - min_num: Minimum number in the lottery range.
+    - max_num: Maximum number in the lottery range.
+
+    Returns:
+    - A list of numbers sorted by their frequency domain scores in descending order.
+    """
     frequency_scores = defaultdict(float)
 
-    # Convert draws to frequency domain
+    # Analyze frequency domain for each position
     for position in range(max(len(draw) for draw in past_draws)):
         position_data = []
         for draw in past_draws:
@@ -160,42 +289,52 @@ def analyze_frequency_domain(past_draws: List[List[int]], min_num: int, max_num:
             fft_result = fft(position_data)
             frequencies = np.abs(fft_result)
 
-            # Find dominant frequencies
-            dominant_freq_idx = np.argsort(frequencies)[-3:]  # Top 3 frequencies
+            # Find dominant frequencies (top 3 excluding DC component)
+            dominant_freq_indices = np.argsort(frequencies[1:])[-3:] + 1  # Exclude DC
+            dominant_frequencies = frequencies[dominant_freq_indices]
 
-            # Reconstruct signal and predict next values
-            for idx in dominant_freq_idx:
-                phase = np.angle(fft_result[idx])
-                amplitude = frequencies[idx]
-
-                # Project next value based on frequency components
+            # Predict next values based on dominant frequencies
+            for idx, amp in zip(dominant_freq_indices, dominant_frequencies):
+                # Project next value based on frequency component
                 t = len(position_data)
-                predicted = amplitude * np.cos(2 * np.pi * idx * t / len(frequencies) + phase)
+                predicted = amp * math.cos(2 * math.pi * idx * t / len(frequencies))
 
                 if min_num <= predicted <= max_num:
-                    frequency_scores[int(predicted)] += amplitude / sum(frequencies)
+                    frequency_scores[int(predicted)] += amp / sum(frequencies)
 
             # Inverse FFT for time domain prediction
             filtered_fft = np.zeros_like(fft_result)
-            filtered_fft[dominant_freq_idx] = fft_result[dominant_freq_idx]
-            reconstructed = ifft(filtered_fft)
+            filtered_fft[dominant_freq_indices] = fft_result[dominant_freq_indices]
+            reconstructed = ifft(filtered_fft).real
 
             # Use last reconstructed value as prediction
-            if min_num <= abs(reconstructed[-1]) <= max_num:
-                frequency_scores[int(abs(reconstructed[-1]))] += 1.0
+            if min_num <= reconstructed[-1] <= max_num:
+                frequency_scores[int(reconstructed[-1])] += 1.0
 
         except Exception as e:
-            print(f"Frequency analysis error: {e}")
+            print(f"Frequency analysis error at position {position}: {e}")
             continue
 
-    return sorted(frequency_scores.keys(), key=frequency_scores.get, reverse=True)
+    # Sort numbers by their frequency domain scores in descending order
+    sorted_frequency_numbers = sorted(frequency_scores.keys(), key=lambda x: frequency_scores[x], reverse=True)
+    return sorted_frequency_numbers
 
 
 def detect_signal_peaks(past_draws: List[List[int]], min_num: int, max_num: int) -> List[int]:
-    """Detect significant peaks and patterns in the signal."""
+    """
+    Detect significant peaks and patterns in the number sequences to identify potential number candidates.
+
+    Parameters:
+    - past_draws: A list of past lottery number draws.
+    - min_num: Minimum number in the lottery range.
+    - max_num: Maximum number in the lottery range.
+
+    Returns:
+    - A list of numbers sorted by their peak detection scores in descending order.
+    """
     peak_scores = defaultdict(float)
 
-    # Convert draws to multiple signal representations
+    # Analyze multiple signal representations with different window sizes
     for window_size in [5, 10, 20]:
         for position in range(max(len(draw) for draw in past_draws)):
             signal_data = []
@@ -207,125 +346,164 @@ def detect_signal_peaks(past_draws: List[List[int]], min_num: int, max_num: int)
                 continue
 
             try:
-                # Apply smoothing
-                smoothed = signal.savgol_filter(signal_data, window_size, 3)
+                # Apply smoothing with Savitzky-Golay filter
+                smoothed = savgol_filter(signal_data, window_length=window_size, polyorder=3)
 
-                # Find peaks with different properties
+                # Find peaks
                 peaks, properties = find_peaks(
                     smoothed,
-                    height=(None, None),
-                    threshold=(None, None),
+                    height=None,
+                    threshold=None,
                     distance=2,
                     prominence=1
                 )
 
                 if len(peaks) >= 2:
-                    # Analyze peak characteristics
-                    peak_heights = properties['peak_heights']
+                    # Calculate average peak distance
                     peak_distances = np.diff(peaks)
-
-                    # Predict next peak based on patterns
                     avg_distance = np.mean(peak_distances)
-                    next_position = peaks[-1] + avg_distance
-                    if next_position < len(smoothed):
-                        predicted_value = smoothed[int(next_position)]
-                        if min_num <= predicted_value <= max_num:
-                            peak_scores[int(predicted_value)] += 1.0
 
-                    # Use peak height trend
-                    height_trend = np.polyfit(peaks, peak_heights, 1)
-                    next_height = np.polyval(height_trend, peaks[-1] + avg_distance)
-                    if min_num <= next_height <= max_num:
-                        peak_scores[int(next_height)] += 0.8
+                    # Predict next peak position
+                    next_peak_pos = peaks[-1] + int(avg_distance)
+                    if next_peak_pos < len(smoothed):
+                        next_peak = smoothed[next_peak_pos]
+                        if min_num <= next_peak <= max_num:
+                            peak_scores[int(next_peak)] += 1.0
 
-                # Analyze valleys (inverted peaks)
+                    # Analyze peak height trend
+                    peak_heights = properties.get('peak_heights', [])
+                    if len(peak_heights) >= 2:
+                        height_trend = np.polyfit(peaks[:len(peak_heights)], peak_heights, 1)
+                        next_height = np.polyval(height_trend, next_peak_pos)
+                        if min_num <= next_height <= max_num:
+                            peak_scores[int(next_height)] += 0.8
+
+                # Detect valleys by inverting the signal
                 valleys, valley_props = find_peaks(-smoothed)
                 if len(valleys) >= 2:
                     valley_distances = np.diff(valleys)
-                    next_valley_pos = valleys[-1] + np.mean(valley_distances)
+                    avg_valley_distance = np.mean(valley_distances)
+
+                    # Predict next valley position
+                    next_valley_pos = valleys[-1] + int(avg_valley_distance)
                     if next_valley_pos < len(smoothed):
-                        valley_prediction = smoothed[int(next_valley_pos)]
-                        if min_num <= valley_prediction <= max_num:
-                            peak_scores[int(valley_prediction)] += 0.7
+                        next_valley = smoothed[next_valley_pos]
+                        if min_num <= next_valley <= max_num:
+                            peak_scores[int(next_valley)] += 0.7
 
             except Exception as e:
-                print(f"Peak detection error: {e}")
+                print(f"Peak detection error with window size {window_size} at position {position}: {e}")
                 continue
 
-    return sorted(peak_scores.keys(), key=peak_scores.get, reverse=True)
+    # Sort numbers by their peak detection scores in descending order
+    sorted_peak_numbers = sorted(peak_scores.keys(), key=lambda x: peak_scores[x], reverse=True)
+    return sorted_peak_numbers
 
 
 def calculate_wave_probabilities(
-        past_draws: List[List[int]],
-        min_num: int,
-        max_num: int,
-        excluded_numbers: Set[int]
+    past_draws: List[List[int]],
+    min_num: int,
+    max_num: int,
+    excluded_numbers: Set[int]
 ) -> Dict[int, float]:
-    """Calculate probabilities based on wave characteristics."""
-    probabilities = defaultdict(float)
+    """
+    Calculate probabilities based on wave characteristics for weighted random selection.
 
-    # Create position-based signals
-    position_signals = []
-    for i in range(max(len(draw) for draw in past_draws)):
-        signal_data = []
-        for draw in past_draws:
-            if i < len(draw):
-                signal_data.append(draw[i])
-        position_signals.append(signal_data)
+    This function assigns weights to each number based on how closely it aligns with the
+    statistical properties (mean and standard deviation) of historical data. Numbers not
+    yet selected are given higher weights if they are more statistically probable.
 
-    for num in range(min_num, max_num + 1):
-        if num in excluded_numbers:
-            continue
+    Parameters:
+    - past_draws: List of past lottery number draws.
+    - min_num: Minimum number in the lottery range.
+    - max_num: Maximum number in the lottery range.
+    - excluded_numbers: Set of numbers to exclude from selection.
 
-        score = 0.0
-        count = 0
+    Returns:
+    - A dictionary mapping each number to its calculated weight.
+    """
+    weights = defaultdict(float)
 
-        for signal_data in position_signals:
-            if not signal_data:
+    if not past_draws:
+        return weights
+
+    try:
+        # Calculate overall mean and standard deviation from past draws
+        all_numbers = [num for draw in past_draws for num in draw]
+        overall_mean = statistics.mean(all_numbers)
+        overall_stdev = statistics.stdev(all_numbers) if len(all_numbers) > 1 else 1.0
+
+        for num in range(min_num, max_num + 1):
+            if num in excluded_numbers:
                 continue
 
-            try:
-                # Calculate basic signal properties
-                mean_value = np.mean(signal_data)
-                std_value = np.std(signal_data)
+            # Calculate z-score for the number
+            z_score = abs((num - overall_mean) / overall_stdev) if overall_stdev != 0 else 0.0
 
-                # Calculate distance from mean in terms of standard deviations
-                z_score = abs((num - mean_value) / std_value if std_value > 0 else 0)
+            # Assign higher weight to numbers closer to the mean
+            weight = max(0, 1 - z_score)
+            weights[num] = weight
 
-                # Add score based on normal distribution probability
-                score += np.exp(-z_score ** 2 / 2)
-                count += 1
+    except Exception as e:
+        print(f"Weight calculation error: {e}")
+        # Fallback to uniform weights
+        for num in range(min_num, max_num + 1):
+            if num not in excluded_numbers:
+                weights[num] = 1.0
 
-                # Add frequency domain component
-                fft_vals = np.abs(fft(signal_data))
-                dominant_freq = np.argmax(fft_vals[1:]) + 1  # Skip DC component
+    # Normalize weights
+    total_weight = sum(weights.values())
+    if total_weight > 0:
+        for num in weights:
+            weights[num] /= total_weight
 
-                # Score based on resonance with dominant frequency
-                resonance = np.cos(2 * np.pi * dominant_freq * num / (max_num - min_num + 1))
-                score += (resonance + 1) / 2  # Normalize to [0,1]
-
-            except Exception as e:
-                print(f"Probability calculation error: {e}")
-                continue
-
-        if count > 0:
-            probabilities[num] = score / (2 * count)  # Normalize by number of signals
-
-    # Normalize probabilities
-    total = sum(probabilities.values())
-    if total > 0:
-        for num in probabilities:
-            probabilities[num] /= total
-
-    return probabilities
+    return weights
 
 
-def generate_random_numbers(lottery_type_instance: lg_lottery_type) -> List[int]:
-    """Generate random numbers when no historical data is available."""
-    numbers = set()
-    while len(numbers) < lottery_type_instance.pieces_of_draw_numbers:
-        numbers.add(random.randint(
-            lottery_type_instance.min_number,
-            lottery_type_instance.max_number
-        ))
-    return sorted(list(numbers))
+def weighted_random_choice(weights: Dict[int, float], available_numbers: Set[int]) -> int:
+    """
+    Selects a random number based on weighted probabilities.
+
+    Parameters:
+    - weights: A dictionary mapping numbers to their weights.
+    - available_numbers: A set of numbers available for selection.
+
+    Returns:
+    - A single selected number.
+    """
+    try:
+        numbers = list(available_numbers)
+        number_weights = [weights.get(num, 1.0) for num in numbers]
+        total = sum(number_weights)
+        if total == 0:
+            return random.choice(numbers)
+        probabilities = [w / total for w in number_weights]
+        selected = random.choices(numbers, weights=probabilities, k=1)[0]
+        return selected
+    except Exception as e:
+        print(f"Weighted random choice error: {e}")
+        return random.choice(list(available_numbers)) if available_numbers else None
+
+
+def generate_random_numbers(min_num: int, max_num: int, total_numbers: int) -> List[int]:
+    """
+    Generates a sorted list of unique random numbers within the specified range.
+
+    Parameters:
+    - min_num: Minimum number in the lottery range.
+    - max_num: Maximum number in the lottery range.
+    - total_numbers: Number of numbers to generate.
+
+    Returns:
+    - A sorted list of randomly generated lottery numbers.
+    """
+    try:
+        numbers = set()
+        while len(numbers) < total_numbers:
+            num = random.randint(min_num, max_num)
+            numbers.add(num)
+        return sorted(list(numbers))
+    except Exception as e:
+        print(f"Error in generate_random_numbers: {str(e)}")
+        # As a last resort, return a sequential list
+        return list(range(min_num, min_num + total_numbers))

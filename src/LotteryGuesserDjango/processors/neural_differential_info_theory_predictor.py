@@ -1,11 +1,11 @@
-# robust_neural_differential_info_theory_predictor.py
+# neural_differential_info_theory_predictor.py
 
 import random
 import math
 from collections import defaultdict
 from django.apps import apps
-
-
+from typing import List, Set, Tuple
+from algorithms.models import lg_lottery_winner_number, lg_lottery_type
 def safe_exp(x):
     try:
         return math.exp(x)
@@ -22,19 +22,6 @@ def safe_sigmoid(x):
         return 1 / (1 + safe_exp(-x))
 
 
-class RobustNeuralODE:
-    def __init__(self, input_size, hidden_size):
-        self.W1 = [[random.uniform(-1, 1) for _ in range(input_size)] for _ in range(hidden_size)]
-        self.W2 = [[random.uniform(-1, 1) for _ in range(hidden_size)] for _ in range(input_size)]
-        self.b1 = [random.uniform(-1, 1) for _ in range(hidden_size)]
-        self.b2 = [random.uniform(-1, 1) for _ in range(input_size)]
-
-    def forward(self, x, t):
-        h = [safe_sigmoid(sum(w[i] * x[i] for i in range(len(x))) + b) for w, b in zip(self.W1, self.b1)]
-        dx = [safe_sigmoid(sum(w[i] * h[i] for i in range(len(h))) + b) for w, b in zip(self.W2, self.b2)]
-        return [x[i] + t * dx[i] for i in range(len(x))]
-
-
 def euler_integrate(ode, x0, t_span, num_steps):
     t_eval = [t_span[0] + i * (t_span[1] - t_span[0]) / num_steps for i in range(num_steps + 1)]
     trajectory = [x0]
@@ -44,19 +31,6 @@ def euler_integrate(ode, x0, t_span, num_steps):
         trajectory.append(x_next)
     return trajectory
 
-
-def calculate_entropy(sequence, num_bins):
-    hist = defaultdict(int)
-    for num in sequence:
-        bin_index = min(int(num * num_bins), num_bins - 1)
-        hist[bin_index] += 1
-
-    total = len(sequence)
-    entropy = 0
-    for count in hist.values():
-        p = count / total
-        entropy -= p * math.log2(p) if p > 0 else 0
-    return entropy
 
 
 def generate_numbers(ode, initial_state, t_span, num_steps, min_num, max_num, total_numbers):
@@ -68,62 +42,188 @@ def generate_numbers(ode, initial_state, t_span, num_steps, min_num, max_num, to
     return numbers[:total_numbers]
 
 
-def get_numbers(lottery_type_instance):
+class RobustNeuralODE:
+    """Neural ODE implementation with robustness features."""
+
+    def __init__(self, input_size: int, hidden_size: int):
+        self.W1 = [[random.uniform(-1, 1) for _ in range(input_size)] for _ in range(hidden_size)]
+        self.W2 = [[random.uniform(-1, 1) for _ in range(hidden_size)] for _ in range(input_size)]
+        self.b1 = [random.uniform(-1, 1) for _ in range(hidden_size)]
+        self.b2 = [random.uniform(-1, 1) for _ in range(input_size)]
+
+    def forward(self, x: List[float], t: float) -> List[float]:
+        """Forward pass through the neural ODE."""
+        h = [safe_sigmoid(sum(w[i] * x[i] for i in range(len(x))) + b)
+             for w, b in zip(self.W1, self.b1)]
+        dx = [safe_sigmoid(sum(w[i] * h[i] for i in range(len(h))) + b)
+              for w, b in zip(self.W2, self.b2)]
+        return [x[i] + t * dx[i] for i in range(len(x))]
+
+
+def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
+    """Generate numbers using neural ODE approach."""
+    main_numbers = generate_number_set(
+        lottery_type_instance,
+        lottery_type_instance.min_number,
+        lottery_type_instance.max_number,
+        lottery_type_instance.pieces_of_draw_numbers,
+        True
+    )
+
+    additional_numbers = []
+    if lottery_type_instance.has_additional_numbers:
+        additional_numbers = generate_number_set(
+            lottery_type_instance,
+            lottery_type_instance.additional_min_number,
+            lottery_type_instance.additional_max_number,
+            lottery_type_instance.additional_numbers_count,
+            False
+        )
+
+    return main_numbers, additional_numbers
+
+
+def generate_number_set(
+        lottery_type_instance: lg_lottery_type,
+        min_num: int,
+        max_num: int,
+        required_numbers: int,
+        is_main: bool
+) -> List[int]:
+    """Generate numbers using neural ODE and entropy analysis."""
     try:
-        # Dynamically import the model
-        lg_lottery_winner_number = apps.get_model('algorithms', 'lg_lottery_winner_number')
-
-        min_num = int(lottery_type_instance.min_number)
-        max_num = int(lottery_type_instance.max_number)
-        total_numbers = int(lottery_type_instance.pieces_of_draw_numbers)
-
-        # Retrieve past winning numbers
-        past_draws = list(lg_lottery_winner_number.objects.filter(
-            lottery_type=lottery_type_instance
-        ).order_by('-id')[:100].values_list('lottery_type_number', flat=True))
+        # Get historical data
+        past_draws = get_historical_data(lottery_type_instance, is_main)
 
         if len(past_draws) < 10:
-            # If not enough past draws, return random numbers
-            return random.sample(range(min_num, max_num + 1), total_numbers)
+            return random_selection(min_num, max_num, required_numbers)
 
-        # Flatten and normalize past draws
-        flat_sequence = [num for draw in past_draws for num in draw]
-        normalized_sequence = [(num - min_num) / (max_num - min_num) for num in flat_sequence]
+        # Process sequence
+        normalized_sequence = normalize_sequence(
+            past_draws,
+            min_num,
+            max_num
+        )
 
-        # Calculate entropy of the normalized sequence
-        entropy = calculate_entropy(normalized_sequence, 10)
+        # Calculate entropy
+        entropy = calculate_entropy(normalized_sequence, num_bins=10)
 
-        # Initialize Neural ODE
-        input_size = total_numbers
-        hidden_size = total_numbers * 2
-        ode = RobustNeuralODE(input_size, hidden_size)
+        # Initialize and run neural ODE
+        predicted_numbers = run_neural_ode(
+            entropy,
+            min_num,
+            max_num,
+            required_numbers
+        )
 
-        # Generate initial state based on entropy
-        initial_state = [random.uniform(0, min(entropy, 10)) for _ in range(input_size)]
+        # Ensure valid predictions
+        predicted_numbers = validate_predictions(
+            predicted_numbers,
+            min_num,
+            max_num,
+            required_numbers,
+            entropy
+        )
 
-        # Set time span and number of steps based on entropy
-        t_span = (0, min(entropy * 10, 100))
-        num_steps = min(int(entropy * 100), 1000)
-
-        # Generate numbers using Neural ODE
-        predicted_numbers = generate_numbers(ode, initial_state, t_span, num_steps, min_num, max_num, total_numbers * 2)
-
-        # Ensure uniqueness and correct range
-        predicted_numbers = list(set(predicted_numbers))
-        predicted_numbers = [num for num in predicted_numbers if min_num <= num <= max_num]
-
-        # If not enough unique numbers, fill with entropy-guided random selection
-        if len(predicted_numbers) < total_numbers:
-            remaining = set(range(min_num, max_num + 1)) - set(predicted_numbers)
-            entropy_weights = [safe_exp(min(entropy, 10) * random.random()) for _ in range(len(remaining))]
-            additional_numbers = random.choices(list(remaining), weights=entropy_weights,
-                                                k=total_numbers - len(predicted_numbers))
-            predicted_numbers += additional_numbers
-
-        return sorted(predicted_numbers[:total_numbers])
+        return sorted(predicted_numbers)
 
     except Exception as e:
-        # Log the error (you might want to use a proper logging system)
-        print(f"Error in robust_neural_differential_info_theory_predictor: {str(e)}")
-        # Fall back to random number generation
-        return random.sample(range(min_num, max_num + 1), total_numbers)
+        print(f"Error in neural ODE prediction: {str(e)}")
+        return random_selection(min_num, max_num, required_numbers)
+
+
+def get_historical_data(lottery_type_instance: lg_lottery_type, is_main: bool) -> List[List[int]]:
+    """Get historical lottery data."""
+    past_draws = list(lg_lottery_winner_number.objects.filter(
+        lottery_type=lottery_type_instance
+    ).order_by('-id')[:100])
+
+    if is_main:
+        return [draw.lottery_type_number for draw in past_draws
+                if isinstance(draw.lottery_type_number, list)]
+    else:
+        return [draw.additional_numbers for draw in past_draws
+                if hasattr(draw, 'additional_numbers') and
+                isinstance(draw.additional_numbers, list)]
+
+
+def normalize_sequence(
+        past_draws: List[List[int]],
+        min_num: int,
+        max_num: int
+) -> List[float]:
+    """Normalize number sequence."""
+    flat_sequence = [num for draw in past_draws for num in draw]
+    return [(num - min_num) / (max_num - min_num) for num in flat_sequence]
+
+
+def calculate_entropy(sequence: List[float], num_bins: int) -> float:
+    """Calculate sequence entropy."""
+    hist = defaultdict(int)
+    for num in sequence:
+        bin_index = min(int(num * num_bins), num_bins - 1)
+        hist[bin_index] += 1
+
+    total = len(sequence)
+    entropy = 0
+    for count in hist.values():
+        p = count / total
+        if p > 0:
+            entropy -= p * math.log2(p)
+    return entropy
+
+
+def run_neural_ode(
+        entropy: float,
+        min_num: int,
+        max_num: int,
+        required_numbers: int
+) -> List[int]:
+    """Run neural ODE prediction."""
+    input_size = required_numbers
+    hidden_size = required_numbers * 2
+    ode = RobustNeuralODE(input_size, hidden_size)
+
+    initial_state = [random.uniform(0, min(entropy, 10))
+                     for _ in range(input_size)]
+
+    t_span = (0, min(entropy * 10, 100))
+    num_steps = min(int(entropy * 100), 1000)
+
+    trajectory = euler_integrate(ode, initial_state, t_span, num_steps)
+    final_state = trajectory[-1]
+
+    numbers = [
+        int(min_num + (max_num - min_num) * safe_sigmoid(x))
+        for x in final_state
+    ]
+    return numbers[:required_numbers * 2]
+
+
+def validate_predictions(
+        predicted_numbers: List[int],
+        min_num: int,
+        max_num: int,
+        required_numbers: int,
+        entropy: float
+) -> List[int]:
+    """Validate and ensure correct number of predictions."""
+    # Ensure uniqueness and range
+    predicted_numbers = list(set(
+        num for num in predicted_numbers
+        if min_num <= num <= max_num
+    ))
+
+    # Fill if needed
+    if len(predicted_numbers) < required_numbers:
+        remaining = set(range(min_num, max_num + 1)) - set(predicted_numbers)
+        entropy_weights = [safe_exp(min(entropy, 10) * random.random())
+                           for _ in range(len(remaining))]
+        additional = random.choices(
+            list(remaining),
+            weights=entropy_weights,
+            k=required_numbers - len(predicted_numbers)
+        )
+        predicted_numbers.extend(additional)
+
+    return predicted_numbers[:required_numbers]

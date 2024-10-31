@@ -2,89 +2,112 @@
 
 import numpy as np
 from collections import Counter
-from algorithms.models import lg_lottery_winner_number
+from typing import List, Tuple
+from algorithms.models import lg_lottery_winner_number, lg_lottery_type
 
-def get_numbers(lottery_type_instance):
+
+def get_numbers(lottery_type_instance) -> Tuple[List[int], List[int]]:
     """
-    Generál lottószámokat Deterministic Chaos-Based elemzéssel.
-
-    Paraméterek:
-    - lottery_type_instance: Az lg_lottery_type modell egy példánya.
-
-    Visszatérési érték:
-    - Egy rendezett lista a megjósolt lottószámokról.
+    Generate lottery numbers using Deterministic Chaos-Based analysis, supporting both main and additional numbers.
+    Returns a tuple (main_numbers, additional_numbers).
     """
-    min_num = int(lottery_type_instance.min_number)
-    max_num = int(lottery_type_instance.max_number)
-    total_numbers = int(lottery_type_instance.pieces_of_draw_numbers)
+    # Main numbers configuration
+    min_num = lottery_type_instance.min_number
+    max_num = lottery_type_instance.max_number
+    total_numbers = lottery_type_instance.pieces_of_draw_numbers
 
-    # Lekérjük a múltbeli nyerőszámokat
+    # Get past draws for main numbers
     past_draws_queryset = lg_lottery_winner_number.objects.filter(
         lottery_type=lottery_type_instance
-    ).order_by('id').values_list('lottery_type_number', flat=True)
+    ).order_by('id')
 
-    past_draws = [
-        [int(num) for num in draw] for draw in past_draws_queryset
-        if isinstance(draw, list) and len(draw) == total_numbers
+    past_main_numbers = [
+        draw.lottery_type_number for draw in past_draws_queryset
+        if isinstance(draw.lottery_type_number, list)
     ]
 
-    if len(past_draws) < 20:
-        # Ha nincs elég adat, visszaadjuk a legkisebb 'total_numbers' számot
-        selected_numbers = list(range(min_num, min_num + total_numbers))
-        return selected_numbers
+    main_numbers = generate_numbers_with_chaos(
+        past_numbers=past_main_numbers,
+        min_num=min_num,
+        max_num=max_num,
+        total_numbers=total_numbers
+    )
 
-    # Számok gyakoriságának számolása
-    all_numbers = [number for draw in past_draws for number in draw]
+    # Additional numbers if needed
+    additional_numbers = []
+    if lottery_type_instance.has_additional_numbers:
+        past_additional_numbers = [
+            draw.additional_numbers for draw in past_draws_queryset
+            if isinstance(draw.additional_numbers, list)
+        ]
+
+        additional_numbers = generate_numbers_with_chaos(
+            past_numbers=past_additional_numbers,
+            min_num=lottery_type_instance.additional_min_number,
+            max_num=lottery_type_instance.additional_max_number,
+            total_numbers=lottery_type_instance.additional_numbers_count
+        )
+
+    return main_numbers, additional_numbers
+
+
+def generate_numbers_with_chaos(
+        past_numbers: List[List[int]],
+        min_num: int,
+        max_num: int,
+        total_numbers: int
+) -> List[int]:
+    """
+    Generates lottery numbers using chaotic map analysis for the given range and count.
+    """
+    # Fallback to sequential numbers if insufficient data
+    if len(past_numbers) < 20:
+        return list(range(min_num, min_num + total_numbers))
+
+    # Calculate number frequencies in past draws
+    all_numbers = [num for draw in past_numbers for num in draw]
     number_counts = Counter(all_numbers)
-    most_common_numbers = [num for num, count in number_counts.most_common()]
+    most_common_numbers = [num for num, _ in number_counts.most_common()]
 
-    # Kaotikus Térkép Konfigurálása (Logistic Map)
-    r = 3.9  # Kaotikus térkép paramétere
-    iterations = 1000  # Iterációk száma
-    window_size = 100  # Az előrejelzéshez használt utolsó iterációk száma
+    # Chaotic Map Configuration
+    r = 3.9  # Chaos parameter
+    iterations = 1000  # Total iterations of the chaotic map
+    window_size = 100  # Window size for averaging in predictions
 
-    # Kezdő állapot beállítása az utolsó húzás számainak átlagával
-    last_draw = past_draws[-1]
-    x0 = np.mean(last_draw) / (max_num + 1)  # Normalizálás 0 és 1 közé
+    # Initialize starting point using the average of the last draw
+    last_draw = past_numbers[-1]
+    x0 = np.mean(last_draw) / (max_num + 1)
 
-    # Iterációk futtatása
+    # Generate chaotic sequence
     x = x0
     sequence = []
     for _ in range(iterations):
         x = r * x * (1 - x)
         sequence.append(x)
 
-    # Az utolsó 'window_size' iteráció átlagát használjuk
+    # Use the final window of the chaotic sequence for predictions
     recent_sequence = sequence[-window_size:]
-    average_recent = np.mean(recent_sequence)
+    predictions = set()
 
-    # Mapping az előrejelzésekhez
-    # Skálázzuk az átlagos értéket a megengedett szám tartományára
-    predicted_num = int(round(average_recent * (max_num - min_num + 1))) + min_num
+    # Generate unique predictions
+    for i in range(total_numbers):
+        avg_val = np.mean(recent_sequence[i:i + window_size // total_numbers])
+        predicted_num = int(round(avg_val * (max_num - min_num))) + min_num
+        predicted_num = max(min_num, min(max_num, predicted_num))
 
-    # Ellenőrzés és korrekció
-    if predicted_num < min_num:
-        predicted_num = min_num
-    elif predicted_num > max_num:
-        predicted_num = max_num
+        # Avoid duplicates by adjusting slightly if necessary
+        while predicted_num in predictions:
+            predicted_num = (predicted_num % max_num) + min_num
 
-    predicted_numbers = [predicted_num]
+        predictions.add(predicted_num)
 
-    # Duplikátumok és tartomány ellenőrzése
-    predicted_numbers = [
-        int(num) for num in predicted_numbers
-        if min_num <= num <= max_num
-    ]
-
-    # Ha kevesebb számunk van, mint szükséges, kiegészítjük a leggyakoribb számokkal
-    if len(predicted_numbers) < total_numbers:
+    # Fill remaining slots with most common numbers if needed
+    while len(predictions) < total_numbers:
         for num in most_common_numbers:
-            if num not in predicted_numbers:
-                predicted_numbers.append(num)
-            if len(predicted_numbers) == total_numbers:
-                break
+            if num not in predictions:
+                predictions.add(num)
+                if len(predictions) == total_numbers:
+                    break
 
-    # Végső rendezés
-    predicted_numbers = predicted_numbers[:total_numbers]
-    predicted_numbers.sort()
-    return predicted_numbers
+    return sorted(predictions)
+

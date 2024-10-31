@@ -3,27 +3,50 @@
 import numpy as np
 import random
 from sklearn.neural_network import MLPClassifier
-from algorithms.models import lg_lottery_winner_number
+from algorithms.models import lg_lottery_winner_number, lg_lottery_type
+from typing import List, Tuple
 
-def get_numbers(lottery_type_instance):
+def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
     """
     Generates lottery numbers using a neural network prediction model.
-
-    Parameters:
-    - lottery_type_instance: An instance of lg_lottery_type model.
-
-    Returns:
-    - A sorted list of predicted lottery numbers.
+    Returns a tuple (main_numbers, additional_numbers).
     """
-    # Parameters
-    min_num = lottery_type_instance.min_number
-    max_num = lottery_type_instance.max_number
-    total_numbers = lottery_type_instance.pieces_of_draw_numbers
+    # Generate main numbers
+    main_numbers = generate_numbers(
+        lottery_type_instance,
+        min_num=int(lottery_type_instance.min_number),
+        max_num=int(lottery_type_instance.max_number),
+        total_numbers=int(lottery_type_instance.pieces_of_draw_numbers),
+        numbers_field='lottery_type_number'
+    )
 
+    # Generate additional numbers if needed
+    additional_numbers = []
+    if lottery_type_instance.has_additional_numbers:
+        additional_numbers = generate_numbers(
+            lottery_type_instance,
+            min_num=int(lottery_type_instance.additional_min_number),
+            max_num=int(lottery_type_instance.additional_max_number),
+            total_numbers=int(lottery_type_instance.additional_numbers_count),
+            numbers_field='additional_numbers'
+        )
+
+    return sorted(main_numbers), sorted(additional_numbers)
+
+def generate_numbers(
+    lottery_type_instance: lg_lottery_type,
+    min_num: int,
+    max_num: int,
+    total_numbers: int,
+    numbers_field: str
+) -> List[int]:
+    """
+    Generates lottery numbers using a neural network prediction model.
+    """
     # Retrieve past winning numbers
     past_draws_queryset = lg_lottery_winner_number.objects.filter(
         lottery_type=lottery_type_instance
-    ).order_by('id').values_list('lottery_type_number', flat=True)
+    ).order_by('id').values_list(numbers_field, flat=True)
 
     past_draws = [draw for draw in past_draws_queryset if isinstance(draw, list) and len(draw) == total_numbers]
 
@@ -48,7 +71,7 @@ def get_numbers(lottery_type_instance):
     for target in y:
         label = [0] * (max_num - min_num + 1)
         for num in target:
-            label[num - min_num] = 1
+            label[int(num) - min_num] = 1
         y_flat.append(label)
     y_flat = np.array(y_flat)
 

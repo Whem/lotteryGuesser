@@ -2,7 +2,7 @@
 # Hybrid algorithm combining Fibonacci patterns, pair correlations, and empirical decomposition
 
 import random
-from typing import List, Set
+from typing import List, Set, Tuple
 from collections import Counter
 from algorithms.models import lg_lottery_winner_number, lg_lottery_type
 from itertools import combinations
@@ -10,95 +10,131 @@ import statistics
 import numpy as np
 
 
-def get_numbers(lottery_type_instance: lg_lottery_type) -> List[int]:
-    """
-    Hybrid algorithm combining Fibonacci patterns, pair correlations, and empirical decomposition
-    to predict lottery numbers.
+def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
+    """Hybrid predictor for combined lottery types."""
+    main_numbers = generate_number_set(
+        lottery_type_instance,
+        lottery_type_instance.min_number,
+        lottery_type_instance.max_number,
+        lottery_type_instance.pieces_of_draw_numbers,
+        True
+    )
 
-    Parameters:
-    - lottery_type_instance: An instance of lg_lottery_type model
+    additional_numbers = []
+    if lottery_type_instance.has_additional_numbers:
+        additional_numbers = generate_number_set(
+            lottery_type_instance,
+            lottery_type_instance.additional_min_number,
+            lottery_type_instance.additional_max_number,
+            lottery_type_instance.additional_numbers_count,
+            False
+        )
 
-    Returns:
-    - List of predicted lottery numbers based on lottery_type_instance.pieces_of_draw_numbers
-    """
-    required_numbers = lottery_type_instance.pieces_of_draw_numbers
+    return main_numbers, additional_numbers
 
-    # Get historical data
-    past_draws = lg_lottery_winner_number.objects.filter(
-        lottery_type=lottery_type_instance
-    ).values_list('lottery_type_number', flat=True).order_by('-id')[:100]  # Last 100 draws
 
-    past_draws = [draw for draw in past_draws if isinstance(draw, list)]
+def generate_number_set(
+        lottery_type_instance: lg_lottery_type,
+        min_num: int,
+        max_num: int,
+        required_numbers: int,
+        is_main: bool
+) -> List[int]:
+    """Generate numbers using hybrid analysis."""
+    past_draws = get_historical_data(lottery_type_instance, is_main)
 
     if not past_draws:
         return generate_random_numbers(lottery_type_instance)
 
-    # 1. Find frequently occurring pairs
+    # Hybrid analysis components
     pair_frequencies = analyze_pair_frequencies(past_draws)
-
-    # 2. Generate Fibonacci-like sequences from historical data
     fibonacci_candidates = generate_fibonacci_candidates(
         past_draws,
-        lottery_type_instance.min_number,
-        lottery_type_instance.max_number
+        min_num,
+        max_num
     )
-
-    # 3. Analyze empirical patterns
     empirical_patterns = analyze_empirical_patterns(past_draws)
 
-    # Initialize predicted numbers set
+    # Calculate allocations
+    pairs_count = max(1, required_numbers // 3)
+    fibonacci_count = max(1, required_numbers // 4)
+    empirical_count = max(1, required_numbers // 4)
+
+    # Generate predictions
+    predicted_numbers = generate_predictions(
+        pair_frequencies,
+        fibonacci_candidates,
+        empirical_patterns,
+        past_draws,
+        min_num,
+        max_num,
+        required_numbers,
+        pairs_count,
+        fibonacci_count,
+        empirical_count
+    )
+
+    return sorted(predicted_numbers)
+
+
+def get_historical_data(lottery_type_instance: lg_lottery_type, is_main: bool) -> List[List[int]]:
+    """Get historical lottery data."""
+    past_draws = list(lg_lottery_winner_number.objects.filter(
+        lottery_type=lottery_type_instance
+    ).order_by('-id')[:100])
+
+    if is_main:
+        return [draw.lottery_type_number for draw in past_draws
+                if isinstance(draw.lottery_type_number, list)]
+    else:
+        return [draw.additional_numbers for draw in past_draws
+                if hasattr(draw, 'additional_numbers') and
+                isinstance(draw.additional_numbers, list)]
+
+
+def generate_predictions(
+        pair_frequencies: Counter,
+        fibonacci_candidates: List[int],
+        empirical_patterns: List[int],
+        past_draws: List[List[int]],
+        min_num: int,
+        max_num: int,
+        required_numbers: int,
+        pairs_count: int,
+        fibonacci_count: int,
+        empirical_count: int
+) -> List[int]:
+    """Generate predictions using hybrid approach."""
     predicted_numbers = set()
 
-    # Dynamically calculate how many numbers to take from each method based on required_numbers
-    pairs_to_take = max(1, required_numbers // 3)
-    fibonacci_to_take = max(1, required_numbers // 4)
-    empirical_to_take = max(1, required_numbers // 4)
-
-    # Add most frequent pairs
-    top_pairs = sorted(pair_frequencies.items(), key=lambda x: x[1], reverse=True)[:pairs_to_take]
-    for pair, _ in top_pairs:
+    # Add pair numbers
+    top_pairs = sorted(pair_frequencies.items(), key=lambda x: x[1], reverse=True)
+    for pair, _ in top_pairs[:pairs_count]:
         predicted_numbers.update(pair)
 
-    # Add numbers from Fibonacci patterns
+    # Add Fibonacci numbers
     if fibonacci_candidates:
-        for num in fibonacci_candidates[:fibonacci_to_take]:
+        for num in fibonacci_candidates[:fibonacci_count]:
             predicted_numbers.add(num)
-            if len(predicted_numbers) >= required_numbers:
-                break
 
-    # Add numbers from empirical patterns
+    # Add empirical numbers
     if empirical_patterns:
-        for num in empirical_patterns[:empirical_to_take]:
+        for num in empirical_patterns[:empirical_count]:
             predicted_numbers.add(num)
-            if len(predicted_numbers) >= required_numbers:
-                break
 
-    # Fill remaining slots with weighted random selection until we have exactly required_numbers
+    # Fill remaining with weighted selection
+    weights = calculate_number_weights(past_draws, min_num, max_num)
+
     while len(predicted_numbers) < required_numbers:
-        # Calculate weights based on historical frequency
-        number_weights = calculate_number_weights(
-            past_draws,
-            lottery_type_instance.min_number,
-            lottery_type_instance.max_number
-        )
+        available = set(range(min_num, max_num + 1)) - predicted_numbers
+        if not available:
+            break
 
-        # Select remaining numbers using weighted random selection
-        available_numbers = set(range(
-            lottery_type_instance.min_number,
-            lottery_type_instance.max_number + 1
-        )) - predicted_numbers
+        available_weights = [weights.get(num, 1) for num in available]
+        selected = random.choices(list(available), weights=available_weights, k=1)[0]
+        predicted_numbers.add(selected)
 
-        if available_numbers:
-            weights = [number_weights.get(num, 1) for num in available_numbers]
-            selected = random.choices(list(available_numbers), weights=weights, k=1)[0]
-            predicted_numbers.add(selected)
-
-    # Ensure we return exactly required_numbers
-    result = sorted(list(predicted_numbers))
-    while len(result) > required_numbers:
-        result.pop()
-
-    return result
+    return list(predicted_numbers)[:required_numbers]
 
 
 def analyze_pair_frequencies(past_draws: List[List[int]]) -> Counter:

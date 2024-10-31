@@ -1,54 +1,202 @@
+# numerology_prediction.py
 import datetime
 import random
-from algorithms.models import lg_lottery_winner_number
+from typing import List, Dict, Tuple, Set
+from algorithms.models import lg_lottery_winner_number, lg_lottery_type
 
-def get_life_path_number(date_of_birth):
+
+def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
     """
-    Calculates the life path number based on a given date of birth.
+    Generate both main and additional numbers using numerology prediction.
+    Returns a tuple of (main_numbers, additional_numbers).
     """
-    total = sum(int(digit) for digit in date_of_birth.replace('-', '') if digit.isdigit())
+    # Generate main numbers
+    main_numbers = generate_number_set(
+        lottery_type_instance,
+        lottery_type_instance.min_number,
+        lottery_type_instance.max_number,
+        lottery_type_instance.pieces_of_draw_numbers,
+        is_main=True
+    )
+
+    # Generate additional numbers if needed
+    additional_numbers = []
+    if lottery_type_instance.has_additional_numbers:
+        additional_numbers = generate_number_set(
+            lottery_type_instance,
+            lottery_type_instance.additional_min_number,
+            lottery_type_instance.additional_max_number,
+            lottery_type_instance.additional_numbers_count,
+            is_main=False
+        )
+
+    return main_numbers, additional_numbers
+
+
+def generate_number_set(
+        lottery_type_instance: lg_lottery_type,
+        min_num: int,
+        max_num: int,
+        required_numbers: int,
+        is_main: bool
+) -> List[int]:
+    """Generate a set of numbers using numerology prediction."""
+    # Get past draws for pattern analysis
+    past_draws = list(lg_lottery_winner_number.objects.filter(
+        lottery_type=lottery_type_instance
+    ).order_by('-id')[:50])
+
+    # Extract appropriate number sets from past draws
+    if is_main:
+        past_numbers = [draw.lottery_type_number for draw in past_draws
+                        if isinstance(draw.lottery_type_number, list)]
+    else:
+        past_numbers = [draw.additional_numbers for draw in past_draws
+                        if hasattr(draw, 'additional_numbers') and
+                        isinstance(draw.additional_numbers, list)]
+
+    # Get current date for numerological calculations
+    current_date = datetime.datetime.now()
+
+    # Generate numbers using multiple numerological methods
+    numerology_numbers = generate_numerology_numbers(
+        current_date,
+        min_num,
+        max_num,
+        required_numbers,
+        past_numbers
+    )
+
+    return sorted(numerology_numbers)
+
+
+def get_life_path_number(date: datetime.datetime) -> int:
+    """Calculate life path number from a date."""
+    date_str = date.strftime('%Y%m%d')
+    total = sum(int(digit) for digit in date_str if digit.isdigit())
     while total > 9:
         total = sum(int(digit) for digit in str(total))
     return total
 
-def get_numbers(lottery_type_instance):
-    """
-    Generates lottery numbers based on numerology prediction.
 
-    Parameters:
-    - lottery_type_instance: An instance of lg_lottery_type model.
+def get_destiny_number(date: datetime.datetime) -> int:
+    """Calculate destiny number based on reduced month and day."""
+    month_day = date.strftime('%m%d')
+    total = sum(int(digit) for digit in month_day if digit.isdigit())
+    while total > 9:
+        total = sum(int(digit) for digit in str(total))
+    return total
 
-    Returns:
-    - A sorted list of predicted lottery numbers.
-    """
-    # Example date of birth (can be modified or taken as input)
-    date_of_birth = '1990-01-01'  # YYYY-MM-DD format
 
-    # Calculate life path number
-    life_path_number = get_life_path_number(date_of_birth)
+def get_cycle_number(date: datetime.datetime) -> int:
+    """Calculate personal year cycle number."""
+    year_number = sum(int(digit) for digit in str(date.year))
+    month_number = date.month
+    day_number = date.day
+    total = year_number + month_number + day_number
+    while total > 9:
+        total = sum(int(digit) for digit in str(total))
+    return total
 
-    # Use life path number to generate base numbers
-    base_numbers = []
-    min_num = lottery_type_instance.min_number
-    max_num = lottery_type_instance.max_number
 
-    # Generate numbers based on numerology calculations
-    for i in range(1, lottery_type_instance.pieces_of_draw_numbers + 1):
-        num = (life_path_number * i) % (max_num - min_num + 1) + min_num
-        base_numbers.append(num)
+def analyze_number_patterns(past_numbers: List[List[int]], min_num: int, max_num: int) -> Dict[int, float]:
+    """Analyze patterns in past numbers through numerological lens."""
+    pattern_scores = {num: 0.0 for num in range(min_num, max_num + 1)}
 
-    # Ensure numbers are unique
-    selected_numbers = list(set(base_numbers))
+    if not past_numbers:
+        return pattern_scores
 
-    # If not enough unique numbers, fill with random numbers
-    num_to_select = lottery_type_instance.pieces_of_draw_numbers
-    if len(selected_numbers) < num_to_select:
-        all_numbers = set(range(min_num, max_num + 1))
-        used_numbers = set(selected_numbers)
-        remaining_numbers = list(all_numbers - used_numbers)
-        random.shuffle(remaining_numbers)
-        selected_numbers.extend(remaining_numbers[:num_to_select - len(selected_numbers)])
+    # Analyze single digit sums of winning combinations
+    for draw in past_numbers:
+        draw_sum = sum(int(digit) for num in draw for digit in str(num))
+        while draw_sum > 9:
+            draw_sum = sum(int(digit) for digit in str(draw_sum))
 
-    # Sort the final list of numbers
-    selected_numbers = sorted(selected_numbers)[:num_to_select]
-    return selected_numbers
+        # Numbers that sum to this value get higher scores
+        for num in range(min_num, max_num + 1):
+            num_sum = sum(int(digit) for digit in str(num))
+            while num_sum > 9:
+                num_sum = sum(int(digit) for digit in str(num_sum))
+            if num_sum == draw_sum:
+                pattern_scores[num] += 1
+
+    # Normalize scores
+    max_score = max(pattern_scores.values())
+    if max_score > 0:
+        for num in pattern_scores:
+            pattern_scores[num] /= max_score
+
+    return pattern_scores
+
+
+def generate_numerology_numbers(
+        current_date: datetime.datetime,
+        min_num: int,
+        max_num: int,
+        required_numbers: int,
+        past_numbers: List[List[int]]
+) -> List[int]:
+    """Generate numbers using multiple numerological methods."""
+    selected_numbers: Set[int] = set()
+
+    # Calculate various numerological numbers
+    life_path = get_life_path_number(current_date)
+    destiny = get_destiny_number(current_date)
+    cycle = get_cycle_number(current_date)
+
+    # Analyze patterns in past numbers
+    pattern_scores = analyze_number_patterns(past_numbers, min_num, max_num)
+
+    # Generate candidate numbers using different methods
+    candidates = []
+
+    # Method 1: Direct numerological numbers
+    for base in [life_path, destiny, cycle]:
+        num = ((base * life_path) % (max_num - min_num + 1)) + min_num
+        candidates.append(num)
+
+    # Method 2: Numerological combinations
+    for i in range(1, 4):
+        num = ((life_path * i + destiny) % (max_num - min_num + 1)) + min_num
+        candidates.append(num)
+        num = ((destiny * i + cycle) % (max_num - min_num + 1)) + min_num
+        candidates.append(num)
+
+    # Method 3: Pattern-based numbers
+    sorted_patterns = sorted(pattern_scores.items(), key=lambda x: x[1], reverse=True)
+    pattern_candidates = [num for num, _ in sorted_patterns[:required_numbers]]
+    candidates.extend(pattern_candidates)
+
+    # Select unique numbers with preference for those matching patterns
+    for num in candidates:
+        if min_num <= num <= max_num:
+            selected_numbers.add(num)
+            if len(selected_numbers) >= required_numbers:
+                break
+
+    # Fill remaining slots if needed
+    while len(selected_numbers) < required_numbers:
+        # Try numbers that sum to life path number first
+        for num in range(min_num, max_num + 1):
+            num_sum = sum(int(digit) for digit in str(num))
+            while num_sum > 9:
+                num_sum = sum(int(digit) for digit in str(num_sum))
+            if num_sum == life_path and num not in selected_numbers:
+                selected_numbers.add(num)
+                break
+        else:
+            # If no matching numbers found, add random number
+            while len(selected_numbers) < required_numbers:
+                num = random.randint(min_num, max_num)
+                if num not in selected_numbers:
+                    selected_numbers.add(num)
+
+    return sorted(list(selected_numbers))
+
+
+def generate_random_numbers(min_num: int, max_num: int, required_numbers: int) -> List[int]:
+    """Generate random numbers when needed."""
+    numbers = set()
+    while len(numbers) < required_numbers:
+        numbers.add(random.randint(min_num, max_num))
+    return sorted(list(numbers))

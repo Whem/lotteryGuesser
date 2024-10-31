@@ -24,10 +24,10 @@ def convert_to_native_types(value):
     return value
 
 
-def get_numbers(lottery_type_instance: lg_lottery_type) -> List[int]:
+def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
     """
-    Chaos theory based prediction using attractor point analysis
-    and basin stability measurements.
+    Chaos theory-based prediction using attractor point analysis and basin stability measurements.
+    Returns a tuple of (main_numbers, additional_numbers).
     """
     past_draws = list(lg_lottery_winner_number.objects.filter(
         lottery_type=lottery_type_instance
@@ -35,72 +35,98 @@ def get_numbers(lottery_type_instance: lg_lottery_type) -> List[int]:
 
     past_draws = [draw for draw in past_draws if isinstance(draw, list)]
     if not past_draws:
-        return generate_random_numbers(lottery_type_instance)
+        return generate_random_numbers(lottery_type_instance), generate_random_additional_numbers(lottery_type_instance)
 
     required_numbers = lottery_type_instance.pieces_of_draw_numbers
-    candidates = set()
+    main_candidates = set()
 
-    # 1. Attractor Point Analysis
+    # 1. Attractor Point Analysis for Main Numbers
     attractor_numbers = analyze_attractor_points(
         past_draws,
         lottery_type_instance.min_number,
         lottery_type_instance.max_number
     )
-    candidates.update(map(convert_to_native_types, attractor_numbers[:required_numbers // 3]))
+    main_candidates.update(attractor_numbers[:required_numbers // 3])
 
-    # 2. Chaos Basin Analysis
+    # 2. Chaos Basin Analysis for Main Numbers
     basin_numbers = analyze_chaos_basins(
         past_draws,
         lottery_type_instance.min_number,
         lottery_type_instance.max_number
     )
-    candidates.update(map(convert_to_native_types, basin_numbers[:required_numbers // 3]))
+    main_candidates.update(basin_numbers[:required_numbers // 3])
 
-    # 3. Lyapunov Stability Analysis
+    # 3. Lyapunov Stability Analysis for Main Numbers
     stability_numbers = analyze_lyapunov_stability(
         past_draws,
         lottery_type_instance.min_number,
         lottery_type_instance.max_number
     )
-    candidates.update(map(convert_to_native_types, stability_numbers[:required_numbers // 3]))
+    main_candidates.update(stability_numbers[:required_numbers // 3])
 
-    # Fill remaining slots using dynamic basin probabilities
+    # Fill remaining slots for main numbers
+    main_numbers = fill_remaining_slots(main_candidates, past_draws, required_numbers, lottery_type_instance.min_number, lottery_type_instance.max_number)
+
+    # Generate additional numbers if required
+    additional_numbers = []
+    if lottery_type_instance.has_additional_numbers:
+        additional_min = lottery_type_instance.additional_min_number
+        additional_max = lottery_type_instance.additional_max_number
+        additional_required = lottery_type_instance.additional_numbers_count
+
+        # Chaos Theory predictions for additional numbers
+        additional_attractor_numbers = analyze_attractor_points(past_draws, additional_min, additional_max)
+        additional_basin_numbers = analyze_chaos_basins(past_draws, additional_min, additional_max)
+        additional_stability_numbers = analyze_lyapunov_stability(past_draws, additional_min, additional_max)
+
+        additional_candidates = set()
+        additional_candidates.update(additional_attractor_numbers[:additional_required // 3])
+        additional_candidates.update(additional_basin_numbers[:additional_required // 3])
+        additional_candidates.update(additional_stability_numbers[:additional_required // 3])
+
+        # Fill remaining slots for additional numbers
+        additional_numbers = fill_remaining_slots(additional_candidates, past_draws, additional_required, additional_min, additional_max)
+
+    return sorted(main_numbers), sorted(additional_numbers)
+
+
+def fill_remaining_slots(candidates: set, past_draws: List[List[int]], required_numbers: int, min_num: int, max_num: int) -> List[int]:
+    """
+    Fill the remaining slots with the highest probability numbers based on dynamic basin probabilities.
+    """
+    weights = calculate_basin_weights(past_draws, min_num, max_num, candidates)
+    available_numbers = set(range(min_num, max_num + 1)) - candidates
+
     while len(candidates) < required_numbers:
-        weights = calculate_basin_weights(
-            past_draws,
-            lottery_type_instance.min_number,
-            lottery_type_instance.max_number,
-            candidates
-        )
+        number_weights = [weights.get(num, 1.0) for num in available_numbers]
+        selected = random.choices(list(available_numbers), weights=number_weights, k=1)[0]
+        candidates.add(selected)
+        available_numbers.remove(selected)
 
-        available_numbers = set(range(
-            lottery_type_instance.min_number,
-            lottery_type_instance.max_number + 1
-        )) - candidates
+    return list(candidates)[:required_numbers]
 
-        if available_numbers:
-            available_numbers = list(available_numbers)  # Convert to list for random.choices
-            number_weights = [weights.get(num, 1.0) for num in available_numbers]
-            try:
-                selected = convert_to_native_types(
-                    random.choices(available_numbers, weights=number_weights, k=1)[0]
-                )
-                candidates.add(selected)
-            except Exception as e:
-                print(f"Selection error: {e}")
-                # Fallback to simple random selection if weighting fails
-                candidates.add(random.choice(list(available_numbers)))
 
-    # Ensure all numbers are native Python integers
-    result = [convert_to_native_types(num) for num in sorted(candidates)][:required_numbers]
+def generate_random_numbers(lottery_type_instance: lg_lottery_type) -> List[int]:
+    """Generate random numbers for main set based on attractor principles."""
+    return generate_random_set(lottery_type_instance.min_number, lottery_type_instance.max_number, lottery_type_instance.pieces_of_draw_numbers)
 
-    # Final validation
-    result = [
-        num if isinstance(num, int) else int(num)
-        for num in result
-    ]
 
-    return result
+def generate_random_additional_numbers(lottery_type_instance: lg_lottery_type) -> List[int]:
+    """Generate random numbers for additional set based on attractor principles."""
+    return generate_random_set(lottery_type_instance.additional_min_number, lottery_type_instance.additional_max_number, lottery_type_instance.additional_numbers_count)
+
+
+def generate_random_set(min_num: int, max_num: int, count: int) -> List[int]:
+    """Generate random numbers using chaos theory principles within a specified range and count."""
+    numbers = set()
+    attractors = [min_num, (min_num + max_num) // 2, max_num]
+    while len(numbers) < count:
+        attractor = random.choice(attractors)
+        noise = random.gauss(0, (max_num - min_num) / 10)
+        num = int(attractor + noise)
+        num = max(min_num, min(max_num, num))
+        numbers.add(num)
+    return sorted(numbers)
 
 
 def analyze_attractor_points(past_draws: List[List[int]], min_num: int, max_num: int) -> List[int]:

@@ -13,67 +13,103 @@ from itertools import combinations, chain
 import random
 
 
-def get_numbers(lottery_type_instance: lg_lottery_type) -> List[int]:
-    """
-    Harmonic pattern analysis with collective behavior modeling.
-    Uses musical harmony principles and swarm intelligence for prediction.
-    """
-    # Get historical data
-    past_draws = list(lg_lottery_winner_number.objects.filter(
-        lottery_type=lottery_type_instance
-    ).values_list('lottery_type_number', flat=True).order_by('-id')[:200])
+def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
+    """Harmonic pattern analyzer for combined lottery types."""
+    main_numbers = generate_number_set(
+        lottery_type_instance,
+        lottery_type_instance.min_number,
+        lottery_type_instance.max_number,
+        lottery_type_instance.pieces_of_draw_numbers,
+        True
+    )
 
-    past_draws = [draw for draw in past_draws if isinstance(draw, list)]
+    additional_numbers = []
+    if lottery_type_instance.has_additional_numbers:
+        additional_numbers = generate_number_set(
+            lottery_type_instance,
+            lottery_type_instance.additional_min_number,
+            lottery_type_instance.additional_max_number,
+            lottery_type_instance.additional_numbers_count,
+            False
+        )
+
+    return main_numbers, additional_numbers
+
+
+def generate_number_set(
+        lottery_type_instance: lg_lottery_type,
+        min_num: int,
+        max_num: int,
+        required_numbers: int,
+        is_main: bool
+) -> List[int]:
+    """Generate numbers using harmonic analysis."""
+    past_draws = get_historical_data(lottery_type_instance, is_main)
+
     if not past_draws:
         return generate_random_numbers(lottery_type_instance)
 
-    required_numbers = lottery_type_instance.pieces_of_draw_numbers
     candidates = set()
 
-    # 1. Harmonic Pattern Analysis
+    # 1. Harmonic Analysis
     harmonic_numbers = analyze_harmonic_patterns(
         past_draws,
-        lottery_type_instance.min_number,
-        lottery_type_instance.max_number
+        min_num,
+        max_num
     )
     candidates.update(harmonic_numbers[:required_numbers // 3])
 
-    # 2. Collective Behavior Analysis
+    # 2. Collective Behavior
     collective_numbers = analyze_collective_behavior(
         past_draws,
-        lottery_type_instance.min_number,
-        lottery_type_instance.max_number
+        min_num,
+        max_num
     )
     candidates.update(collective_numbers[:required_numbers // 3])
 
-    # 3. Rhythm Pattern Analysis
+    # 3. Rhythm Analysis
     rhythm_numbers = analyze_rhythm_patterns(
         past_draws,
-        lottery_type_instance.min_number,
-        lottery_type_instance.max_number
+        min_num,
+        max_num
     )
     candidates.update(rhythm_numbers[:required_numbers // 3])
 
-    # Fill remaining slots using harmonic probabilities
+    # Fill remaining slots
     while len(candidates) < required_numbers:
         weights = calculate_harmonic_probabilities(
             past_draws,
-            lottery_type_instance.min_number,
-            lottery_type_instance.max_number,
+            min_num,
+            max_num,
             candidates
         )
 
-        available_numbers = set(range(
-            lottery_type_instance.min_number,
-            lottery_type_instance.max_number + 1
-        )) - candidates
-
+        available_numbers = set(range(min_num, max_num + 1)) - candidates
         if available_numbers:
             number_weights = [weights.get(num, 1.0) for num in available_numbers]
-            selected = random.choices(list(available_numbers), weights=number_weights, k=1)[0]
+            selected = random.choices(
+                list(available_numbers),
+                weights=number_weights,
+                k=1
+            )[0]
             candidates.add(selected)
 
     return sorted(list(candidates))[:required_numbers]
+
+
+def get_historical_data(lottery_type_instance: lg_lottery_type, is_main: bool) -> List[List[int]]:
+    """Get historical lottery data."""
+    past_draws = list(lg_lottery_winner_number.objects.filter(
+        lottery_type=lottery_type_instance
+    ).order_by('-id')[:200])
+
+    if is_main:
+        return [draw.lottery_type_number for draw in past_draws
+                if isinstance(draw.lottery_type_number, list)]
+    else:
+        return [draw.additional_numbers for draw in past_draws
+                if hasattr(draw, 'additional_numbers') and
+                isinstance(draw.additional_numbers, list)]
 
 
 def analyze_harmonic_patterns(past_draws: List[List[int]], min_num: int, max_num: int) -> List[int]:

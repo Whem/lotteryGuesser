@@ -1,6 +1,6 @@
 # ensemble_prediction.py
-
 from collections import Counter
+from typing import List, Tuple
 from algorithms.models import lg_lottery_winner_number, lg_lottery_type
 
 # Import get_numbers functions from existing predictor modules
@@ -12,66 +12,122 @@ from .graph_centrality_prediction import get_numbers as graph_centrality_get_num
 from .chaotic_map_prediction import get_numbers as chaotic_map_get_numbers
 
 
-def get_numbers(lottery_type_instance):
+def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
     """
-    Generál lottószámokat Ensemble alapú elemzéssel.
-
-    Paraméterek:
-    - lottery_type_instance: Az lg_lottery_type modell egy példánya.
-
-    Visszatérési érték:
-    - Egy rendezett lista a megjósolt lottószámokról.
+    Ensemble predictor for combined lottery types.
+    Returns (main_numbers, additional_numbers).
     """
-    # Gyűjtsük össze a predikciókat minden modellből
+    # Generate main numbers
+    main_numbers = generate_number_set(
+        lottery_type_instance,
+        lottery_type_instance.min_number,
+        lottery_type_instance.max_number,
+        lottery_type_instance.pieces_of_draw_numbers,
+        True
+    )
+
+    # Generate additional numbers if needed
+    additional_numbers = []
+    if lottery_type_instance.has_additional_numbers:
+        additional_numbers = generate_number_set(
+            lottery_type_instance,
+            lottery_type_instance.additional_min_number,
+            lottery_type_instance.additional_max_number,
+            lottery_type_instance.additional_numbers_count,
+            False
+        )
+
+    return main_numbers, additional_numbers
+
+
+def generate_number_set(
+        lottery_type_instance: lg_lottery_type,
+        min_num: int,
+        max_num: int,
+        required_numbers: int,
+        is_main: bool
+) -> List[int]:
+    """Generate numbers using ensemble prediction."""
+    # Collect predictions from all models
     predictions = []
 
-    predictions.append(fuzzy_logic_get_numbers(lottery_type_instance))
-    predictions.append(cellular_automaton_get_numbers(lottery_type_instance))
-    predictions.append(tda_get_numbers(lottery_type_instance))
-    predictions.append(symbolic_regression_get_numbers(lottery_type_instance))
-    predictions.append(graph_centrality_get_numbers(lottery_type_instance))
-    predictions.append(chaotic_map_get_numbers(lottery_type_instance))
+    # Gather predictions for the appropriate number set
+    if is_main:
+        predictions.extend([
+            fuzzy_logic_get_numbers(lottery_type_instance)[0],
+            cellular_automaton_get_numbers(lottery_type_instance)[0],
+            tda_get_numbers(lottery_type_instance)[0],
+            symbolic_regression_get_numbers(lottery_type_instance)[0],
+            graph_centrality_get_numbers(lottery_type_instance)[0],
+            chaotic_map_get_numbers(lottery_type_instance)[0]
+        ])
+    else:
+        predictions.extend([
+            fuzzy_logic_get_numbers(lottery_type_instance)[1],
+            cellular_automaton_get_numbers(lottery_type_instance)[1],
+            tda_get_numbers(lottery_type_instance)[1],
+            symbolic_regression_get_numbers(lottery_type_instance)[1],
+            graph_centrality_get_numbers(lottery_type_instance)[1],
+            chaotic_map_get_numbers(lottery_type_instance)[1]
+        ])
 
-    # Gyűjtsük össze az összes predikált számot
+    # Count all predicted numbers
     all_predicted_numbers = [num for pred in predictions for num in pred]
-
-    # Számoljuk meg a számok előfordulását
     number_counts = Counter(all_predicted_numbers)
 
-    # Válasszuk ki a leggyakoribb számokat a total_numbers mennyiségben
-    total_numbers = int(lottery_type_instance.pieces_of_draw_numbers)
-    most_common = number_counts.most_common(total_numbers)
-    predicted_numbers = [num for num, count in most_common]
-
-    # Biztosítjuk, hogy a számok egyediek és a megengedett tartományon belül maradjanak
-    min_num = int(lottery_type_instance.min_number)
-    max_num = int(lottery_type_instance.max_number)
-
-    predicted_numbers = [int(num) for num in predicted_numbers if min_num <= num <= max_num]
-
-    # Ha kevesebb számunk van, mint szükséges, kiegészítjük a leggyakoribb számokkal
-    if len(predicted_numbers) < total_numbers:
-        # Gyűjtsük össze az összes szám előfordulását
-        past_draws_queryset = lg_lottery_winner_number.objects.filter(
-            lottery_type=lottery_type_instance
-        ).order_by('id').values_list('lottery_type_number', flat=True)
-
-        past_draws = [
-            [int(num) for num in draw] for draw in past_draws_queryset
-            if isinstance(draw, list) and len(draw) == total_numbers
-        ]
-
-        all_numbers = [number for draw in past_draws for number in draw]
-        number_counts_past = Counter(all_numbers)
-        sorted_common_numbers = [num for num, count in number_counts_past.most_common() if num not in predicted_numbers]
-
-        for num in sorted_common_numbers:
+    # Select most common numbers within valid range
+    predicted_numbers = []
+    for num, _ in number_counts.most_common():
+        if min_num <= num <= max_num:
             predicted_numbers.append(num)
-            if len(predicted_numbers) == total_numbers:
+            if len(predicted_numbers) >= required_numbers:
                 break
 
-    # Végső rendezés
-    predicted_numbers = predicted_numbers[:total_numbers]
-    predicted_numbers.sort()
+    # Fill with historical numbers if needed
+    if len(predicted_numbers) < required_numbers:
+        historical_numbers = get_historical_numbers(
+            lottery_type_instance,
+            min_num,
+            max_num,
+            required_numbers,
+            is_main,
+            predicted_numbers
+        )
+        predicted_numbers.extend(historical_numbers)
 
-    return predicted_numbers
+    # Final sorting and trimming
+    return sorted(predicted_numbers[:required_numbers])
+
+
+def get_historical_numbers(
+        lottery_type_instance: lg_lottery_type,
+        min_num: int,
+        max_num: int,
+        required_numbers: int,
+        is_main: bool,
+        existing_numbers: List[int]
+) -> List[int]:
+    """Get additional numbers from historical data."""
+    past_draws = lg_lottery_winner_number.objects.filter(
+        lottery_type=lottery_type_instance
+    ).order_by('id')
+
+    all_numbers = []
+    for draw in past_draws:
+        numbers = draw.lottery_type_number if is_main else draw.additional_numbers
+        if isinstance(numbers, list):
+            all_numbers.extend(numbers)
+
+    # Count and filter numbers
+    number_counts = Counter(all_numbers)
+    additional_numbers = []
+
+    for num, _ in number_counts.most_common():
+        if (min_num <= num <= max_num and
+                num not in existing_numbers and
+                num not in additional_numbers):
+            additional_numbers.append(num)
+            if len(existing_numbers) + len(additional_numbers) >= required_numbers:
+                break
+
+    return additional_numbers

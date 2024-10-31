@@ -1,7 +1,4 @@
-# neural_pattern_evolution_predictor.py
-# Advanced neural pattern recognition with evolutionary optimization
-# Combines successful patterns from historical data with adaptive learning
-
+#neural_pattern_evolution_predictor.py
 import random
 from typing import List, Dict, Set, Tuple
 from collections import Counter, defaultdict
@@ -13,65 +10,100 @@ from scipy.stats import zscore
 import math
 
 
-def get_numbers(lottery_type_instance: lg_lottery_type) -> List[int]:
+def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
     """
     Neural pattern evolution algorithm that combines multiple advanced approaches
     with dynamic pattern recognition and evolutionary optimization.
+    Returns a tuple of (main_numbers, additional_numbers).
     """
+    # Generate main numbers
+    main_numbers = generate_number_set(
+        lottery_type_instance,
+        lottery_type_instance.min_number,
+        lottery_type_instance.max_number,
+        lottery_type_instance.pieces_of_draw_numbers,
+        is_main=True
+    )
+
+    # Generate additional numbers if needed
+    additional_numbers = []
+    if lottery_type_instance.has_additional_numbers:
+        additional_numbers = generate_number_set(
+            lottery_type_instance,
+            lottery_type_instance.additional_min_number,
+            lottery_type_instance.additional_max_number,
+            lottery_type_instance.additional_numbers_count,
+            is_main=False
+        )
+
+    return main_numbers, additional_numbers
+
+
+def generate_number_set(
+        lottery_type_instance: lg_lottery_type,
+        min_num: int,
+        max_num: int,
+        required_numbers: int,
+        is_main: bool
+) -> List[int]:
+    """Generate a set of numbers using the neural pattern evolution algorithm."""
     # Get extended historical data for better pattern recognition
     past_draws = list(lg_lottery_winner_number.objects.filter(
         lottery_type=lottery_type_instance
-    ).values_list('lottery_type_number', flat=True).order_by('-id')[:500])
+    ).order_by('-id')[:500])
 
-    past_draws = [draw for draw in past_draws if isinstance(draw, list)]
+    # Extract appropriate number sets from past draws
+    if is_main:
+        past_numbers = [draw.lottery_type_number for draw in past_draws
+                        if isinstance(draw.lottery_type_number, list)]
+    else:
+        past_numbers = [draw.additional_numbers for draw in past_draws
+                        if hasattr(draw, 'additional_numbers') and
+                        isinstance(draw.additional_numbers, list)]
 
-    if not past_draws:
-        return generate_random_numbers(lottery_type_instance)
+    if not past_numbers:
+        return generate_random_numbers(min_num, max_num, required_numbers)
 
-    required_numbers = lottery_type_instance.pieces_of_draw_numbers
     candidates = set()
 
     # 1. Neural Pattern Analysis
     neural_patterns = analyze_neural_patterns(
-        past_draws,
-        lottery_type_instance.min_number,
-        lottery_type_instance.max_number
+        past_numbers,
+        min_num,
+        max_num
     )
     candidates.update(neural_patterns[:required_numbers // 2])
 
     # 2. Evolutionary Distance Patterns
     evolution_numbers = find_evolutionary_distances(
-        past_draws,
-        lottery_type_instance.min_number,
-        lottery_type_instance.max_number
+        past_numbers,
+        min_num,
+        max_num
     )
     candidates.update(evolution_numbers[:required_numbers // 2])
 
     # 3. Quantum-inspired Pattern Detection
     quantum_patterns = detect_quantum_patterns(
-        past_draws,
-        lottery_type_instance.min_number,
-        lottery_type_instance.max_number
+        past_numbers,
+        min_num,
+        max_num
     )
     candidates.update(quantum_patterns[:required_numbers // 2])
 
     # 4. Apply Matrix Transformation Patterns
-    matrix_patterns = analyze_matrix_patterns(past_draws)
+    matrix_patterns = analyze_matrix_patterns(past_numbers)
     candidates.update(matrix_patterns[:required_numbers // 2])
 
     # Fill remaining slots with neural weighted selection
     while len(candidates) < required_numbers:
         weights = calculate_neural_weights(
-            past_draws,
-            lottery_type_instance.min_number,
-            lottery_type_instance.max_number,
+            past_numbers,
+            min_num,
+            max_num,
             candidates
         )
 
-        available_numbers = set(range(
-            lottery_type_instance.min_number,
-            lottery_type_instance.max_number + 1
-        )) - candidates
+        available_numbers = set(range(min_num, max_num + 1)) - candidates
 
         if available_numbers:
             number_weights = [weights.get(num, 1.0) for num in available_numbers]
@@ -169,33 +201,44 @@ def analyze_matrix_patterns(past_draws: List[List[int]]) -> List[int]:
     """Analyze patterns using matrix transformations."""
     matrix_scores = defaultdict(float)
 
+    if not past_draws:
+        return []
+
     # Create sliding windows of draws
     window_size = min(10, len(past_draws))
     for i in range(len(past_draws) - window_size + 1):
         window = past_draws[i:i + window_size]
 
         # Create matrix from window
-        matrix = np.array([sorted(draw) for draw in window])
+        # Ensure all draws in window have the same length by padding with zeros
+        max_len = max(len(draw) for draw in window)
+        padded_window = [draw + [0] * (max_len - len(draw)) for draw in window]
+        matrix = np.array(padded_window)
 
         # Analyze column patterns
         for col in range(matrix.shape[1]):
             column_values = matrix[:, col]
             diff = np.diff(column_values)
 
-            # Predict next value using various methods
-            linear_next = int(column_values[-1] + np.mean(diff))
-            exp_next = int(column_values[-1] * np.exp(np.mean(np.log(diff[diff > 0]))))
+            if len(diff) > 0:  # Check if there are enough values to calculate differences
+                # Predict next value using various methods
+                linear_next = int(column_values[-1] + np.mean(diff))
 
-            matrix_scores[linear_next] += 1 / (i + 1)
-            matrix_scores[exp_next] += 0.8 / (i + 1)
+                # Only calculate exp_next if all differences are positive
+                positive_diffs = diff[diff > 0]
+                if len(positive_diffs) > 0:
+                    exp_next = int(column_values[-1] * np.exp(np.mean(np.log(positive_diffs))))
+                    matrix_scores[exp_next] += 0.8 / (i + 1)
 
-            # Analyze diagonal patterns
-            if col < matrix.shape[1] - 1:
-                diag_values = np.diagonal(matrix[:, col:])
-                diag_diff = np.diff(diag_values)
-                if len(diag_diff) > 0:
-                    diag_next = int(diag_values[-1] + np.mean(diag_diff))
-                    matrix_scores[diag_next] += 1.2 / (i + 1)
+                matrix_scores[linear_next] += 1 / (i + 1)
+
+                # Analyze diagonal patterns
+                if col < matrix.shape[1] - 1:
+                    diag_values = np.diagonal(matrix[:, col:])
+                    diag_diff = np.diff(diag_values)
+                    if len(diag_diff) > 0:
+                        diag_next = int(diag_values[-1] + np.mean(diag_diff))
+                        matrix_scores[diag_next] += 1.2 / (i + 1)
 
     return sorted(matrix_scores.keys(), key=matrix_scores.get, reverse=True)
 
@@ -209,13 +252,20 @@ def calculate_neural_weights(
     """Calculate neural network inspired weights for number selection."""
     weights = defaultdict(float)
 
+    if not past_draws:
+        return weights
+
     # Basic frequency analysis
     all_numbers = [num for draw in past_draws for num in draw]
+
+    if not all_numbers:
+        return weights
+
     frequency_counter = Counter(all_numbers)
 
     # Statistical measures
     mean = statistics.mean(all_numbers)
-    std_dev = statistics.stdev(all_numbers)
+    std_dev = statistics.stdev(all_numbers) if len(all_numbers) > 1 else 1
 
     for num in range(min_num, max_num + 1):
         if num in excluded_numbers:
@@ -248,12 +298,9 @@ def calculate_neural_weights(
     return weights
 
 
-def generate_random_numbers(lottery_type_instance: lg_lottery_type) -> List[int]:
+def generate_random_numbers(min_num: int, max_num: int, required_numbers: int) -> List[int]:
     """Generate random numbers when no historical data is available."""
     numbers = set()
-    while len(numbers) < lottery_type_instance.pieces_of_draw_numbers:
-        numbers.add(random.randint(
-            lottery_type_instance.min_number,
-            lottery_type_instance.max_number
-        ))
+    while len(numbers) < required_numbers:
+        numbers.add(random.randint(min_num, max_num))
     return sorted(list(numbers))

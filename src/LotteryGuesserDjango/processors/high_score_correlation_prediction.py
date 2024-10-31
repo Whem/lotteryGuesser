@@ -12,66 +12,97 @@ import random
 from scipy.signal import find_peaks
 
 
-def get_numbers(lottery_type_instance: lg_lottery_type) -> List[int]:
-    """
-    High score hybrid algorithm that combines the most successful approaches
-    based on historical performance metrics.
-    """
-    past_draws = list(lg_lottery_winner_number.objects.filter(
-        lottery_type=lottery_type_instance
-    ).values_list('lottery_type_number', flat=True).order_by('-id')[:200])
+def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
+    """High score hybrid predictor for combined lottery types."""
+    main_numbers = generate_number_set(
+        lottery_type_instance,
+        lottery_type_instance.min_number,
+        lottery_type_instance.max_number,
+        lottery_type_instance.pieces_of_draw_numbers,
+        True
+    )
 
-    past_draws = [draw for draw in past_draws if isinstance(draw, list)]
+    additional_numbers = []
+    if lottery_type_instance.has_additional_numbers:
+        additional_numbers = generate_number_set(
+            lottery_type_instance,
+            lottery_type_instance.additional_min_number,
+            lottery_type_instance.additional_max_number,
+            lottery_type_instance.additional_numbers_count,
+            False
+        )
+
+    return main_numbers, additional_numbers
+
+
+def generate_number_set(
+        lottery_type_instance: lg_lottery_type,
+        min_num: int,
+        max_num: int,
+        required_numbers: int,
+        is_main: bool
+) -> List[int]:
+    """Generate numbers using hybrid analysis."""
+    past_draws = get_historical_data(lottery_type_instance, is_main)
+
     if not past_draws:
         return generate_random_numbers(lottery_type_instance)
 
-    required_numbers = lottery_type_instance.pieces_of_draw_numbers
     candidates = set()
 
-    # 1. Fibonacci-based Analysis (40.0 score)
+    # 1. Fibonacci Analysis (40.0 score)
     fibonacci_numbers = analyze_fibonacci_patterns(
-        past_draws,
-        lottery_type_instance.min_number,
-        lottery_type_instance.max_number
+        past_draws, min_num, max_num
     )
     candidates.update(fibonacci_numbers[:required_numbers // 4])
 
     # 2. Cross-Draw Correlation (35.0 score)
     correlation_numbers = analyze_cross_correlations(
-        past_draws,
-        lottery_type_instance.min_number,
-        lottery_type_instance.max_number
+        past_draws, min_num, max_num
     )
     candidates.update(correlation_numbers[:required_numbers // 4])
 
     # 3. Number Pair Analysis (25.0 score)
     pair_numbers = analyze_number_pairs(
-        past_draws,
-        lottery_type_instance.min_number,
-        lottery_type_instance.max_number
+        past_draws, min_num, max_num
     )
     candidates.update(pair_numbers[:required_numbers // 4])
 
-    # Fill remaining slots using weighted combination
+    # Fill remaining using hybrid weights
     while len(candidates) < required_numbers:
         weights = calculate_hybrid_weights(
             past_draws,
-            lottery_type_instance.min_number,
-            lottery_type_instance.max_number,
+            min_num,
+            max_num,
             candidates
         )
 
-        available_numbers = set(range(
-            lottery_type_instance.min_number,
-            lottery_type_instance.max_number + 1
-        )) - candidates
-
+        available_numbers = set(range(min_num, max_num + 1)) - candidates
         if available_numbers:
             number_weights = [weights.get(num, 1.0) for num in available_numbers]
-            selected = random.choices(list(available_numbers), weights=number_weights, k=1)[0]
+            selected = random.choices(
+                list(available_numbers),
+                weights=number_weights,
+                k=1
+            )[0]
             candidates.add(selected)
 
     return sorted(list(candidates))[:required_numbers]
+
+
+def get_historical_data(lottery_type_instance: lg_lottery_type, is_main: bool) -> List[List[int]]:
+    """Get historical lottery data."""
+    past_draws = list(lg_lottery_winner_number.objects.filter(
+        lottery_type=lottery_type_instance
+    ).order_by('-id')[:200])
+
+    if is_main:
+        return [draw.lottery_type_number for draw in past_draws
+                if isinstance(draw.lottery_type_number, list)]
+    else:
+        return [draw.additional_numbers for draw in past_draws
+                if hasattr(draw, 'additional_numbers') and
+                isinstance(draw.additional_numbers, list)]
 
 
 def analyze_fibonacci_patterns(past_draws: List[List[int]], min_num: int, max_num: int) -> List[int]:

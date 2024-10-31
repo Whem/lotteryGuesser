@@ -14,36 +14,63 @@ from scipy.stats import pearsonr
 import math
 
 
-def get_numbers(lottery_type_instance: lg_lottery_type) -> List[int]:
+def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
     """
-    Cluster-based correlation prediction with time series analysis
+    Cluster correlation predictor for combined lottery types.
+    Returns (main_numbers, additional_numbers).
     """
-    # Fetch extended historical data
-    past_draws = list(lg_lottery_winner_number.objects.filter(
-        lottery_type=lottery_type_instance
-    ).values_list('lottery_type_number', flat=True).order_by('-id')[:150])
+    # Generate main numbers
+    main_numbers = generate_number_set(
+        lottery_type_instance,
+        lottery_type_instance.min_number,
+        lottery_type_instance.max_number,
+        lottery_type_instance.pieces_of_draw_numbers,
+        True
+    )
 
-    past_draws = [draw for draw in past_draws if isinstance(draw, list)]
+    # Generate additional numbers if needed
+    additional_numbers = []
+    if lottery_type_instance.has_additional_numbers:
+        additional_numbers = generate_number_set(
+            lottery_type_instance,
+            lottery_type_instance.additional_min_number,
+            lottery_type_instance.additional_max_number,
+            lottery_type_instance.additional_numbers_count,
+            False
+        )
+
+    return main_numbers, additional_numbers
+
+
+def generate_number_set(
+        lottery_type_instance: lg_lottery_type,
+        min_num: int,
+        max_num: int,
+        required_numbers: int,
+        is_main: bool
+) -> List[int]:
+    """Generate numbers using cluster correlation analysis."""
+    # Get historical data
+    past_draws = get_historical_data(lottery_type_instance, is_main)
 
     if not past_draws:
         return generate_random_numbers(lottery_type_instance)
 
-    required_numbers = lottery_type_instance.pieces_of_draw_numbers
     number_pool = set()
 
     # 1. Cluster Analysis
     cluster_numbers = perform_cluster_analysis(
         past_draws,
-        lottery_type_instance.min_number,
-        lottery_type_instance.max_number
+        min_num,
+        max_num
     )
     number_pool.update(cluster_numbers[:required_numbers // 3])
 
-    # 2. Time Series Decomposition
+    # 2. Time Series Analysis
     time_series_numbers = analyze_time_series(
         past_draws,
-        lottery_type_instance.min_number,
-        lottery_type_instance.max_number
+        min_num,
+        max_num
     )
     number_pool.update(time_series_numbers[:required_numbers // 3])
 
@@ -51,26 +78,41 @@ def get_numbers(lottery_type_instance: lg_lottery_type) -> List[int]:
     correlation_numbers = find_number_correlations(past_draws)
     number_pool.update(correlation_numbers[:required_numbers // 3])
 
-    # Fill remaining slots using adaptive probability
+    # Fill remaining slots
     while len(number_pool) < required_numbers:
         weights = calculate_adaptive_probabilities(
             past_draws,
-            lottery_type_instance.min_number,
-            lottery_type_instance.max_number,
+            min_num,
+            max_num,
             number_pool
         )
 
-        available_numbers = set(range(
-            lottery_type_instance.min_number,
-            lottery_type_instance.max_number + 1
-        )) - number_pool
-
+        available_numbers = set(range(min_num, max_num + 1)) - number_pool
         if available_numbers:
             number_weights = [weights.get(num, 1.0) for num in available_numbers]
-            selected = random.choices(list(available_numbers), weights=number_weights, k=1)[0]
+            selected = random.choices(
+                list(available_numbers),
+                weights=number_weights,
+                k=1
+            )[0]
             number_pool.add(selected)
 
     return sorted(list(number_pool))[:required_numbers]
+
+
+def get_historical_data(lottery_type_instance: lg_lottery_type, is_main: bool) -> List[List[int]]:
+    """Get historical lottery data based on number type."""
+    past_draws = list(lg_lottery_winner_number.objects.filter(
+        lottery_type=lottery_type_instance
+    ).order_by('-id')[:150])
+
+    if is_main:
+        return [draw.lottery_type_number for draw in past_draws
+                if isinstance(draw.lottery_type_number, list)]
+    else:
+        return [draw.additional_numbers for draw in past_draws
+                if hasattr(draw, 'additional_numbers') and
+                isinstance(draw.additional_numbers, list)]
 
 
 def perform_cluster_analysis(past_draws: List[List[int]], min_num: int, max_num: int) -> List[int]:

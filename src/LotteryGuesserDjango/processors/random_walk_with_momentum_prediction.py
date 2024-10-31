@@ -1,7 +1,9 @@
+# random_walk_with_momentum_prediction.py
 import random
-from algorithms.models import lg_lottery_winner_number
+from typing import List, Tuple
+from algorithms.models import lg_lottery_winner_number, lg_lottery_type
 
-def get_numbers(lottery_type_instance):
+def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
     """
     Generates lottery numbers based on random walk with momentum prediction.
 
@@ -9,16 +11,56 @@ def get_numbers(lottery_type_instance):
     - lottery_type_instance: An instance of lg_lottery_type model.
 
     Returns:
+    - A tuple containing two lists:
+        - main_numbers: A sorted list of predicted main lottery numbers.
+        - additional_numbers: A sorted list of predicted additional lottery numbers (if applicable).
+    """
+    # Generate main numbers
+    main_numbers = generate_number_set(
+        lottery_type_instance=lottery_type_instance,
+        min_num=lottery_type_instance.min_number,
+        max_num=lottery_type_instance.max_number,
+        total_numbers=lottery_type_instance.pieces_of_draw_numbers,
+        number_field='lottery_type_number'
+    )
+
+    additional_numbers = []
+    if lottery_type_instance.has_additional_numbers:
+        # Generate additional numbers
+        additional_numbers = generate_number_set(
+            lottery_type_instance=lottery_type_instance,
+            min_num=lottery_type_instance.additional_min_number,
+            max_num=lottery_type_instance.additional_max_number,
+            total_numbers=lottery_type_instance.additional_numbers_count,
+            number_field='additional_numbers'
+        )
+
+    return main_numbers, additional_numbers
+
+def generate_number_set(
+    lottery_type_instance: lg_lottery_type,
+    min_num: int,
+    max_num: int,
+    total_numbers: int,
+    number_field: str
+) -> List[int]:
+    """
+    Generates a set of lottery numbers based on random walk with momentum prediction.
+
+    Parameters:
+    - lottery_type_instance: An instance of lg_lottery_type model.
+    - min_num: Minimum number in the lottery range.
+    - max_num: Maximum number in the lottery range.
+    - total_numbers: Total numbers to generate.
+    - number_field: The field name in lg_lottery_winner_number to retrieve past numbers ('lottery_type_number' or 'additional_numbers').
+
+    Returns:
     - A sorted list of predicted lottery numbers.
     """
-    min_num = lottery_type_instance.min_number
-    max_num = lottery_type_instance.max_number
-    total_numbers = lottery_type_instance.pieces_of_draw_numbers
-
     # Retrieve the most recent winning numbers
     past_draws = lg_lottery_winner_number.objects.filter(
         lottery_type=lottery_type_instance
-    ).order_by('-id').values_list('lottery_type_number', flat=True)
+    ).order_by('-id').values_list(number_field, flat=True)
 
     if past_draws.exists():
         # Start from the most recent draw

@@ -1,4 +1,6 @@
 # complex_network_lottery_predictor.py
+# Utilizes complex network theory to predict lottery numbers based on co-occurrence networks.
+# Builds a network of past numbers, calculates node strength, and predicts based on network strength.
 
 import random
 from collections import defaultdict

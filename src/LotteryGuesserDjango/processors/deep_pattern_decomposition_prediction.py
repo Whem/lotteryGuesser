@@ -14,87 +14,152 @@ from itertools import combinations, permutations
 import math
 
 
-def get_numbers(lottery_type_instance: lg_lottery_type) -> List[int]:
+def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
     """
-    Deep pattern decomposition algorithm that combines hierarchical pattern analysis
-    with statistical decomposition and entropy-based selection.
+    Deep pattern decomposition algorithm for combined lottery types.
+    Returns (main_numbers, additional_numbers).
     """
-    # Get extensive historical data
-    past_draws = list(lg_lottery_winner_number.objects.filter(
-        lottery_type=lottery_type_instance
-    ).values_list('lottery_type_number', flat=True).order_by('-id')[:300])
+    # Generate main numbers
+    main_numbers = generate_number_set(
+        lottery_type_instance,
+        lottery_type_instance.min_number,
+        lottery_type_instance.max_number,
+        lottery_type_instance.pieces_of_draw_numbers,
+        True
+    )
 
-    past_draws = [draw for draw in past_draws if isinstance(draw, list)]
+    # Generate additional numbers if needed
+    additional_numbers = []
+    if lottery_type_instance.has_additional_numbers:
+        additional_numbers = generate_number_set(
+            lottery_type_instance,
+            lottery_type_instance.additional_min_number,
+            lottery_type_instance.additional_max_number,
+            lottery_type_instance.additional_numbers_count,
+            False
+        )
+
+    return main_numbers, additional_numbers
+
+
+def get_pattern_statistics(past_draws: List[List[int]]) -> Dict[str, Dict]:
+    """
+    Get comprehensive pattern statistics.
+
+    Returns a dictionary containing:
+    - position_stats
+    - sequence_stats
+    - distance_stats
+    - entropy_stats
+    """
     if not past_draws:
-        return generate_random_numbers(lottery_type_instance)
+        return {}
 
-    required_numbers = lottery_type_instance.pieces_of_draw_numbers
+    stats = {
+        'position_stats': analyze_position_statistics(past_draws),
+        'sequence_stats': analyze_sequence_statistics(past_draws),
+        'distance_stats': analyze_distance_statistics(past_draws),
+        'entropy_stats': analyze_entropy_statistics(past_draws)
+    }
+
+    return stats
+
+def select_next_number(
+        probabilities: Dict[int, float],
+        min_num: int,
+        max_num: int,
+        excluded_numbers: Set[int]
+) -> int:
+    """Select next number based on probabilities."""
+    available_numbers = [
+        num for num in range(min_num, max_num + 1)
+        if num not in excluded_numbers
+    ]
+
+    if not available_numbers:
+        return random.randint(min_num, max_num)
+
+    weights = [probabilities.get(num, 0.1) for num in available_numbers]
+    return random.choices(available_numbers, weights=weights, k=1)[0]
+
+
+def random_number_set(min_num: int, max_num: int, required_numbers: int) -> List[int]:
+    """Generate a random set of numbers."""
+    return sorted(random.sample(range(min_num, max_num + 1), required_numbers))
+
+def generate_number_set(
+        lottery_type_instance: lg_lottery_type,
+        min_num: int,
+        max_num: int,
+        required_numbers: int,
+        is_main: bool
+) -> List[int]:
+    """Generate numbers using deep pattern analysis."""
+    # Get historical data
+    past_draws = get_historical_data(lottery_type_instance, is_main)
+
+    if not past_draws:
+        return random_number_set(min_num, max_num, required_numbers)
+
     candidates = set()
 
     # 1. Deep Pattern Analysis
-    pattern_numbers = analyze_deep_patterns(
-        past_draws,
-        lottery_type_instance.min_number,
-        lottery_type_instance.max_number
-    )
+    pattern_numbers = analyze_deep_patterns(past_draws, min_num, max_num)
     candidates.update(pattern_numbers[:required_numbers // 3])
 
     # 2. Statistical Decomposition
-    decomp_numbers = perform_statistical_decomposition(
-        past_draws,
-        lottery_type_instance.min_number,
-        lottery_type_instance.max_number
-    )
+    decomp_numbers = perform_statistical_decomposition(past_draws, min_num, max_num)
     candidates.update(decomp_numbers[:required_numbers // 3])
 
-    # 3. Entropy-Based Selection
-    entropy_numbers = analyze_entropy_patterns(
-        past_draws,
-        lottery_type_instance.min_number,
-        lottery_type_instance.max_number
-    )
+    # 3. Entropy Analysis
+    entropy_numbers = analyze_entropy_patterns(past_draws, min_num, max_num)
     candidates.update(entropy_numbers[:required_numbers // 3])
 
-    # Fill remaining slots using composite probability
+    # Fill remaining using composite probabilities
     while len(candidates) < required_numbers:
         probabilities = calculate_composite_probabilities(
             past_draws,
-            lottery_type_instance.min_number,
-            lottery_type_instance.max_number,
+            min_num,
+            max_num,
             candidates
         )
-
-        available_numbers = set(range(
-            lottery_type_instance.min_number,
-            lottery_type_instance.max_number + 1
-        )) - candidates
-
-        if available_numbers:
-            numbers = list(available_numbers)
-            weights = [probabilities.get(num, 0.1) for num in numbers]
-            selected = random.choices(numbers, weights=weights, k=1)[0]
-            candidates.add(selected)
+        candidates.add(select_next_number(probabilities, min_num, max_num, candidates))
 
     return sorted(list(candidates))[:required_numbers]
+
+
+def get_historical_data(lottery_type_instance: lg_lottery_type, is_main: bool) -> List[List[int]]:
+    """Get historical lottery data based on number type."""
+    past_draws = list(lg_lottery_winner_number.objects.filter(
+        lottery_type=lottery_type_instance
+    ).order_by('-id')[:300])
+
+    if is_main:
+        return [draw.lottery_type_number for draw in past_draws
+                if isinstance(draw.lottery_type_number, list)]
+    else:
+        return [draw.additional_numbers for draw in past_draws
+                if hasattr(draw, 'additional_numbers') and
+                isinstance(draw.additional_numbers, list)]
 
 
 def analyze_deep_patterns(past_draws: List[List[int]], min_num: int, max_num: int) -> List[int]:
     """Deep pattern analysis using hierarchical decomposition."""
     pattern_scores = defaultdict(float)
 
-    # Layer 1: Position-based patterns
+    # Analyze position patterns
     position_patterns = analyze_position_patterns(past_draws)
     for num, score in position_patterns.items():
         if min_num <= num <= max_num:
             pattern_scores[num] += score * 0.4
 
-    # Layer 2: Sequence patterns
+    # Analyze sequence patterns
     sequence_patterns = analyze_sequence_patterns(past_draws)
     for num, score in sequence_patterns.items():
         if min_num <= num <= max_num:
             pattern_scores[num] += score * 0.3
 
-    # Layer 3: Distance patterns
+    # Analyze distance patterns
     distance_patterns = analyze_distance_patterns(past_draws)
     for num, score in distance_patterns.items():
         if min_num <= num <= max_num:

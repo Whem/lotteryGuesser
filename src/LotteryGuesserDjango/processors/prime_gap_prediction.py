@@ -1,40 +1,66 @@
+# prime_gap_prediction.py
+
 import random
 from collections import Counter
-from algorithms.models import lg_lottery_winner_number
+from typing import List, Tuple
+from algorithms.models import lg_lottery_winner_number, lg_lottery_type
 
-def get_numbers(lottery_type_instance):
+def is_prime(n: int) -> bool:
+    """Check if a number is prime."""
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
     """
     Generates lottery numbers based on prime gap prediction.
-
-    Parameters:
-    - lottery_type_instance: An instance of lg_lottery_type model.
-
-    Returns:
-    - A sorted list of predicted lottery numbers.
+    Returns a tuple (main_numbers, additional_numbers).
     """
-    # Helper function to check if a number is prime
-    def is_prime(n):
-        if n <= 1:
-            return False
-        if n <= 3:
-            return True
-        if n % 2 == 0 or n % 3 == 0:
-            return False
-        i = 5
-        while i * i <= n:
-            if n % i == 0 or n % (i + 2) == 0:
-                return False
-            i += 6
-        return True
+    # Generate main numbers
+    main_numbers = generate_numbers(
+        lottery_type_instance,
+        min_num=int(lottery_type_instance.min_number),
+        max_num=int(lottery_type_instance.max_number),
+        total_needed=int(lottery_type_instance.pieces_of_draw_numbers),
+        numbers_field='lottery_type_number'
+    )
 
-    min_num = lottery_type_instance.min_number
-    max_num = lottery_type_instance.max_number
-    total_needed = lottery_type_instance.pieces_of_draw_numbers
+    # Generate additional numbers if needed
+    additional_numbers = []
+    if lottery_type_instance.has_additional_numbers:
+        additional_numbers = generate_numbers(
+            lottery_type_instance,
+            min_num=int(lottery_type_instance.additional_min_number),
+            max_num=int(lottery_type_instance.additional_max_number),
+            total_needed=int(lottery_type_instance.additional_numbers_count),
+            numbers_field='additional_numbers'
+        )
 
+    return sorted(main_numbers), sorted(additional_numbers)
+
+def generate_numbers(
+    lottery_type_instance: lg_lottery_type,
+    min_num: int,
+    max_num: int,
+    total_needed: int,
+    numbers_field: str
+) -> List[int]:
+    """Generate numbers based on prime gap prediction."""
     # Retrieve past winning numbers
-    past_draws = lg_lottery_winner_number.objects.filter(
+    past_draws_queryset = lg_lottery_winner_number.objects.filter(
         lottery_type=lottery_type_instance
-    ).values_list('lottery_type_number', flat=True)
+    ).order_by('id').values_list(numbers_field, flat=True)
+
+    past_draws = list(past_draws_queryset)
 
     # Count frequency of prime gaps
     gap_counter = Counter()
@@ -89,6 +115,8 @@ def get_numbers(lottery_type_instance):
     elif len(selected_numbers) > total_needed:
         selected_numbers = selected_numbers[:total_needed]
 
+    # Convert numbers to standard Python int
+    selected_numbers = [int(num) for num in selected_numbers]
+
     # Sort and return the selected numbers
-    selected_numbers.sort()
-    return selected_numbers
+    return sorted(selected_numbers)

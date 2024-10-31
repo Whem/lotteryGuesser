@@ -2,27 +2,69 @@
 
 import numpy as np
 from pyunicorn.timeseries import RecurrencePlot
-from algorithms.models import lg_lottery_winner_number
+from typing import List, Tuple
+from algorithms.models import lg_lottery_winner_number, lg_lottery_type
 
 
-def get_numbers(lottery_type_instance):
+def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
     """
-    Generál lottószámokat Rekurrens Kvantifikációs Analízis (RQA) alkalmazásával.
+    Generates lottery numbers using Recurrence Quantification Analysis (RQA).
 
-    Paraméterek:
-    - lottery_type_instance: Az lg_lottery_type modell egy példánya.
+    Parameters:
+    - lottery_type_instance: An instance of lg_lottery_type model.
 
-    Visszatérési érték:
-    - Egy rendezett lista a megjósolt lottószámokról.
+    Returns:
+    - A tuple containing two lists:
+        - main_numbers: A sorted list of predicted main lottery numbers.
+        - additional_numbers: A sorted list of predicted additional lottery numbers (if applicable).
     """
-    min_num = int(lottery_type_instance.min_number)
-    max_num = int(lottery_type_instance.max_number)
-    total_numbers = int(lottery_type_instance.pieces_of_draw_numbers)
+    # Generate main numbers
+    main_numbers = generate_number_set(
+        lottery_type_instance=lottery_type_instance,
+        number_field='lottery_type_number',
+        min_num=int(lottery_type_instance.min_number),
+        max_num=int(lottery_type_instance.max_number),
+        total_numbers=int(lottery_type_instance.pieces_of_draw_numbers)
+    )
 
-    # Lekérjük a múltbeli nyerőszámokat
+    additional_numbers = []
+    if lottery_type_instance.has_additional_numbers:
+        # Generate additional numbers
+        additional_numbers = generate_number_set(
+            lottery_type_instance=lottery_type_instance,
+            number_field='additional_numbers',
+            min_num=int(lottery_type_instance.additional_min_number),
+            max_num=int(lottery_type_instance.additional_max_number),
+            total_numbers=int(lottery_type_instance.additional_numbers_count)
+        )
+
+    return main_numbers, additional_numbers
+
+
+def generate_number_set(
+    lottery_type_instance: lg_lottery_type,
+    number_field: str,
+    min_num: int,
+    max_num: int,
+    total_numbers: int
+) -> List[int]:
+    """
+    Generates a set of lottery numbers using Recurrence Quantification Analysis (RQA).
+
+    Parameters:
+    - lottery_type_instance: An instance of lg_lottery_type model.
+    - number_field: The field name in lg_lottery_winner_number to retrieve past numbers.
+    - min_num: Minimum number in the lottery range.
+    - max_num: Maximum number in the lottery range.
+    - total_numbers: Total numbers to generate.
+
+    Returns:
+    - A sorted list of predicted lottery numbers.
+    """
+    # Retrieve past winning numbers
     past_draws_queryset = lg_lottery_winner_number.objects.filter(
         lottery_type=lottery_type_instance
-    ).order_by('id').values_list('lottery_type_number', flat=True)
+    ).order_by('id').values_list(number_field, flat=True)
 
     past_draws = [
         [int(num) for num in draw] for draw in past_draws_queryset
@@ -30,51 +72,51 @@ def get_numbers(lottery_type_instance):
     ]
 
     if len(past_draws) < 20:
-        # Ha nincs elég adat, visszaadjuk a legkisebb 'total_numbers' számot
+        # If not enough data, return the smallest 'total_numbers' numbers
         selected_numbers = list(range(min_num, min_num + total_numbers))
         return selected_numbers
 
-    # Átalakítjuk a múltbeli húzásokat egy idősorozattá
+    # Transform past draws into a time series
     draw_matrix = np.array(past_draws)
     time_series = draw_matrix.flatten()
 
-    # Rekurrens Kvantifikációs Analízis végrehajtása
-    # Rekurrencia plot létrehozása
+    # Perform Recurrence Quantification Analysis
+    # Create a recurrence plot
     rp = RecurrencePlot(
         time_series,
         dim=1,
         tau=1,
         metric='euclidean',
         normalize=False,
-        recurrence_rate=0.1  # Adjunk meg egy rekurrencia arányt
+        recurrence_rate=0.1  # Set a recurrence rate
     )
 
-    # Rekurrencia mátrix lekérése
+    # Get the recurrence matrix
     recurrence_matrix = rp.recurrence_matrix()
 
-    # Számoljuk ki a rekurrencia gyakoriságát minden időpontra
+    # Compute the recurrence frequency for each time point
     recurrence_histogram = np.sum(recurrence_matrix, axis=0)
 
-    # Társítjuk a gyakorisági értékeket a számokhoz
+    # Map recurrence frequency to numbers
     number_scores = {}
     for idx, count in enumerate(recurrence_histogram):
         number = int(time_series[idx])
         if min_num <= number <= max_num:
             number_scores[number] = number_scores.get(number, 0) + count
 
-    # Rendezzük a számokat a rekurrencia gyakoriságuk alapján
+    # Sort numbers by their recurrence frequency
     sorted_numbers = sorted(number_scores.items(), key=lambda x: x[1], reverse=True)
 
-    # Kiválasztjuk az első 'total_numbers' számot
+    # Select the first 'total_numbers' numbers
     predicted_numbers = [num for num, score in sorted_numbers]
 
-    # Eltávolítjuk a duplikátumokat és csak az érvényes számokat tartjuk meg
+    # Remove duplicates and keep only valid numbers
     predicted_numbers = [
         int(num) for num in dict.fromkeys(predicted_numbers)
         if min_num <= num <= max_num
     ]
 
-    # Ha kevesebb számunk van, mint szükséges, kiegészítjük a leggyakoribb számokkal
+    # If we have fewer numbers than needed, fill with the most frequent numbers
     if len(predicted_numbers) < total_numbers:
         all_numbers = time_series
         number_counts = {}
@@ -90,6 +132,7 @@ def get_numbers(lottery_type_instance):
             if len(predicted_numbers) == total_numbers:
                 break
 
+    # Ensure we have exactly 'total_numbers' numbers
     predicted_numbers = predicted_numbers[:total_numbers]
     predicted_numbers.sort()
     return predicted_numbers

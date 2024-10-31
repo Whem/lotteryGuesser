@@ -55,32 +55,79 @@ def normalize_weights(weights):
     return [w / total for w in valid_weights]
 
 
-# quantum_annealing_topological_predictor.py
-
-import random
-import math
-from collections import defaultdict
-from django.apps import apps
-
-
-# ... (previous functions remain unchanged)
-
 def get_numbers(lottery_type_instance):
+    """
+    Generates lottery numbers using quantum annealing and topological data analysis.
+
+    Parameters:
+    - lottery_type_instance: An instance of lg_lottery_type model.
+
+    Returns:
+    - A tuple containing two lists:
+        - main_numbers: A sorted list of predicted main lottery numbers.
+        - additional_numbers: A sorted list of predicted additional lottery numbers (if applicable).
+    """
+    main_numbers = generate_number_set(
+        lottery_type_instance,
+        min_num=int(lottery_type_instance.min_number),
+        max_num=int(lottery_type_instance.max_number),
+        total_numbers=int(lottery_type_instance.pieces_of_draw_numbers),
+        is_main=True
+    )
+
+    additional_numbers = []
+    if lottery_type_instance.has_additional_numbers:
+        additional_numbers = generate_number_set(
+            lottery_type_instance,
+            min_num=int(lottery_type_instance.additional_min_number),
+            max_num=int(lottery_type_instance.additional_max_number),
+            total_numbers=int(lottery_type_instance.additional_numbers_count),
+            is_main=False
+        )
+
+    return main_numbers, additional_numbers
+
+
+def generate_number_set(
+        lottery_type_instance,
+        min_num,
+        max_num,
+        total_numbers,
+        is_main
+):
+    """
+    Generates a set of lottery numbers using quantum annealing and topological data analysis.
+
+    Parameters:
+    - lottery_type_instance: An instance of lg_lottery_type model.
+    - min_num: Minimum number in the lottery range.
+    - max_num: Maximum number in the lottery range.
+    - total_numbers: Total numbers to generate.
+    - is_main: Boolean indicating whether this is for main numbers or additional numbers.
+
+    Returns:
+    - A sorted list of predicted lottery numbers.
+    """
     lg_lottery_winner_number = apps.get_model('algorithms', 'lg_lottery_winner_number')
 
-    min_num = int(lottery_type_instance.min_number)
-    max_num = int(lottery_type_instance.max_number)
-    total_numbers = int(lottery_type_instance.pieces_of_draw_numbers)
+    # Retrieve past draws
+    if is_main:
+        past_draws = list(lg_lottery_winner_number.objects.filter(
+            lottery_type=lottery_type_instance
+        ).order_by('-id')[:100].values_list('lottery_type_number', flat=True))
+    else:
+        past_draws = list(lg_lottery_winner_number.objects.filter(
+            lottery_type=lottery_type_instance
+        ).order_by('-id')[:100].values_list('additional_numbers', flat=True))
 
-    past_draws = list(lg_lottery_winner_number.objects.filter(
-        lottery_type=lottery_type_instance
-    ).order_by('-id')[:100].values_list('lottery_type_number', flat=True))
-
+    # If not enough past draws, return random numbers
     if len(past_draws) < 10:
-        return random.sample(range(min_num, max_num + 1), total_numbers)
+        return sorted(random.sample(range(min_num, max_num + 1), total_numbers))
 
-    point_cloud = [list(draw) for draw in past_draws]
+    # Build a point cloud from past draws
+    point_cloud = [list(draw) for draw in past_draws if isinstance(draw, list)]
 
+    # Compute persistent homology
     persistence = create_persistent_homology(point_cloud, max_dimension=1, max_radius=100)
     topological_features = extract_topological_features(persistence, num_features=total_numbers)
 
@@ -98,16 +145,17 @@ def get_numbers(lottery_type_instance):
 
     predicted_numbers = [int(min_num + (max_num - min_num) * (state + 1) / 2) for state in annealed_state]
 
+    # Remove duplicates and ensure numbers are within range
     predicted_numbers = list(set(predicted_numbers))
     predicted_numbers = [num for num in predicted_numbers if min_num <= num <= max_num]
 
+    # Fill in if not enough numbers
     if len(predicted_numbers) < total_numbers:
         remaining = set(range(min_num, max_num + 1)) - set(predicted_numbers)
         remaining_list = list(remaining)
 
         # Ensure we have exactly the right number of weights
         weights = normalized_features[:len(remaining_list)]
-        weights = weights[:len(remaining_list)]  # Truncate if too long
         while len(weights) < len(remaining_list):
             weights.append(random.random())
 
@@ -118,17 +166,6 @@ def get_numbers(lottery_type_instance):
             weights = weights[:len(remaining_list)]
         elif len(weights) < len(remaining_list):
             remaining_list = remaining_list[:len(weights)]
-
-        # Debug prints
-        print(f"Total numbers needed: {total_numbers}")
-        print(f"Numbers already predicted: {len(predicted_numbers)}")
-        print(f"Remaining numbers: {len(remaining_list)}")
-        print(f"Weights: {len(weights)}")
-        print(f"Sum of weights: {sum(weights)}")
-
-        # Double-check lengths before calling random.choices
-        assert len(remaining_list) == len(
-            weights), f"Mismatch: remaining_list({len(remaining_list)}) != weights({len(weights)})"
 
         # Ensure we're selecting the correct number of additional numbers
         additional_count = min(total_numbers - len(predicted_numbers), len(remaining_list))

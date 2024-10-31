@@ -1,105 +1,215 @@
+#gap_analysis_prediction.py
 import random
-from typing import List
+from typing import List, Tuple, Dict
 from collections import Counter
 from algorithms.models import lg_lottery_winner_number, lg_lottery_type
 
 
-def get_numbers(lottery_type_instance: lg_lottery_type) -> List[int]:
+def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
     """
-    Generates lottery numbers using an optimized genetic algorithm.
-
-    Parameters:
-    - lottery_type_instance: An instance of lg_lottery_type model.
-
-    Returns:
-    - A sorted list of predicted lottery numbers.
+    Gap analysis based genetic algorithm predictor for combined lottery types.
+    Returns (main_numbers, additional_numbers).
     """
-    # Retrieve past draws
-    past_draws_queryset = lg_lottery_winner_number.objects.filter(
-        lottery_type=lottery_type_instance
-    ).values_list('lottery_type_number', flat=True)
 
-    past_draws = [
-        draw for draw in past_draws_queryset if isinstance(draw, list)
-    ]
+    # Generate main numbers
+    main_numbers = generate_number_set(
+        lottery_type_instance,
+        lottery_type_instance.min_number,
+        lottery_type_instance.max_number,
+        lottery_type_instance.pieces_of_draw_numbers,
+        True,
+        lottery_type_instance
+    )
+
+    # Generate additional numbers if needed
+    additional_numbers = []
+    if lottery_type_instance.has_additional_numbers:
+        additional_numbers = generate_number_set(
+            lottery_type_instance,
+            lottery_type_instance.additional_min_number,
+            lottery_type_instance.additional_max_number,
+            lottery_type_instance.additional_numbers_count,
+            False,
+            lottery_type_instance
+        )
+
+    return main_numbers, additional_numbers
+
+
+def generate_number_set(
+        lottery_type_instance: lg_lottery_type,
+        min_num: int,
+        max_num: int,
+        required_numbers: int,
+        is_main: bool,
+        lottery_static_instance: lg_lottery_type
+) -> List[int]:
+    """Generate numbers using genetic algorithm with gap analysis."""
+    # Get historical data
+    past_draws = get_historical_data(lottery_type_instance, is_main)
 
     if not past_draws:
-        # If no past draws, return random numbers
-        return sorted(random.sample(
-            range(lottery_type_instance.min_number, lottery_type_instance.max_number + 1),
-            lottery_type_instance.pieces_of_draw_numbers
-        ))
+        return random_number_set(min_num, max_num, required_numbers)
 
-    # Flatten past draws to get all numbers
-    all_past_numbers = [num for draw in past_draws for num in draw]
+    # Calculate fitness metrics
+    number_fitness = calculate_fitness_metrics(
+        past_draws,
+        min_num,
+        max_num
+    )
 
-    # Precompute the frequency of each number in past draws
-    number_counter = Counter(all_past_numbers)
-
-    # Precompute the fitness value for each number
-    number_fitness = {
-        num: number_counter.get(num, 0)
-        for num in range(lottery_type_instance.min_number, lottery_type_instance.max_number + 1)
+    # Genetic algorithm parameters
+    params = {
+        'population_size': 100,
+        'generations': 50,
+        'mutation_rate': 0.1
     }
 
-    # Genetic Algorithm Parameters
-    population_size = 100  # Increased population size for better diversity
-    generations = 50       # Increased generations for better convergence
-    mutation_rate = 0.1    # Adjusted mutation rate
+    # Run genetic algorithm
+    best_solution = run_genetic_algorithm(
+        number_fitness,
+        min_num,
+        max_num,
+        required_numbers,
+        params,
+        lottery_static_instance
+    )
 
+    return sorted(best_solution)
+
+
+def get_historical_data(lottery_type_instance: lg_lottery_type, is_main: bool) -> List[List[int]]:
+    """Get historical lottery data based on number type."""
+    past_draws = list(lg_lottery_winner_number.objects.filter(
+        lottery_type=lottery_type_instance
+    ).order_by('-id'))
+
+    if is_main:
+        draws = [draw.lottery_type_number for draw in past_draws
+                 if isinstance(draw.lottery_type_number, list)]
+    else:
+        draws = [draw.additional_numbers for draw in past_draws
+                 if hasattr(draw, 'additional_numbers') and
+                 isinstance(draw.additional_numbers, list)]
+
+    return draws
+
+
+def calculate_fitness_metrics(
+        past_draws: List[List[int]],
+        min_num: int,
+        max_num: int
+) -> Dict[int, float]:
+    """Calculate fitness metrics for each number."""
+    # Flatten past draws
+    all_numbers = [num for draw in past_draws for num in draw]
+
+    # Calculate frequency
+    frequency = Counter(all_numbers)
+
+    # Calculate fitness scores
+    fitness = {
+        num: frequency.get(num, 0)
+        for num in range(min_num, max_num + 1)
+    }
+
+    return fitness
+
+
+def run_genetic_algorithm(
+        fitness_metrics: Dict[int, float],
+        min_num: int,
+        max_num: int,
+        required_numbers: int,
+        params: Dict,
+        lottery_static_instance: lg_lottery_type
+) -> List[int]:
+    """Run genetic algorithm to find optimal number set."""
     # Initialize population
-    population = initialize_population(population_size, lottery_type_instance)
+    population = initialize_population(
+        params['population_size'],
+        min_num,
+        max_num,
+        required_numbers
+    )
 
-    for _ in range(generations):
+    # Run generations
+    for _ in range(params['generations']):
         # Calculate fitness scores
-        fitness_scores = [fitness(individual, number_fitness) for individual in population]
+        fitness_scores = [
+            calculate_individual_fitness(individual, fitness_metrics)
+            for individual in population
+        ]
 
-        # Select parents based on fitness scores
+        # Select parents
         parents = select_parents(population, fitness_scores)
 
-        # Generate offspring through crossover
-        offspring = crossover(parents, population_size, lottery_type_instance)
+        # Generate offspring
+        offspring = crossover(
+            parents,
+            params['population_size'],
+            lottery_static_instance
+        )
 
-        # Apply mutation to offspring
-        population = mutate(offspring, mutation_rate, lottery_type_instance)
+        # Apply mutation
+        population = mutate(
+            offspring,
+            params['mutation_rate'],
+            lottery_static_instance
+        )
 
-    # Final fitness evaluation
-    fitness_scores = [fitness(individual, number_fitness) for individual in population]
-    best_individual = max(zip(population, fitness_scores), key=lambda x: x[1])[0]
+    # Select best solution
+    final_fitness_scores = [
+        calculate_individual_fitness(individual, fitness_metrics)
+        for individual in population
+    ]
+    best_solution = max(
+        zip(population, final_fitness_scores),
+        key=lambda x: x[1]
+    )[0]
 
-    return sorted(best_individual)
+    return best_solution
 
 
-def initialize_population(size: int, lottery_type_instance: lg_lottery_type) -> List[List[int]]:
-    min_num = lottery_type_instance.min_number
-    max_num = lottery_type_instance.max_number
-    num_pieces = lottery_type_instance.pieces_of_draw_numbers
-
+def initialize_population(
+        size: int,
+        min_num: int,
+        max_num: int,
+        required_numbers: int
+) -> List[List[int]]:
+    """Initialize random population."""
     number_range = range(min_num, max_num + 1)
     population = [
-        sorted(random.sample(number_range, num_pieces))
+        sorted(random.sample(number_range, required_numbers))
         for _ in range(size)
     ]
     return population
 
 
-def fitness(individual: List[int], number_fitness: dict) -> float:
-    # Fitness is the sum of precomputed fitness values of the individual's numbers
-    return sum(number_fitness.get(num, 0) for num in individual)
+def calculate_individual_fitness(
+        individual: List[int],
+        fitness_metrics: Dict[int, float]
+) -> float:
+    """Calculate fitness for an individual."""
+    return sum(fitness_metrics.get(num, 0) for num in individual)
 
 
-def select_parents(population: List[List[int]], fitness_scores: List[float]) -> List[List[int]]:
-    # Use roulette wheel selection based on fitness scores
+def select_parents(
+        population: List[List[int]],
+        fitness_scores: List[float]
+) -> List[List[int]]:
+    """Select parents using roulette wheel selection."""
     total_fitness = sum(fitness_scores)
     if total_fitness == 0:
-        # If all fitness scores are zero, select parents randomly
-        selection_probabilities = [1 / len(population)] * len(population)
+        probabilities = [1 / len(population)] * len(population)
     else:
-        selection_probabilities = [score / total_fitness for score in fitness_scores]
+        probabilities = [score / total_fitness for score in fitness_scores]
 
-    parents = random.choices(population, weights=selection_probabilities, k=len(population))
-    return parents
-
+    return random.choices(
+        population,
+        weights=probabilities,
+        k=len(population)
+    )
 
 def crossover(parents: List[List[int]], offspring_size: int, lottery_type_instance: lg_lottery_type) -> List[List[int]]:
     offspring = []

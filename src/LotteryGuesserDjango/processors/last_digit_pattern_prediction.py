@@ -1,31 +1,112 @@
+# last_digit_pattern_prediction.py
+
 from collections import Counter
-from typing import List, Set
+from typing import List, Set, Tuple
 import random
 from algorithms.models import lg_lottery_winner_number, lg_lottery_type
 
+def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
+    """
+    Generate lottery numbers based on last digit patterns for both main and additional numbers.
+    Returns a tuple (main_numbers, additional_numbers).
+    """
+    # Generate main numbers
+    main_numbers = generate_numbers(
+        lottery_type_instance,
+        lottery_type_instance.min_number,
+        lottery_type_instance.max_number,
+        lottery_type_instance.pieces_of_draw_numbers,
+        is_main=True
+    )
 
-def get_numbers(lottery_type_instance: lg_lottery_type) -> List[int]:
-    past_draws = lg_lottery_winner_number.objects.filter(lottery_type=lottery_type_instance).values_list(
-        'lottery_type_number', flat=True)
-    last_digit_counter = Counter(number % 10 for draw in past_draws for number in draw)
+    # Generate additional numbers if needed
+    additional_numbers = []
+    if lottery_type_instance.has_additional_numbers:
+        additional_numbers = generate_numbers(
+            lottery_type_instance,
+            lottery_type_instance.additional_min_number,
+            lottery_type_instance.additional_max_number,
+            lottery_type_instance.additional_numbers_count,
+            is_main=False
+        )
 
+    return sorted(main_numbers), sorted(additional_numbers)
+
+def generate_numbers(
+    lottery_type_instance: lg_lottery_type,
+    min_num: int,
+    max_num: int,
+    required_numbers: int,
+    is_main: bool
+) -> List[int]:
+    """
+    Generate numbers based on last digit patterns.
+    """
+    # Fetch past draws
+    past_draws_queryset = lg_lottery_winner_number.objects.filter(
+        lottery_type=lottery_type_instance
+    ).values_list('lottery_type_number', flat=True)
+
+    # Extract numbers based on whether they are main or additional
+    past_numbers = []
+    for draw in past_draws_queryset:
+        if isinstance(draw, list):
+            if is_main:
+                numbers = [num for num in draw if min_num <= num <= max_num]
+            else:
+                # Assuming additional numbers are stored separately
+                additional_nums = getattr(draw, 'additional_numbers', [])
+                numbers = [num for num in additional_nums if min_num <= num <= max_num]
+            if numbers:
+                past_numbers.extend(numbers)
+
+    if not past_numbers:
+        # If no past numbers, return random numbers
+        return random.sample(range(min_num, max_num + 1), required_numbers)
+
+    # Calculate last digit frequencies
+    last_digit_counter = Counter(number % 10 for number in past_numbers)
+
+    # Get most common last digits
     most_common_last_digits = [digit for digit, _ in last_digit_counter.most_common()]
-    predicted_numbers = generate_numbers_from_digits(most_common_last_digits, lottery_type_instance)
 
-    return sorted(predicted_numbers)[:lottery_type_instance.pieces_of_draw_numbers]
+    # Generate numbers from most common last digits
+    predicted_numbers = generate_numbers_from_digits(
+        most_common_last_digits,
+        min_num,
+        max_num,
+        required_numbers
+    )
 
+    return predicted_numbers
 
-def generate_numbers_from_digits(digits: List[int], lottery_type_instance: lg_lottery_type) -> Set[int]:
+def generate_numbers_from_digits(
+    digits: List[int],
+    min_num: int,
+    max_num: int,
+    required_numbers: int
+) -> List[int]:
     numbers = set()
     for digit in digits:
-        candidates = [num for num in range(lottery_type_instance.min_number, lottery_type_instance.max_number + 1) if
-                      num % 10 == digit]
+        candidates = [
+            num for num in range(min_num, max_num + 1)
+            if num % 10 == digit
+        ]
         if candidates:
-            numbers.add(random.choice(candidates))
-        if len(numbers) >= lottery_type_instance.pieces_of_draw_numbers:
+            chosen_num = random.choice(candidates)
+            numbers.add(chosen_num)
+        if len(numbers) >= required_numbers:
             break
 
-    while len(numbers) < lottery_type_instance.pieces_of_draw_numbers:
-        numbers.add(random.randint(lottery_type_instance.min_number, lottery_type_instance.max_number))
+    # Fill missing numbers if needed
+    all_possible_numbers = set(range(min_num, max_num + 1))
+    while len(numbers) < required_numbers:
+        remaining_numbers = all_possible_numbers - numbers
+        if not remaining_numbers:
+            break
+        numbers.add(random.choice(list(remaining_numbers)))
 
-    return numbers
+    # Ensure all numbers are standard Python int
+    predicted_numbers = [int(num) for num in numbers]
+
+    return predicted_numbers[:required_numbers]

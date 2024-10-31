@@ -1,103 +1,218 @@
 # fractal_dimension_analysis_prediction.py
-
 import numpy as np
-from algorithms.models import lg_lottery_winner_number
+from typing import List, Tuple, Dict
+from algorithms.models import lg_lottery_winner_number, lg_lottery_type
 
-def get_numbers(lottery_type_instance):
+
+def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
     """
-    Generál lottószámokat Fraktáldimenzió-elemzés alkalmazásával.
-
-    Paraméterek:
-    - lottery_type_instance: Az lg_lottery_type modell egy példánya.
-
-    Visszatérési érték:
-    - Egy rendezett lista a megjósolt lottószámokról.
+    Fractal dimension predictor for combined lottery types.
+    Returns (main_numbers, additional_numbers).
     """
-    min_num = int(lottery_type_instance.min_number)
-    max_num = int(lottery_type_instance.max_number)
-    total_numbers = int(lottery_type_instance.pieces_of_draw_numbers)
+    # Generate main numbers
+    main_numbers = generate_number_set(
+        lottery_type_instance,
+        lottery_type_instance.min_number,
+        lottery_type_instance.max_number,
+        lottery_type_instance.pieces_of_draw_numbers,
+        True
+    )
 
-    # Lekérjük a múltbeli nyerőszámokat
-    past_draws_queryset = lg_lottery_winner_number.objects.filter(
-        lottery_type=lottery_type_instance
-    ).order_by('id').values_list('lottery_type_number', flat=True)
+    # Generate additional numbers if needed
+    additional_numbers = []
+    if lottery_type_instance.has_additional_numbers:
+        additional_numbers = generate_number_set(
+            lottery_type_instance,
+            lottery_type_instance.additional_min_number,
+            lottery_type_instance.additional_max_number,
+            lottery_type_instance.additional_numbers_count,
+            False
+        )
 
-    past_draws = [
-        [int(num) for num in draw] for draw in past_draws_queryset
-        if isinstance(draw, list) and len(draw) == total_numbers
-    ]
+    return main_numbers, additional_numbers
+
+
+def generate_number_set(
+        lottery_type_instance: lg_lottery_type,
+        min_num: int,
+        max_num: int,
+        required_numbers: int,
+        is_main: bool
+) -> List[int]:
+    """Generate numbers using fractal dimension analysis."""
+    # Get historical data
+    past_draws = get_historical_data(lottery_type_instance, is_main)
 
     if len(past_draws) < 20:
-        # Ha nincs elég adat, visszaadjuk a legkisebb 'total_numbers' számot
-        selected_numbers = list(range(min_num, min_num + total_numbers))
-        return selected_numbers
+        return list(range(min_num, min_num + required_numbers))
 
-    # Átalakítjuk a múltbeli húzásokat egy idősorozattá
-    draw_matrix = np.array(past_draws)
-    time_series = draw_matrix.flatten()
+    # Convert to time series
+    time_series = np.array(past_draws).flatten()
 
-    # Fraktáldimenzió kiszámítása a Higuchi-módszerrel
-    max_k = 10  # Maximális időintervallum
-    N = len(time_series)
-    Lk = np.zeros(max_k)
-    for k in range(1, max_k+1):
-        Lm = []
-        for m in range(k):
-            Lmk = 0
-            n_max = int(np.floor((N - m) / k))
-            if n_max < 2:
-                continue
-            for i in range(1, n_max):
-                Lmk += abs(time_series[m + i*k] - time_series[m + (i-1)*k])
-            norm = (N - 1) / (k * n_max * k)
-            Lmk = (Lmk * norm)
-            Lm.append(Lmk)
-        if Lm:
-            Lk[k-1] = np.sum(Lm) / len(Lm)
-        else:
-            Lk[k-1] = 0
+    # Calculate fractal dimension
+    fractal_dimension = calculate_higuchi_dimension(time_series)
 
-    # Lineáris regresszió a fraktáldimenzió becsléséhez
-    positive_indices = Lk > 0
-    ln_Lk = np.log(Lk[positive_indices])
-    ln_k = np.log(np.arange(1, max_k+1)[positive_indices])
-    if len(ln_k) >= 2:
-        coeffs = np.polyfit(ln_k, ln_Lk, 1)
-        fractal_dimension = coeffs[0]
+    # Generate predictions
+    predicted_numbers = generate_predictions(
+        time_series,
+        fractal_dimension,
+        min_num,
+        max_num,
+        required_numbers
+    )
+
+    return sorted(predicted_numbers)
+
+
+def get_historical_data(lottery_type_instance: lg_lottery_type, is_main: bool) -> List[List[int]]:
+    """Get historical lottery data based on number type."""
+    past_draws = list(lg_lottery_winner_number.objects.filter(
+        lottery_type=lottery_type_instance
+    ).order_by('id'))
+
+    if is_main:
+        draws = [draw.lottery_type_number for draw in past_draws
+                 if isinstance(draw.lottery_type_number, list)]
     else:
-        fractal_dimension = 1  # Alapértelmezett érték, ha nincs elég adat
+        draws = [draw.additional_numbers for draw in past_draws
+                 if hasattr(draw, 'additional_numbers') and
+                 isinstance(draw.additional_numbers, list)]
 
-    # Számok gyakoriságának módosítása a fraktáldimenzió alapján
-    number_counts = {}
-    for number in time_series:
-        number = int(number)
-        if min_num <= number <= max_num:
-            number_counts[number] = number_counts.get(number, 0) + 1
+    return [[int(num) for num in draw] for draw in draws]
 
-    adjusted_counts = {}
-    for number, count in number_counts.items():
-        adjusted_counts[number] = count * fractal_dimension
 
-    # Számok rendezése a módosított gyakoriság alapján
-    sorted_numbers = sorted(adjusted_counts.items(), key=lambda x: x[1], reverse=True)
+def calculate_higuchi_dimension(time_series: np.ndarray, max_k: int = 10) -> float:
+    """Calculate Higuchi fractal dimension."""
+    try:
+        N = len(time_series)
+        Lk = np.zeros(max_k)
 
-    # Kiválasztjuk az első 'total_numbers' számot
-    predicted_numbers = [int(num) for num, score in sorted_numbers[:total_numbers]]
+        for k in range(1, max_k + 1):
+            Lm = []
 
-    # Eltávolítjuk a duplikátumokat és csak az érvényes számokat tartjuk meg
-    predicted_numbers = [
-        int(num) for num in dict.fromkeys(predicted_numbers)
-        if min_num <= num <= max_num
-    ]
+            for m in range(k):
+                Lmk = 0
+                n_max = int(np.floor((N - m) / k))
 
-    # Ha kevesebb számunk van, mint szükséges, kiegészítjük a következő leggyakoribb számokkal
-    if len(predicted_numbers) < total_numbers:
-        for num, _ in sorted_numbers:
-            num = int(num)
-            if num not in predicted_numbers:
-                predicted_numbers.append(num)
-            if len(predicted_numbers) == total_numbers:
+                if n_max >= 2:
+                    for i in range(1, n_max):
+                        Lmk += abs(time_series[m + i * k] - time_series[m + (i - 1) * k])
+
+                    norm = (N - 1) / (k * n_max * k)
+                    Lmk = Lmk * norm
+                    Lm.append(Lmk)
+
+            if Lm:
+                Lk[k - 1] = np.mean(Lm)
+
+        # Calculate fractal dimension through linear regression
+        positive_indices = Lk > 0
+        if np.sum(positive_indices) >= 2:
+            ln_Lk = np.log(Lk[positive_indices])
+            ln_k = np.log(np.arange(1, max_k + 1)[positive_indices])
+            coeffs = np.polyfit(ln_k, ln_Lk, 1)
+            return abs(coeffs[0])  # Return absolute value for stability
+
+    except Exception as e:
+        print(f"Error calculating fractal dimension: {str(e)}")
+
+    return 1.0  # Default dimension if calculation fails
+
+
+def generate_predictions(
+        time_series: np.ndarray,
+        fractal_dimension: float,
+        min_num: int,
+        max_num: int,
+        required_numbers: int
+) -> List[int]:
+    """Generate predictions based on fractal analysis."""
+    try:
+        # Calculate frequency-based scores
+        number_counts = {}
+        for number in time_series:
+            number = int(number)
+            if min_num <= number <= max_num:
+                number_counts[number] = number_counts.get(number, 0) + 1
+
+        # Adjust scores using fractal dimension
+        adjusted_scores = {
+            number: count * fractal_dimension
+            for number, count in number_counts.items()
+        }
+
+        # Sort numbers by adjusted scores
+        sorted_numbers = sorted(
+            adjusted_scores.items(),
+            key=lambda x: x[1],
+            reverse=True
+        )
+
+        # Select unique valid numbers
+        predicted_numbers = []
+        used_numbers = set()
+
+        for number, _ in sorted_numbers:
+            if (min_num <= number <= max_num and
+                    number not in used_numbers):
+                predicted_numbers.append(number)
+                used_numbers.add(number)
+
+            if len(predicted_numbers) >= required_numbers:
                 break
 
-    predicted_numbers.sort()
-    return predicted_numbers
+        # Fill remaining if needed
+        while len(predicted_numbers) < required_numbers:
+            for number in range(min_num, max_num + 1):
+                if number not in used_numbers:
+                    predicted_numbers.append(number)
+                    used_numbers.add(number)
+                    break
+
+        return predicted_numbers[:required_numbers]
+
+    except Exception as e:
+        print(f"Error generating predictions: {str(e)}")
+        return list(range(min_num, min_num + required_numbers))
+
+
+def get_fractal_statistics(past_draws: List[List[int]]) -> Dict:
+    """
+    Get comprehensive fractal analysis statistics.
+
+    Returns:
+    - fractal_dimension: overall fractal dimension
+    - dimension_by_position: fractal dimension for each position
+    - complexity_metrics: additional complexity measures
+    """
+    if not past_draws:
+        return {}
+
+    try:
+        # Convert to array for analysis
+        draw_matrix = np.array(past_draws)
+        time_series = draw_matrix.flatten()
+
+        # Calculate overall dimension
+        overall_dimension = calculate_higuchi_dimension(time_series)
+
+        # Calculate dimension by position
+        position_dimensions = []
+        for i in range(draw_matrix.shape[1]):
+            dimension = calculate_higuchi_dimension(draw_matrix[:, i])
+            position_dimensions.append(dimension)
+
+        stats = {
+            'fractal_dimension': float(overall_dimension),
+            'dimension_by_position': [float(d) for d in position_dimensions],
+            'complexity_metrics': {
+                'mean_dimension': float(np.mean(position_dimensions)),
+                'dimension_variance': float(np.var(position_dimensions))
+            }
+        }
+
+        return stats
+
+    except Exception as e:
+        print(f"Error calculating fractal statistics: {str(e)}")
+        return {}

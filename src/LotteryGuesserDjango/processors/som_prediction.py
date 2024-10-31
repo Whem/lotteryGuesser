@@ -1,95 +1,109 @@
-# som_prediction.py
+# socioeconomic_indicator_prediction.py
 
+import random
 import numpy as np
-from collections import Counter
-from minisom import MiniSom
+from typing import List, Tuple
 from algorithms.models import lg_lottery_winner_number, lg_lottery_type
 
 
-def get_numbers(lottery_type_instance, som_size=(10, 10), sigma=1.0, learning_rate=0.5, random_seed=42):
+def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
     """
-    Generál lottószámokat Self-Organizing Map (SOM) alapú elemzéssel.
+    Generates lottery numbers using a simple reinforcement learning approach based on socioeconomic indicators.
 
-    Paraméterek:
-    - lottery_type_instance: Az lg_lottery_type modell egy példánya.
-    - som_size: A SOM hálózat mérete.
-    - sigma: A környezet nagysága.
-    - learning_rate: A tanulási ráta.
-    - random_seed: Véletlenszerűség kezelése.
+    Parameters:
+    - lottery_type_instance: An instance of lg_lottery_type model.
 
-    Visszatérési érték:
-    - Egy rendezett lista a megjósolt lottószámokról.
+    Returns:
+    - A tuple containing two lists:
+        - main_numbers: A sorted list of predicted main lottery numbers.
+        - additional_numbers: A sorted list of predicted additional lottery numbers (if applicable).
     """
-    min_num = int(lottery_type_instance.min_number)
-    max_num = int(lottery_type_instance.max_number)
-    total_numbers = int(lottery_type_instance.pieces_of_draw_numbers)
+    # Generate main numbers
+    main_numbers = generate_numbers(
+        lottery_type_instance=lottery_type_instance,
+        min_num=int(lottery_type_instance.min_number),
+        max_num=int(lottery_type_instance.max_number),
+        total_numbers=int(lottery_type_instance.pieces_of_draw_numbers)
+    )
 
-    # Lekérjük a múltbeli nyerőszámokat
-    past_draws_queryset = lg_lottery_winner_number.objects.filter(
-        lottery_type=lottery_type_instance
-    ).order_by('id').values_list('lottery_type_number', flat=True)
+    additional_numbers = []
+    if lottery_type_instance.has_additional_numbers:
+        # Generate additional numbers
+        additional_numbers = generate_numbers(
+            lottery_type_instance=lottery_type_instance,
+            min_num=int(lottery_type_instance.additional_min_number),
+            max_num=int(lottery_type_instance.additional_max_number),
+            total_numbers=int(lottery_type_instance.additional_numbers_count)
+        )
 
-    past_draws = [
-        [int(num) for num in draw] for draw in past_draws_queryset
-        if isinstance(draw, list) and len(draw) == total_numbers
-    ]
+    return main_numbers, additional_numbers
 
-    if len(past_draws) < 20:
-        # Ha nincs elég adat, visszaadjuk a legkisebb 'total_numbers' számot
-        selected_numbers = list(range(min_num, min_num + total_numbers))
-        return selected_numbers
 
-    # Egyesítsük az összes húzás számát egy NumPy tömbbe
-    data = np.array(past_draws)
+def generate_numbers(
+        lottery_type_instance: lg_lottery_type,
+        min_num: int,
+        max_num: int,
+        total_numbers: int
+) -> List[int]:
+    """
+    Generates a list of lottery numbers using a simple reinforcement learning approach based on socioeconomic indicators.
 
-    # Inicializáljuk a SOM modellt
-    som = MiniSom(som_size[0], som_size[1], total_numbers, sigma=sigma, learning_rate=learning_rate,
-                 random_seed=random_seed)
-    som.train_random(data, 1000)
+    Parameters:
+    - lottery_type_instance: An instance of lg_lottery_type model.
+    - min_num: Minimum number in the lottery range.
+    - max_num: Maximum number in the lottery range.
+    - total_numbers: Total numbers to generate.
 
-    # Kiválasztjuk a leggyakoribb neuronokat
-    win_map = som.win_map(data)
-    frequent_neurons = sorted(win_map.keys(), key=lambda x: len(win_map[x]), reverse=True)
+    Returns:
+    - A sorted list of predicted lottery numbers.
+    """
 
-    predicted_numbers = []
-    for neuron in frequent_neurons:
-        draws = win_map[neuron]
-        for draw in draws:
-            for num in draw:
-                if num not in predicted_numbers and min_num <= num <= max_num:
-                    predicted_numbers.append(int(num))  # Konvertálás int-re
-                    if len(predicted_numbers) == total_numbers:
-                        break
-            if len(predicted_numbers) == total_numbers:
-                break
-        if len(predicted_numbers) == total_numbers:
-            break
+    # Note: Reinforcement learning typically requires a defined environment and reward system.
+    # For the purpose of this example, we'll use a simplified approach.
 
-    # Ha kevesebb szám van, mint szükséges, kiegészítjük a leggyakoribb számokkal
-    if len(predicted_numbers) < total_numbers:
-        all_numbers = [num for draw in past_draws for num in draw]
-        number_counts = Counter(all_numbers)
-        most_common_numbers = [num for num, count in number_counts.most_common() if num not in predicted_numbers]
+    def get_economic_indicators():
+        """
+        Simulates fetching socioeconomic indicators.
+        In a real-world scenario, replace this with actual API calls to retrieve real data.
 
-        for num in most_common_numbers:
-            predicted_numbers.append(int(num))  # Konvertálás int-re
-            if len(predicted_numbers) == total_numbers:
-                break
+        Returns:
+            dict: A dictionary containing simulated economic indicators.
+        """
+        # Simulated socioeconomic indicators
+        return {
+            'gdp_growth': np.random.uniform(0, 5),
+            'unemployment_rate': np.random.uniform(3, 10),
+            'inflation_rate': np.random.uniform(0, 5),
+            'stock_market_index': np.random.uniform(10000, 30000)
+        }
 
-    # Biztosítjuk, hogy a számok egyediek és a megengedett tartományba esnek
-    predicted_numbers = [int(num) for num in predicted_numbers if min_num <= num <= max_num]
+    indicators = get_economic_indicators()
 
-    # Ha még mindig kevesebb számunk van, mint szükséges, adjunk hozzá determinisztikus módon
-    if len(predicted_numbers) < total_numbers:
-        for num in range(min_num, max_num + 1):
-            if num not in predicted_numbers:
-                predicted_numbers.append(int(num))  # Konvertálás int-re
-                if len(predicted_numbers) == total_numbers:
-                    break
+    # Normalize the indicators
+    indicator_values = list(indicators.values())
+    min_val = min(indicator_values)
+    max_val = max(indicator_values)
+    if max_val - min_val == 0:
+        normalized_indicators = {k: 0.5 for k in indicators.keys()}  # Avoid division by zero
+    else:
+        normalized_indicators = {
+            k: (v - min_val) / (max_val - min_val) for k, v in indicators.items()
+        }
 
-    # Végső rendezés és konvertálás standard Python int típusra
-    predicted_numbers = predicted_numbers[:total_numbers]
-    predicted_numbers = [int(num) for num in predicted_numbers]
-    predicted_numbers.sort()
+    # Generate numbers based on indicators
+    predicted_numbers = set()
+    for _ in range(total_numbers * 2):  # Generate more numbers than needed to increase uniqueness
+        weighted_sum = sum(v * np.random.random() for v in normalized_indicators.values())
+        number = int(min_num + weighted_sum * (max_num - min_num))
+        if min_num <= number <= max_num:
+            predicted_numbers.add(number)
 
-    return predicted_numbers
+    # If too many numbers were generated, randomly remove some
+    while len(predicted_numbers) > total_numbers:
+        predicted_numbers.remove(random.choice(list(predicted_numbers)))
+
+    # If not enough numbers, fill with random numbers
+    while len(predicted_numbers) < total_numbers:
+        predicted_numbers.add(random.randint(min_num, max_num))
+
+    return sorted(predicted_numbers)

@@ -4,7 +4,7 @@ import numpy as np
 from scipy.signal import savgol_filter
 from scipy.stats import skew, kurtosis
 from django.apps import apps
-
+from typing import List, Dict, Tuple, Set
 def simulate_geomagnetic_field(past_draws, min_num, max_num):
     field = np.zeros(max_num - min_num + 1)
     for draw in past_draws:
@@ -40,51 +40,124 @@ def analyze_field_characteristics(field):
         'energy': float(np.sum(field**2))
     }
 
-def get_numbers(lottery_type_instance):
-    lg_lottery_winner_number = apps.get_model('algorithms', 'lg_lottery_winner_number')
 
-    min_num = int(lottery_type_instance.min_number)
-    max_num = int(lottery_type_instance.max_number)
-    total_numbers = int(lottery_type_instance.pieces_of_draw_numbers)
-
-    past_draws = list(lg_lottery_winner_number.objects.filter(
-        lottery_type=lottery_type_instance
-    ).order_by('-id')[:100].values_list('lottery_type_number', flat=True))
-
-    if len(past_draws) < 10:
-        return sorted(set(np.random.choice(range(min_num, max_num + 1), total_numbers).tolist()))
-
-    # Simulate geomagnetic field
-    field = simulate_geomagnetic_field(past_draws, min_num, max_num)
-
-    # Apply perturbations and influences
+def apply_field_modifications(field: np.ndarray) -> np.ndarray:
+    """Applies all field modifications."""
     field = ionospheric_perturbation(field)
     field = solar_wind_influence(field)
     field = geomagnetic_storm_simulation(field)
+    return field
 
-    # Analyze field characteristics
-    characteristics = analyze_field_characteristics(field)
 
-    # Calculate magnetic declination
-    declination = magnetic_declination(field)
+def generate_predictions(
+        field: np.ndarray,
+        declination: np.ndarray,
+        characteristics: Dict,
+        min_num: int,
+        max_num: int,
+        required_numbers: int
+) -> List[int]:
+    """Generates predictions from field analysis."""
+    # Combine factors
+    combined_field = (
+            field +
+            0.3 * declination +
+            0.2 * np.abs(characteristics['skewness']) +
+            0.1 * characteristics['energy']
+    )
 
-    # Ensure all arrays have the same length
-    assert len(field) == len(declination), "Field and declination must have the same length"
-
-    # Combine all factors for final prediction
-    combined_field = field + 0.3 * declination + 0.2 * np.abs(characteristics['skewness']) + 0.1 * characteristics['energy']
-
-    # Select numbers based on highest combined field values
+    # Select numbers
     sorted_indices = np.argsort(combined_field)[::-1]
-    predicted_numbers = [int(i + min_num) for i in sorted_indices[:total_numbers]]
+    predicted_numbers = [
+        int(i + min_num)
+        for i in sorted_indices[:required_numbers]
+    ]
 
-    # Ensure uniqueness and correct range
-    predicted_numbers = sorted(set(num for num in predicted_numbers if min_num <= num <= max_num))
+    # Ensure uniqueness and range
+    predicted_numbers = sorted(set(
+        num for num in predicted_numbers
+        if min_num <= num <= max_num
+    ))
 
-    # If not enough unique numbers, fill with random selection
-    while len(predicted_numbers) < total_numbers:
+    # Fill if needed
+    while len(predicted_numbers) < required_numbers:
         new_num = int(np.random.randint(min_num, max_num + 1))
         if new_num not in predicted_numbers:
             predicted_numbers.append(new_num)
 
     return sorted(predicted_numbers)
+
+def get_numbers(lottery_type_instance) -> Tuple[List[int], List[int]]:
+    """Generates numbers using geomagnetic simulation for both main and additional sets."""
+    # Generate main numbers
+    main_numbers = generate_number_set(
+        lottery_type_instance,
+        lottery_type_instance.min_number,
+        lottery_type_instance.max_number,
+        lottery_type_instance.pieces_of_draw_numbers,
+        True
+    )
+
+    # Generate additional numbers if needed
+    additional_numbers = []
+    if lottery_type_instance.has_additional_numbers:
+        additional_numbers = generate_number_set(
+            lottery_type_instance,
+            lottery_type_instance.additional_min_number,
+            lottery_type_instance.additional_max_number,
+            lottery_type_instance.additional_numbers_count,
+            False
+        )
+
+    return main_numbers, additional_numbers
+
+
+def generate_number_set(
+        lottery_type_instance,
+        min_num: int,
+        max_num: int,
+        required_numbers: int,
+        is_main: bool
+) -> List[int]:
+    """Generates numbers using geomagnetic field simulation."""
+    past_draws = get_historical_data(lottery_type_instance, is_main)
+
+    if len(past_draws) < 10:
+        return sorted(set(np.random.choice(
+            range(min_num, max_num + 1),
+            required_numbers
+        ).tolist()))
+
+    # Generate and analyze field
+    field = simulate_geomagnetic_field(past_draws, min_num, max_num)
+    field = apply_field_modifications(field)
+    characteristics = analyze_field_characteristics(field)
+    declination = magnetic_declination(field)
+
+    # Generate predictions
+    predicted_numbers = generate_predictions(
+        field,
+        declination,
+        characteristics,
+        min_num,
+        max_num,
+        required_numbers
+    )
+
+    return predicted_numbers
+
+
+def get_historical_data(lottery_type_instance, is_main: bool) -> List[List[int]]:
+    """Gets historical lottery data."""
+    lg_lottery_winner_number = apps.get_model('algorithms', 'lg_lottery_winner_number')
+    past_draws = list(lg_lottery_winner_number.objects.filter(
+        lottery_type=lottery_type_instance
+    ).order_by('-id')[:100])
+
+    if is_main:
+        return [draw.lottery_type_number for draw in past_draws
+                if isinstance(draw.lottery_type_number, list)]
+    else:
+        return [draw.additional_numbers for draw in past_draws
+                if hasattr(draw, 'additional_numbers') and
+                isinstance(draw.additional_numbers, list)]

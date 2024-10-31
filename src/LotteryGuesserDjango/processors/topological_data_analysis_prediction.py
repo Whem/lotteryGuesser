@@ -1,108 +1,222 @@
 # topological_data_analysis_prediction.py
 
-import numpy as np
+import random
+from typing import List, Tuple, Set, Dict
 from collections import Counter
-from sklearn.decomposition import PCA
+import numpy as np
+import pandas as pd
+import datetime
 import gudhi as gd
-from algorithms.models import lg_lottery_winner_number
+from algorithms.models import lg_lottery_winner_number, lg_lottery_type
 
-def get_numbers(lottery_type_instance):
+
+def is_symmetric(number: int) -> bool:
     """
-    Generál lottószámokat Topological Data Analysis (TDA) alapú elemzéssel.
+    Determines if a given number is symmetric (palindromic).
 
-    Paraméterek:
-    - lottery_type_instance: Az lg_lottery_type modell egy példánya.
+    Parameters:
+    - number: The number to check for symmetry.
 
-    Visszatérési érték:
-    - Egy rendezett lista a megjósolt lottószámokról.
+    Returns:
+    - True if the number is symmetric, False otherwise.
     """
-    min_num = int(lottery_type_instance.min_number)
-    max_num = int(lottery_type_instance.max_number)
-    total_numbers = int(lottery_type_instance.pieces_of_draw_numbers)
+    number_str = str(number)
+    return number_str == number_str[::-1]
 
-    # Lekérjük a múltbeli nyerőszámokat
-    past_draws_queryset = lg_lottery_winner_number.objects.filter(
-        lottery_type=lottery_type_instance
-    ).order_by('id').values_list('lottery_type_number', flat=True)
 
-    past_draws = [
-        [int(num) for num in draw] for draw in past_draws_queryset
-        if isinstance(draw, list) and len(draw) == total_numbers
-    ]
+def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
+    """
+    Generates lottery numbers using Topological Data Analysis (TDA) based analysis.
 
-    if len(past_draws) < 20:
-        # Ha nincs elég adat, visszaadjuk a legkisebb 'total_numbers' számot
-        selected_numbers = list(range(min_num, min_num + total_numbers))
+    This function generates both main numbers and additional numbers (if applicable) by analyzing
+    past lottery draws using TDA. It identifies symmetric numbers, calculates their frequency trends
+    over recent and previous weeks, and prioritizes selecting numbers with increasing trends.
+
+    Parameters:
+    - lottery_type_instance: An instance of lg_lottery_type model.
+
+    Returns:
+    - A tuple containing two lists:
+        - main_numbers: A sorted list of predicted main lottery numbers.
+        - additional_numbers: A sorted list of predicted additional lottery numbers (if applicable).
+    """
+    # Generate main numbers
+    main_numbers = generate_numbers(
+        lottery_type_instance=lottery_type_instance,
+        number_field='lottery_type_number',
+        min_num=int(lottery_type_instance.min_number),
+        max_num=int(lottery_type_instance.max_number),
+        total_numbers=int(lottery_type_instance.pieces_of_draw_numbers)
+    )
+
+    additional_numbers = []
+    if lottery_type_instance.has_additional_numbers:
+        # Generate additional numbers
+        additional_numbers = generate_numbers(
+            lottery_type_instance=lottery_type_instance,
+            number_field='additional_numbers',
+            min_num=int(lottery_type_instance.additional_min_number),
+            max_num=int(lottery_type_instance.additional_max_number),
+            total_numbers=int(lottery_type_instance.additional_numbers_count)
+        )
+
+    return main_numbers, additional_numbers
+
+
+def generate_numbers(
+    lottery_type_instance: lg_lottery_type,
+    number_field: str,
+    min_num: int,
+    max_num: int,
+    total_numbers: int
+) -> List[int]:
+    """
+    Generates a list of lottery numbers using Topological Data Analysis (TDA).
+
+    This helper function encapsulates the logic for generating numbers, allowing reuse for both
+    main and additional numbers. It analyzes past draws to identify symmetric numbers, calculates
+    their frequency trends over recent and previous weeks, and prioritizes those with increasing trends.
+    Any remaining slots are filled with random numbers within the valid range.
+
+    Parameters:
+    - lottery_type_instance: The lottery type instance.
+    - number_field: The field name in lg_lottery_winner_number to retrieve past numbers
+                    ('lottery_type_number' or 'additional_numbers').
+    - min_num: Minimum number in the lottery range.
+    - max_num: Maximum number in the lottery range.
+    - total_numbers: Number of numbers to generate.
+
+    Returns:
+    - A sorted list of predicted lottery numbers.
+    """
+    try:
+        # Define the number of recent weeks to analyze
+        recent_weeks = 10  # Adjust as needed
+
+        # Get current year and week
+        current_date = datetime.date.today()
+        current_year, current_week, _ = current_date.isocalendar()
+
+        # Initialize counters for recent and previous periods
+        recent_numbers = Counter()
+        previous_numbers = Counter()
+
+        # Collect numbers from recent weeks
+        for week_offset in range(recent_weeks):
+            # Calculate target week and year
+            target_week = current_week - week_offset
+            target_year = current_year
+
+            # Adjust for year change if necessary
+            while target_week < 1:
+                target_year -= 1
+                last_week_of_year = datetime.date(target_year, 12, 28).isocalendar()[1]
+                target_week += last_week_of_year
+
+            # Retrieve draws for the target week and year
+            draws = lg_lottery_winner_number.objects.filter(
+                lottery_type=lottery_type_instance,
+                lottery_type_number_year=target_year,
+                lottery_type_number_week=target_week
+            ).values_list(number_field, flat=True)
+
+            for draw in draws:
+                if isinstance(draw, list):
+                    for number in draw:
+                        if isinstance(number, int) and is_symmetric(number):
+                            recent_numbers[number] += 1
+
+        # Collect numbers from previous weeks (same number of weeks)
+        for week_offset in range(recent_weeks, recent_weeks * 2):
+            # Calculate target week and year
+            target_week = current_week - week_offset
+            target_year = current_year
+
+            # Adjust for year change if necessary
+            while target_week < 1:
+                target_year -= 1
+                last_week_of_year = datetime.date(target_year, 12, 28).isocalendar()[1]
+                target_week += last_week_of_year
+
+            # Retrieve draws for the target week and year
+            draws = lg_lottery_winner_number.objects.filter(
+                lottery_type=lottery_type_instance,
+                lottery_type_number_year=target_year,
+                lottery_type_number_week=target_week
+            ).values_list(number_field, flat=True)
+
+            for draw in draws:
+                if isinstance(draw, list):
+                    for number in draw:
+                        if isinstance(number, int) and is_symmetric(number):
+                            previous_numbers[number] += 1
+
+        # Calculate trend scores for each number
+        trend_scores = {}
+        all_numbers = set(recent_numbers.keys()).union(previous_numbers.keys())
+        for num in all_numbers:
+            recent_freq = recent_numbers.get(num, 0)
+            previous_freq = previous_numbers.get(num, 0)
+            if previous_freq == 0:
+                trend = recent_freq
+            else:
+                trend = recent_freq / previous_freq
+            trend_scores[num] = trend
+
+        # Sort numbers based on trend scores in descending order
+        sorted_numbers = sorted(trend_scores.items(), key=lambda x: x[1], reverse=True)
+
+        # Select numbers with trend > 1 (increasing trend)
+        selected_numbers = [num for num, trend in sorted_numbers if trend > 1]
+
+        # Add remaining symmetric numbers if needed
+        if len(selected_numbers) < total_numbers:
+            symmetrical_numbers = [num for num in range(min_num, max_num + 1) if is_symmetric(num)]
+            remaining_symmetrical_numbers = list(set(symmetrical_numbers) - set(selected_numbers))
+            random.shuffle(remaining_symmetrical_numbers)
+            selected_numbers.extend(remaining_symmetrical_numbers[:total_numbers - len(selected_numbers)])
+
+        # If still not enough, fill with any random numbers within the range
+        if len(selected_numbers) < total_numbers:
+            all_numbers_set = set(range(min_num, max_num + 1))
+            remaining_numbers = list(all_numbers_set - set(selected_numbers))
+            random.shuffle(remaining_numbers)
+            selected_numbers.extend(remaining_numbers[:total_numbers - len(selected_numbers)])
+
+        # Ensure we have the correct number of numbers and sort them
+        selected_numbers = selected_numbers[:total_numbers]
+        selected_numbers.sort()
         return selected_numbers
 
-    # Számok gyakoriságának számolása
-    all_numbers = [number for draw in past_draws for number in draw]
-    number_counts = Counter(all_numbers)
-    most_common_numbers = [num for num, count in number_counts.most_common()]
+    except Exception as e:
+        # Log the error (consider using a proper logging system)
+        print(f"Error in generate_numbers: {str(e)}")
+        # Fall back to random number generation
+        return generate_random_numbers(min_num, max_num, total_numbers)
 
-    # Adatok előkészítése a TDA-hoz
-    # Minden húzás egy pont a többdimenziós térben
-    data = np.array(past_draws)
 
-    # Persistent Homology számítása
-    rips_complex = gd.RipsComplex(points=data, max_edge_length=2.0)
-    simplex_tree = rips_complex.create_simplex_tree(max_dimension=2)
-    persistence = simplex_tree.persistence()
+def generate_random_numbers(min_num: int, max_num: int, total_numbers: int) -> List[int]:
+    """
+    Generates a sorted list of unique random numbers within the specified range.
 
-    # Persistencia diagramok feldolgozása
-    # Kivonjuk a 1. dimenzió (hurok) persistenciáját
-    loops = [p for p in persistence if p[0] == 1]
+    Parameters:
+    - min_num: Minimum number in the lottery range.
+    - max_num: Maximum number in the lottery range.
+    - total_numbers: Number of numbers to generate.
 
-    # Feature-ek kinyerése a persistencia diagramból
-    # Például a legtöbb hurok, átlagos persistencia, stb.
-    num_loops = len(loops)
-    avg_persistence = np.mean([p[1][1] - p[1][0] for p in loops]) if loops else 0
-    max_persistence = np.max([p[1][1] - p[1][0] for p in loops]) if loops else 0
+    Returns:
+    - A sorted list of randomly generated lottery numbers.
+    """
+    try:
+        numbers = set()
+        while len(numbers) < total_numbers:
+            num = random.randint(min_num, max_num)
+            numbers.add(num)
+        return sorted(list(numbers))
+    except Exception as e:
+        print(f"Error in generate_random_numbers: {str(e)}")
+        # As a last resort, return a sequential list
+        return list(range(min_num, min_num + total_numbers))
 
-    # Feature vektor létrehozása
-    features = np.array([num_loops, avg_persistence, max_persistence]).reshape(1, -1)
 
-    # Főkomponens Analízis (PCA) a dimenziócsökkentéshez
-    pca = PCA(n_components=2)
-    past_features = []
-    for p in persistence:
-        if p[0] == 1:
-            loop_persistence = p[1][1] - p[1][0]
-            past_features.append([loop_persistence])
-    if len(past_features) >= 2:
-        pca.fit(past_features)
-        reduced_features = pca.transform(features)
-    else:
-        reduced_features = features  # Ha nincs elég adat, ne csökkentsük
-
-    # Előrejelzés a features alapján
-    # Itt egyszerűen példaként a legtöbb hurok alapján választunk számot
-    # További fejlesztések: gépi tanulási modellek integrálása a features alapján
-    if num_loops > 5:
-        # Ha sok hurok van, válasszuk a leggyakoribb számokat
-        predicted_numbers = most_common_numbers[:total_numbers]
-    elif num_loops > 3:
-        # Mérsékelt hurok
-        predicted_numbers = most_common_numbers[:total_numbers]
-    else:
-        # Kevesebb hurok, válasszuk a leggyakoribb számokat
-        predicted_numbers = most_common_numbers[:total_numbers]
-
-    # Biztosítjuk, hogy a számok egyediek és az érvényes tartományba esnek
-    predicted_numbers = [
-        int(num) for num in predicted_numbers
-        if min_num <= num <= max_num
-    ]
-
-    # Ha kevesebb számunk van, mint szükséges, kiegészítjük a leggyakoribb számokkal
-    if len(predicted_numbers) < total_numbers:
-        for num in most_common_numbers:
-            if num not in predicted_numbers:
-                predicted_numbers.append(num)
-            if len(predicted_numbers) == total_numbers:
-                break
-
-    # Végső rendezés
-    predicted_numbers = predicted_numbers[:total_numbers]
-    predicted_numbers.sort()
-    return predicted_numbers
+# Optional: Additional helper functions can be added here if needed.

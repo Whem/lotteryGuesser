@@ -1,67 +1,87 @@
+# genetic_algorithm_prediction.py
 import random
 from collections import Counter
+from typing import List, Tuple, Set
 from algorithms.models import lg_lottery_winner_number, lg_lottery_type
 
-def get_numbers(lottery_type_instance):
-    """
-    Generates lottery numbers based on geometric progression patterns found in past draws.
 
-    Parameters:
-    - lottery_type_instance: An instance of lg_lottery_type model.
+def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
+    """Generates numbers for both main and additional sets using geometric progression."""
+    main_numbers = generate_number_set(
+        lottery_type_instance,
+        lottery_type_instance.min_number,
+        lottery_type_instance.max_number,
+        lottery_type_instance.pieces_of_draw_numbers,
+        True
+    )
 
-    Returns:
-    - A sorted list of predicted lottery numbers.
-    """
-    # Retrieve past draws
-    past_draws_queryset = lg_lottery_winner_number.objects.filter(
-        lottery_type=lottery_type_instance
-    ).values_list('lottery_type_number', flat=True)
-
-    past_draws = [draw for draw in past_draws_queryset if isinstance(draw, list)]
-
-    # Find geometric progressions in past draws
-    progressions = find_geometric_progressions(past_draws)
-
-    # Generate numbers from the most common progressions
-    predicted_numbers = generate_numbers_from_progressions(progressions, lottery_type_instance)
-
-    # If we don't have enough numbers, fill with random ones
-    while len(predicted_numbers) < lottery_type_instance.pieces_of_draw_numbers:
-        new_number = random.randint(
-            lottery_type_instance.min_number,
-            lottery_type_instance.max_number
+    additional_numbers = []
+    if lottery_type_instance.has_additional_numbers:
+        additional_numbers = generate_number_set(
+            lottery_type_instance,
+            lottery_type_instance.additional_min_number,
+            lottery_type_instance.additional_max_number,
+            lottery_type_instance.additional_numbers_count,
+            False
         )
+
+    return main_numbers, additional_numbers
+
+
+def generate_number_set(
+        lottery_type_instance: lg_lottery_type,
+        min_num: int,
+        max_num: int,
+        required_numbers: int,
+        is_main: bool
+) -> List[int]:
+    """Generates a set of numbers using geometric progression analysis."""
+    past_draws = get_historical_data(lottery_type_instance, is_main)
+    progressions = find_geometric_progressions(past_draws)
+    predicted_numbers = generate_numbers_from_progressions(
+        progressions, min_num, max_num, required_numbers
+    )
+
+    while len(predicted_numbers) < required_numbers:
+        new_number = random.randint(min_num, max_num)
         predicted_numbers.add(new_number)
 
-    # Return the required number of sorted numbers
-    return sorted(predicted_numbers)[:lottery_type_instance.pieces_of_draw_numbers]
+    return sorted(list(predicted_numbers))[:required_numbers]
 
 
-def find_geometric_progressions(past_draws):
-    """
-    Finds geometric progressions in past lottery draws.
+def get_historical_data(lottery_type_instance: lg_lottery_type, is_main: bool) -> List[List[int]]:
+    """Gets historical data for either main or additional numbers."""
+    past_draws = list(lg_lottery_winner_number.objects.filter(
+        lottery_type=lottery_type_instance
+    ).order_by('-id'))
 
-    Parameters:
-    - past_draws: A list of past draws, each draw is a list of numbers.
+    if is_main:
+        return [draw.lottery_type_number for draw in past_draws
+                if isinstance(draw.lottery_type_number, list)]
+    else:
+        return [draw.additional_numbers for draw in past_draws
+                if hasattr(draw, 'additional_numbers') and
+                isinstance(draw.additional_numbers, list)]
 
-    Returns:
-    - A Counter object with progressions as keys and their occurrence counts as values.
-    """
+
+def find_geometric_progressions(past_draws: List[List[int]]) -> Counter:
+    """Finds geometric progressions in past draws."""
     progressions = Counter()
     for draw in past_draws:
-        sorted_draw = sorted(set(draw))  # Remove duplicates
+        sorted_draw = sorted(set(draw))
         n = len(sorted_draw)
         if n < 3:
             continue
+
         for i in range(n - 2):
             a = sorted_draw[i]
             for j in range(i + 1, n - 1):
                 b = sorted_draw[j]
                 if a == 0:
-                    continue  # Avoid division by zero
+                    continue
                 ratio = b / a
                 if ratio <= 0:
-                    continue  # Only positive ratios
+                    continue
                 for k in range(j + 1, n):
                     c = sorted_draw[k]
                     if is_geometric_progression(a, b, c):
@@ -70,73 +90,51 @@ def find_geometric_progressions(past_draws):
     return progressions
 
 
-def is_geometric_progression(a, b, c):
-    """
-    Checks if three numbers form a geometric progression.
-
-    Parameters:
-    - a, b, c: The three numbers to check.
-
-    Returns:
-    - True if they form a geometric progression, False otherwise.
-    """
-    if a == 0 or b == 0:
-        return False  # Avoid division by zero
-    return b ** 2 == a * c
+def is_geometric_progression(a: int, b: int, c: int) -> bool:
+    """Checks if three numbers form a geometric progression."""
+    return a != 0 and b != 0 and b ** 2 == a * c
 
 
-def generate_numbers_from_progressions(progressions, lottery_type_instance):
-    """
-    Generates predicted numbers by extending the most common geometric progressions.
-
-    Parameters:
-    - progressions: A Counter object of geometric progressions.
-    - lottery_type_instance: An instance of lg_lottery_type model.
-
-    Returns:
-    - A set of predicted lottery numbers.
-    """
+def generate_numbers_from_progressions(
+        progressions: Counter,
+        min_num: int,
+        max_num: int,
+        required_numbers: int
+) -> Set[int]:
+    """Generates numbers from geometric progressions."""
     predicted_numbers = set()
     top_progressions = progressions.most_common(3)
 
     for progression, _ in top_progressions:
         predicted_numbers.update(progression)
-
-        # Extend the progression
-        extend_progression(predicted_numbers, progression, lottery_type_instance)
-
-        # Stop if we have enough numbers
-        if len(predicted_numbers) >= lottery_type_instance.pieces_of_draw_numbers:
+        extend_progression(predicted_numbers, progression, min_num, max_num)
+        if len(predicted_numbers) >= required_numbers:
             break
 
     return predicted_numbers
 
 
-def extend_progression(predicted_numbers, progression, lottery_type_instance):
-    """
-    Extends a geometric progression forward and backward.
-
-    Parameters:
-    - predicted_numbers: A set to store predicted numbers.
-    - progression: The geometric progression to extend.
-    - lottery_type_instance: An instance of lg_lottery_type model.
-    """
+def extend_progression(
+        predicted_numbers: Set[int],
+        progression: Tuple[int, int, int],
+        min_num: int,
+        max_num: int
+) -> None:
+    """Extends a geometric progression forward and backward."""
     a, b, c = progression
     ratio = b / a
 
     if ratio <= 0 or ratio == 1:
-        return  # Invalid ratio for geometric progression
+        return
 
-    # Extend forward
+    # Forward extension
     next_number = c * ratio
-    while (lottery_type_instance.min_number <= next_number <= lottery_type_instance.max_number
-           and next_number.is_integer()):
+    while min_num <= next_number <= max_num and next_number.is_integer():
         predicted_numbers.add(int(next_number))
         next_number *= ratio
 
-    # Extend backward
+    # Backward extension
     prev_number = a / ratio
-    while (lottery_type_instance.min_number <= prev_number <= lottery_type_instance.max_number
-           and prev_number.is_integer()):
+    while min_num <= prev_number <= max_num and prev_number.is_integer():
         predicted_numbers.add(int(prev_number))
         prev_number /= ratio

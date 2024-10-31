@@ -1,70 +1,201 @@
+# odd_even_balance_prediction.py
+from collections import Counter, defaultdict
 import random
-from collections import Counter
-from algorithms.models import lg_lottery_winner_number
+from typing import List, Dict, Tuple, Set
+from algorithms.models import lg_lottery_winner_number, lg_lottery_type
 
-def get_numbers(lottery_type_instance):
+
+def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
     """
-    Generates lottery numbers based on odd-even balance prediction.
-
-    Parameters:
-    - lottery_type_instance: An instance of lg_lottery_type model.
-
-    Returns:
-    - A sorted list of predicted lottery numbers.
+    Generate both main and additional numbers using odd-even balance prediction.
+    Returns a tuple of (main_numbers, additional_numbers).
     """
-    # Retrieve past winning numbers
-    past_draws = lg_lottery_winner_number.objects.filter(
+    # Generate main numbers
+    main_numbers = generate_number_set(
+        lottery_type_instance,
+        lottery_type_instance.min_number,
+        lottery_type_instance.max_number,
+        lottery_type_instance.pieces_of_draw_numbers,
+        is_main=True
+    )
+
+    # Generate additional numbers if needed
+    additional_numbers = []
+    if lottery_type_instance.has_additional_numbers:
+        additional_numbers = generate_number_set(
+            lottery_type_instance,
+            lottery_type_instance.additional_min_number,
+            lottery_type_instance.additional_max_number,
+            lottery_type_instance.additional_numbers_count,
+            is_main=False
+        )
+
+    return main_numbers, additional_numbers
+
+
+def generate_number_set(
+        lottery_type_instance: lg_lottery_type,
+        min_num: int,
+        max_num: int,
+        required_numbers: int,
+        is_main: bool
+) -> List[int]:
+    """Generate a set of numbers using odd-even balance prediction."""
+    # Get past draws
+    past_draws = list(lg_lottery_winner_number.objects.filter(
         lottery_type=lottery_type_instance
-    ).values_list('lottery_type_number', flat=True)
+    ).order_by('-id')[:200])
 
-    # Analyze odd-even patterns
-    pattern_counter = Counter()
-    for draw in past_draws:
-        if not isinstance(draw, list):
-            continue
-        odd_count = sum(1 for number in draw if number % 2 != 0)
-        even_count = sum(1 for number in draw if number % 2 == 0)
-        pattern_counter[(odd_count, even_count)] += 1
-
-    # Find the most common odd-even pattern
-    most_common_pattern = pattern_counter.most_common(1)
-    if most_common_pattern:
-        odd_count, even_count = most_common_pattern[0][0]
+    # Extract appropriate number sets from past draws
+    if is_main:
+        past_numbers = [draw.lottery_type_number for draw in past_draws
+                        if isinstance(draw.lottery_type_number, list)]
     else:
-        # Default to an even split if no data is available
-        total_numbers = lottery_type_instance.pieces_of_draw_numbers
-        odd_count = total_numbers // 2
-        even_count = total_numbers - odd_count
+        past_numbers = [draw.additional_numbers for draw in past_draws
+                        if hasattr(draw, 'additional_numbers') and
+                        isinstance(draw.additional_numbers, list)]
 
-    # Generate numbers matching the most common pattern
-    min_num = lottery_type_instance.min_number
-    max_num = lottery_type_instance.max_number
-    all_numbers = list(range(min_num, max_num + 1))
+    if not past_numbers:
+        return generate_random_numbers(min_num, max_num, required_numbers)
 
-    odd_numbers = [num for num in all_numbers if num % 2 != 0]
-    even_numbers = [num for num in all_numbers if num % 2 == 0]
+    pattern_stats = analyze_odd_even_patterns(past_numbers, required_numbers)
+    selected_numbers = generate_numbers_from_patterns(
+        pattern_stats,
+        min_num,
+        max_num,
+        required_numbers
+    )
 
-    # Check if there are enough odd and even numbers
-    odd_count = min(odd_count, len(odd_numbers))
-    even_count = min(even_count, len(even_numbers))
+    return sorted(selected_numbers)
 
-    # Randomly select the required number of odd and even numbers
-    selected_numbers = []
-    selected_numbers.extend(random.sample(odd_numbers, odd_count))
-    selected_numbers.extend(random.sample(even_numbers, even_count))
 
-    # Ensure we have the correct number of total numbers
-    num_to_select = lottery_type_instance.pieces_of_draw_numbers
-    if len(selected_numbers) < num_to_select:
-        # Fill with random numbers from the remaining pool
-        remaining_numbers = list(set(all_numbers) - set(selected_numbers))
-        random.shuffle(remaining_numbers)
-        selected_numbers.extend(remaining_numbers[:num_to_select - len(selected_numbers)])
-    elif len(selected_numbers) > num_to_select:
-        # Trim the list if we have too many numbers
-        random.shuffle(selected_numbers)
-        selected_numbers = selected_numbers[:num_to_select]
+def analyze_odd_even_patterns(
+        past_draws: List[List[int]],
+        required_numbers: int
+) -> Dict[str, Dict]:
+    """
+    Analyze comprehensive odd-even patterns in past draws.
+    Returns statistics about patterns and their effectiveness.
+    """
+    pattern_stats = {
+        'distributions': Counter(),  # Counts of different odd-even distributions
+        'positional': defaultdict(Counter),  # Odd-even preferences by position
+        'sequences': Counter(),  # Consecutive odd-even patterns
+        'effectiveness': defaultdict(list),  # How often each pattern appeared in winning numbers
+        'trends': defaultdict(float)  # Recent trends in odd-even ratios
+    }
 
-    # Sort the final list of numbers
-    selected_numbers.sort()
-    return selected_numbers
+    if not past_draws:
+        return pattern_stats
+
+    # Analyze each draw
+    for draw_idx, draw in enumerate(past_draws):
+        sorted_draw = sorted(draw)
+
+        # Record distribution
+        odd_count = sum(1 for num in draw if num % 2 != 0)
+        even_count = len(draw) - odd_count
+        pattern_stats['distributions'][(odd_count, even_count)] += 1
+
+        # Analyze positional preferences
+        for pos, num in enumerate(sorted_draw):
+            if pos < required_numbers:
+                pattern_stats['positional'][pos]['odd' if num % 2 != 0 else 'even'] += 1
+
+        # Analyze sequences
+        if len(sorted_draw) >= 2:
+            sequence = ''.join('O' if num % 2 != 0 else 'E' for num in sorted_draw)
+            pattern_stats['sequences'][sequence] += 1
+
+        # Calculate recent trends
+        if draw_idx < 20:  # Focus on recent draws
+            ratio = odd_count / len(draw) if draw else 0
+            pattern_stats['trends'][draw_idx] = ratio
+
+    # Normalize and calculate effectiveness
+    total_draws = len(past_draws)
+    for pattern, count in pattern_stats['distributions'].items():
+        pattern_stats['effectiveness'][pattern] = count / total_draws
+
+    return pattern_stats
+
+
+def generate_numbers_from_patterns(
+        pattern_stats: Dict[str, Dict],
+        min_num: int,
+        max_num: int,
+        required_numbers: int
+) -> List[int]:
+    """Generate numbers based on analyzed odd-even patterns."""
+    selected_numbers: Set[int] = set()
+
+    # Get the most common and effective pattern
+    if pattern_stats['distributions']:
+        target_pattern = max(
+            pattern_stats['distributions'].items(),
+            key=lambda x: (x[1], pattern_stats['effectiveness'][x[0]])
+        )[0]
+    else:
+        # Default to balanced distribution if no data
+        target_pattern = (required_numbers // 2, required_numbers - required_numbers // 2)
+
+    odd_count, even_count = target_pattern
+
+    # Prepare number pools
+    odd_numbers = [n for n in range(min_num, max_num + 1) if n % 2 != 0]
+    even_numbers = [n for n in range(min_num, max_num + 1) if n % 2 == 0]
+
+    # Score numbers based on positional preferences
+    odd_scores = defaultdict(float)
+    even_scores = defaultdict(float)
+
+    for pos, counts in pattern_stats['positional'].items():
+        total_pos = sum(counts.values())
+        if total_pos > 0:
+            odd_preference = counts['odd'] / total_pos
+            even_preference = counts['even'] / total_pos
+
+            # Apply positional preferences to scoring
+            for num in odd_numbers:
+                odd_scores[num] += odd_preference
+            for num in even_numbers:
+                even_scores[num] += even_preference
+
+    # Select numbers based on scores and target pattern
+    sorted_odds = sorted(odd_scores.items(), key=lambda x: x[1], reverse=True)
+    sorted_evens = sorted(even_scores.items(), key=lambda x: x[1], reverse=True)
+
+    # Add highest scoring odd numbers
+    for num, _ in sorted_odds[:odd_count]:
+        selected_numbers.add(num)
+
+    # Add highest scoring even numbers
+    for num, _ in sorted_evens[:even_count]:
+        selected_numbers.add(num)
+
+    # Fill any remaining slots
+    while len(selected_numbers) < required_numbers:
+        remaining_odds = [n for n in odd_numbers if n not in selected_numbers]
+        remaining_evens = [n for n in even_numbers if n not in selected_numbers]
+
+        if random.random() < 0.5 and remaining_odds:
+            selected_numbers.add(random.choice(remaining_odds))
+        elif remaining_evens:
+            selected_numbers.add(random.choice(remaining_evens))
+        else:
+            break
+
+    # If still not enough numbers, add random ones
+    while len(selected_numbers) < required_numbers:
+        num = random.randint(min_num, max_num)
+        selected_numbers.add(num)
+
+    return sorted(list(selected_numbers))
+
+
+def generate_random_numbers(min_num: int, max_num: int, required_numbers: int) -> List[int]:
+    """Generate random numbers when no historical data is available."""
+    numbers = set()
+    while len(numbers) < required_numbers:
+        numbers.add(random.randint(min_num, max_num))
+    return sorted(list(numbers))

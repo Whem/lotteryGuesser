@@ -1,92 +1,229 @@
 # empirical_mode_decomposition_prediction.py
-
 import numpy as np
 from PyEMD import EMD
-from algorithms.models import lg_lottery_winner_number
+from typing import List, Tuple, Set, Dict
+from algorithms.models import lg_lottery_winner_number, lg_lottery_type
+from collections import Counter
 
-def get_numbers(lottery_type_instance):
+
+def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
     """
-    Generál lottószámokat Empirikus Módus Dekompozíció (EMD) segítségével.
-
-    Paraméterek:
-    - lottery_type_instance: Az lg_lottery_type modell egy példánya.
-
-    Visszatérési érték:
-    - Egy rendezett lista a megjósolt lottószámokról.
+    Empirical Mode Decomposition predictor for combined lottery types.
+    Returns (main_numbers, additional_numbers).
     """
-    min_num = lottery_type_instance.min_number
-    max_num = lottery_type_instance.max_number
-    total_numbers = lottery_type_instance.pieces_of_draw_numbers
+    # Generate main numbers
+    main_numbers = generate_number_set(
+        lottery_type_instance,
+        lottery_type_instance.min_number,
+        lottery_type_instance.max_number,
+        lottery_type_instance.pieces_of_draw_numbers,
+        True
+    )
 
-    # Lekérjük a múltbeli nyerőszámokat
-    past_draws_queryset = lg_lottery_winner_number.objects.filter(
-        lottery_type=lottery_type_instance
-    ).order_by('id').values_list('lottery_type_number', flat=True)
+    # Generate additional numbers if needed
+    additional_numbers = []
+    if lottery_type_instance.has_additional_numbers:
+        additional_numbers = generate_number_set(
+            lottery_type_instance,
+            lottery_type_instance.additional_min_number,
+            lottery_type_instance.additional_max_number,
+            lottery_type_instance.additional_numbers_count,
+            False
+        )
 
-    past_draws = [
-        draw for draw in past_draws_queryset
-        if isinstance(draw, list) and len(draw) == total_numbers
-    ]
+    return main_numbers, additional_numbers
+
+
+def generate_number_set(
+        lottery_type_instance: lg_lottery_type,
+        min_num: int,
+        max_num: int,
+        required_numbers: int,
+        is_main: bool
+) -> List[int]:
+    """Generate a set of numbers using EMD analysis."""
+    # Get historical data
+    past_draws = get_historical_data(lottery_type_instance, is_main)
 
     if len(past_draws) < 20:
-        # Ha nincs elég adat, visszaadjuk a legkisebb 'total_numbers' számot
-        selected_numbers = list(range(min_num, min_num + total_numbers))
-        return selected_numbers
+        return random_number_set(min_num, max_num, required_numbers)
 
-    # Átalakítjuk a múltbeli húzásokat egy numpy mátrixba
+    # Convert to numpy matrix
     draw_matrix = np.array(past_draws)
 
-    predicted_numbers = []
+    # Perform EMD analysis
+    predicted_numbers = perform_emd_analysis(
+        draw_matrix,
+        min_num,
+        max_num,
+        required_numbers
+    )
 
-    # Minden pozícióra külön EMD alkalmazása
-    for i in range(total_numbers):
-        # Kiválasztjuk az adott pozíció idősorozatát
+    # Ensure unique numbers
+    predicted_numbers = ensure_unique_numbers(
+        predicted_numbers,
+        past_draws,
+        min_num,
+        max_num,
+        required_numbers
+    )
+
+    return sorted(predicted_numbers)
+
+
+def get_historical_data(lottery_type_instance: lg_lottery_type, is_main: bool) -> List[List[int]]:
+    """Get historical lottery data based on number type."""
+    past_draws = list(lg_lottery_winner_number.objects.filter(
+        lottery_type=lottery_type_instance
+    ).order_by('id'))
+
+    if is_main:
+        draws = [draw.lottery_type_number for draw in past_draws
+                 if isinstance(draw.lottery_type_number, list)]
+    else:
+        draws = [draw.additional_numbers for draw in past_draws
+                 if hasattr(draw, 'additional_numbers') and
+                 isinstance(draw.additional_numbers, list)]
+
+    # Ensure consistent length
+    required_length = len(draws[0]) if draws else 0
+    return [draw for draw in draws if len(draw) == required_length]
+
+
+def perform_emd_analysis(
+        draw_matrix: np.ndarray,
+        min_num: int,
+        max_num: int,
+        required_numbers: int
+) -> List[int]:
+    """Perform EMD analysis on the draw matrix."""
+    predicted_numbers = []
+    emd = EMD()
+
+    # Analyze each position
+    for i in range(draw_matrix.shape[1]):
         series = draw_matrix[:, i]
 
-        # EMD alkalmazása
-        emd = EMD()
-        IMFs = emd.emd(series)
+        try:
+            # Apply EMD
+            IMFs = emd.emd(series)
 
-        # Rekonstruáljuk a jelet az első IMF nélkül (zaj szűrése)
-        if IMFs.shape[0] > 1:
-            reconstructed_series = np.sum(IMFs[1:], axis=0)
-        else:
-            reconstructed_series = series
+            # Reconstruct signal without first IMF (noise)
+            if IMFs.shape[0] > 1:
+                reconstructed = np.sum(IMFs[1:], axis=0)
+            else:
+                reconstructed = series
 
-        # Lineáris trend alapján előrejelzés
-        if len(reconstructed_series) >= 2:
-            trend = reconstructed_series[-1] - reconstructed_series[-2]
-            next_value = reconstructed_series[-1] + trend
-        else:
-            next_value = reconstructed_series[-1]
+            # Predict next value
+            if len(reconstructed) >= 2:
+                trend = reconstructed[-1] - reconstructed[-2]
+                next_value = reconstructed[-1] + trend
+            else:
+                next_value = reconstructed[-1]
 
-        # Kerekítés és tartományhoz igazítás
-        predicted_number = int(round(next_value))
-        if predicted_number < min_num:
-            predicted_number = min_num
-        elif predicted_number > max_num:
-            predicted_number = max_num
+            # Round and adjust to range
+            predicted_number = int(round(next_value))
+            predicted_number = max(min_num, min(max_num, predicted_number))
+            predicted_numbers.append(predicted_number)
 
-        predicted_numbers.append(predicted_number)
+        except Exception as e:
+            print(f"EMD analysis error for position {i}: {str(e)}")
+            # Fallback to last value if error occurs
+            if len(series) > 0:
+                predicted_numbers.append(int(series[-1]))
 
-    # Egyedivé tesszük a számokat
-    predicted_numbers = list(set(predicted_numbers))
-
-    # Ha kevesebb számunk van, mint szükséges, kiegészítjük a leggyakoribb számokkal
-    if len(predicted_numbers) < total_numbers:
-        all_numbers = [number for draw in past_draws for number in draw]
-        number_counts = {}
-        for number in all_numbers:
-            number_counts[number] = number_counts.get(number, 0) + 1
-        sorted_numbers = sorted(number_counts.items(), key=lambda x: x[1], reverse=True)
-        for num, _ in sorted_numbers:
-            if num not in predicted_numbers:
-                predicted_numbers.append(num)
-            if len(predicted_numbers) == total_numbers:
-                break
-
-    # Rendezés és levágás a szükséges hosszra
-    predicted_numbers = predicted_numbers[:total_numbers]
-    predicted_numbers.sort()
     return predicted_numbers
 
+
+def ensure_unique_numbers(
+        predicted_numbers: List[int],
+        past_draws: List[List[int]],
+        min_num: int,
+        max_num: int,
+        required_numbers: int
+) -> List[int]:
+    """Ensure we have enough unique numbers."""
+    unique_numbers = set(predicted_numbers)
+
+    if len(unique_numbers) < required_numbers:
+        # Get frequency of past numbers
+        frequency = Counter(num for draw in past_draws for num in draw)
+
+        # Add most common numbers not already included
+        common_numbers = sorted(frequency.items(), key=lambda x: x[1], reverse=True)
+        for num, _ in common_numbers:
+            if num not in unique_numbers:
+                unique_numbers.add(num)
+            if len(unique_numbers) >= required_numbers:
+                break
+
+        # If still not enough, add random numbers
+        while len(unique_numbers) < required_numbers:
+            new_number = random.randint(min_num, max_num)
+            unique_numbers.add(new_number)
+
+    return list(unique_numbers)[:required_numbers]
+
+
+def random_number_set(min_num: int, max_num: int, required_numbers: int) -> List[int]:
+    """Generate a random set of numbers."""
+    return sorted(random.sample(range(min_num, max_num + 1), required_numbers))
+
+
+def get_emd_statistics(past_draws: List[List[int]]) -> Dict:
+    """
+    Get comprehensive EMD statistics.
+
+    Returns a dictionary containing:
+    - imf_count: average number of IMFs per position
+    - reconstruction_error: average reconstruction error
+    - trend_strength: correlation with linear trend
+    - noise_ratio: estimated noise ratio
+    """
+    if not past_draws or len(past_draws) < 2:
+        return {}
+
+    draw_matrix = np.array(past_draws)
+    stats = {
+        'imf_counts': [],
+        'reconstruction_errors': [],
+        'trend_correlations': [],
+        'noise_ratios': []
+    }
+
+    emd = EMD()
+
+    for i in range(draw_matrix.shape[1]):
+        try:
+            series = draw_matrix[:, i]
+            IMFs = emd.emd(series)
+
+            # Count IMFs
+            stats['imf_counts'].append(IMFs.shape[0])
+
+            # Calculate reconstruction error
+            if IMFs.shape[0] > 1:
+                reconstructed = np.sum(IMFs[1:], axis=0)
+                error = np.mean(np.abs(series - reconstructed))
+                stats['reconstruction_errors'].append(error)
+
+                # Estimate noise ratio
+                noise = IMFs[0]
+                noise_ratio = np.std(noise) / np.std(series)
+                stats['noise_ratios'].append(noise_ratio)
+
+            # Calculate trend correlation
+            trend = np.arange(len(series))
+            correlation = np.corrcoef(series, trend)[0, 1]
+            stats['trend_correlations'].append(correlation)
+
+        except Exception as e:
+            print(f"Error calculating EMD statistics for position {i}: {str(e)}")
+
+    # Aggregate statistics
+    return {
+        'avg_imf_count': np.mean(stats['imf_counts']),
+        'avg_reconstruction_error': np.mean(stats['reconstruction_errors']),
+        'avg_trend_correlation': np.mean(stats['trend_correlations']),
+        'avg_noise_ratio': np.mean(stats['noise_ratios'])
+    }

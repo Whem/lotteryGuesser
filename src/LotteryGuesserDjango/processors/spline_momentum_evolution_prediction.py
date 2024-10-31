@@ -3,81 +3,143 @@
 # Combines spline analysis with evolutionary momentum patterns
 
 import numpy as np
-from typing import List, Dict, Set, Tuple
-from collections import Counter, defaultdict
-from algorithms.models import lg_lottery_winner_number, lg_lottery_type
 import statistics
+import random
+from typing import List, Tuple, Set, Dict
+from collections import Counter, defaultdict
 from scipy.interpolate import CubicSpline
 from scipy import signal
 from sklearn.preprocessing import StandardScaler
-import random
 from itertools import combinations
+from algorithms.models import lg_lottery_winner_number, lg_lottery_type
 
 
-def get_numbers(lottery_type_instance: lg_lottery_type) -> List[int]:
+def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
     """
-    Spline interpolation based prediction with adaptive momentum
-    and wave mechanics analysis.
+    Generates lottery numbers using Spline Interpolation with Adaptive Momentum
+    and Wave Mechanics Analysis.
+
+    Parameters:
+    - lottery_type_instance: An instance of lg_lottery_type model.
+
+    Returns:
+    - A tuple containing two lists:
+        - main_numbers: A sorted list of predicted main lottery numbers.
+        - additional_numbers: A sorted list of predicted additional lottery numbers (if applicable).
     """
+    # Generate main numbers
+    main_numbers = generate_numbers(
+        lottery_type_instance=lottery_type_instance,
+        number_field='lottery_type_number',
+        min_num=int(lottery_type_instance.min_number),
+        max_num=int(lottery_type_instance.max_number),
+        total_numbers=int(lottery_type_instance.pieces_of_draw_numbers)
+    )
+
+    additional_numbers = []
+    if lottery_type_instance.has_additional_numbers:
+        # Generate additional numbers
+        additional_numbers = generate_numbers(
+            lottery_type_instance=lottery_type_instance,
+            number_field='additional_numbers',
+            min_num=int(lottery_type_instance.additional_min_number),
+            max_num=int(lottery_type_instance.additional_max_number),
+            total_numbers=int(lottery_type_instance.additional_numbers_count)
+        )
+
+    return main_numbers, additional_numbers
+
+
+def generate_numbers(
+    lottery_type_instance: lg_lottery_type,
+    number_field: str,
+    min_num: int,
+    max_num: int,
+    total_numbers: int
+) -> List[int]:
+    """
+    Generates a list of lottery numbers using Spline Interpolation with Adaptive Momentum
+    and Wave Mechanics Analysis.
+
+    Parameters:
+    - lottery_type_instance: An instance of lg_lottery_type model.
+    - number_field: The field name in lg_lottery_winner_number to retrieve past numbers
+                    ('lottery_type_number' or 'additional_numbers').
+    - min_num: Minimum number in the lottery range.
+    - max_num: Maximum number in the lottery range.
+    - total_numbers: Total numbers to generate.
+
+    Returns:
+    - A sorted list of predicted lottery numbers.
+    """
+    # Retrieve past winning numbers
     past_draws = list(lg_lottery_winner_number.objects.filter(
         lottery_type=lottery_type_instance
-    ).values_list('lottery_type_number', flat=True).order_by('-id')[:200])
+    ).values_list(number_field, flat=True).order_by('-id')[:200])
 
-    past_draws = [draw for draw in past_draws if isinstance(draw, list)]
+    # Filter valid past draws
+    past_draws = [draw for draw in past_draws if isinstance(draw, list) and len(draw) == total_numbers]
     if not past_draws:
-        return generate_random_numbers(lottery_type_instance)
+        return generate_random_numbers(lottery_type_instance, min_num, max_num, total_numbers)
 
-    required_numbers = lottery_type_instance.pieces_of_draw_numbers
     candidates = set()
 
     # 1. Spline Interpolation Analysis
     spline_numbers = analyze_spline_patterns(
         past_draws,
-        lottery_type_instance.min_number,
-        lottery_type_instance.max_number
+        min_num,
+        max_num
     )
-    candidates.update(spline_numbers[:required_numbers // 3])
+    candidates.update(spline_numbers[:max(total_numbers // 3, 1)])
 
     # 2. Momentum Evolution Analysis
     momentum_numbers = analyze_momentum_evolution(
         past_draws,
-        lottery_type_instance.min_number,
-        lottery_type_instance.max_number
+        min_num,
+        max_num
     )
-    candidates.update(momentum_numbers[:required_numbers // 3])
+    candidates.update(momentum_numbers[:max(total_numbers // 3, 1)])
 
     # 3. Wave Resonance Analysis
     resonance_numbers = analyze_wave_resonance(
         past_draws,
-        lottery_type_instance.min_number,
-        lottery_type_instance.max_number
+        min_num,
+        max_num
     )
-    candidates.update(resonance_numbers[:required_numbers // 3])
+    candidates.update(resonance_numbers[:max(total_numbers // 3, 1)])
 
     # Fill remaining slots using adaptive field theory
-    while len(candidates) < required_numbers:
+    while len(candidates) < total_numbers:
         weights = calculate_field_weights(
             past_draws,
-            lottery_type_instance.min_number,
-            lottery_type_instance.max_number,
+            min_num,
+            max_num,
             candidates
         )
 
-        available_numbers = set(range(
-            lottery_type_instance.min_number,
-            lottery_type_instance.max_number + 1
-        )) - candidates
+        available_numbers = set(range(min_num, max_num + 1)) - candidates
+        if not available_numbers:
+            break  # No more numbers to select
 
-        if available_numbers:
-            number_weights = [weights.get(num, 1.0) for num in available_numbers]
-            selected = random.choices(list(available_numbers), weights=number_weights, k=1)[0]
-            candidates.add(selected)
+        number_weights = [weights.get(num, 1.0) for num in available_numbers]
+        selected = random.choices(list(available_numbers), weights=number_weights, k=1)[0]
+        candidates.add(selected)
 
-    return sorted(list(candidates))[:required_numbers]
+    return sorted(list(candidates))[:total_numbers]
 
 
 def analyze_spline_patterns(past_draws: List[List[int]], min_num: int, max_num: int) -> List[int]:
-    """Analyze patterns using spline interpolation."""
+    """
+    Analyze patterns using spline interpolation.
+
+    Parameters:
+    - past_draws: List of past lottery number draws.
+    - min_num: Minimum number in the lottery range.
+    - max_num: Maximum number in the lottery range.
+
+    Returns:
+    - A list of predicted numbers based on spline analysis.
+    """
     spline_scores = defaultdict(float)
 
     # Convert draws to positional time series
@@ -124,14 +186,24 @@ def analyze_spline_patterns(past_draws: List[List[int]], min_num: int, max_num: 
                     spline_scores[int(infl_value)] += 0.5
 
         except Exception as e:
-            print(f"Spline analysis error: {e}")
+            print(f"Spline analysis error at position {pos}: {e}")
             continue
 
     return sorted(spline_scores.keys(), key=spline_scores.get, reverse=True)
 
 
 def analyze_momentum_evolution(past_draws: List[List[int]], min_num: int, max_num: int) -> List[int]:
-    """Analyze momentum patterns and their evolution."""
+    """
+    Analyze momentum patterns and their evolution.
+
+    Parameters:
+    - past_draws: List of past lottery number draws.
+    - min_num: Minimum number in the lottery range.
+    - max_num: Maximum number in the lottery range.
+
+    Returns:
+    - A list of predicted numbers based on momentum evolution analysis.
+    """
     momentum_scores = defaultdict(float)
 
     # Calculate momentum at different time scales
@@ -183,7 +255,17 @@ def analyze_momentum_evolution(past_draws: List[List[int]], min_num: int, max_nu
 
 
 def analyze_wave_resonance(past_draws: List[List[int]], min_num: int, max_num: int) -> List[int]:
-    """Analyze wave resonance patterns in the number sequence."""
+    """
+    Analyze wave resonance patterns in the number sequence.
+
+    Parameters:
+    - past_draws: List of past lottery number draws.
+    - min_num: Minimum number in the lottery range.
+    - max_num: Maximum number in the lottery range.
+
+    Returns:
+    - A list of predicted numbers based on wave resonance analysis.
+    """
     resonance_scores = defaultdict(float)
 
     # Convert number sequence to wave form
@@ -251,7 +333,18 @@ def calculate_field_weights(
         max_num: int,
         excluded_numbers: Set[int]
 ) -> Dict[int, float]:
-    """Calculate weights using field theory principles."""
+    """
+    Calculate weights using field theory principles.
+
+    Parameters:
+    - past_draws: List of past lottery number draws.
+    - min_num: Minimum number in the lottery range.
+    - max_num: Maximum number in the lottery range.
+    - excluded_numbers: Set of numbers to exclude from selection.
+
+    Returns:
+    - A dictionary mapping each number to its calculated weight.
+    """
     weights = defaultdict(float)
 
     if not past_draws:
@@ -271,7 +364,10 @@ def calculate_field_weights(
                 field += np.exp(-(x - idx) ** 2 / (2 * width ** 2))
 
         # Normalize field
-        field = field / np.max(field)
+        if np.max(field) != 0:
+            field = field / np.max(field)
+        else:
+            field = np.ones_like(field) / len(field)  # Avoid division by zero
 
         # Calculate weights from field
         for num in range(min_num, max_num + 1):
@@ -289,15 +385,21 @@ def calculate_field_weights(
 
             # Local maxima weight
             peaks, _ = signal.find_peaks(field)
-            peak_distance = min(abs(idx - peak) for peak in peaks) if peaks.size > 0 else len(field)
-            peak_weight = 1 / (1 + peak_distance)
+            if len(peaks) == 0:
+                peak_weight = 1.0
+            else:
+                peak_distance = min(abs(idx - peak) for peak in peaks)
+                peak_weight = 1 / (1 + peak_distance)
 
             # Combine weights
             weights[num] = field_weight * gradient_weight * peak_weight
 
     except Exception as e:
         print(f"Field calculation error: {e}")
-        return {num: 1.0 for num in range(min_num, max_num + 1) if num not in excluded_numbers}
+        # Fallback to uniform weights
+        for num in range(min_num, max_num + 1):
+            if num not in excluded_numbers:
+                weights[num] = 1.0
 
     # Normalize weights
     total_weight = sum(weights.values())
@@ -308,19 +410,30 @@ def calculate_field_weights(
     return weights
 
 
-def generate_random_numbers(lottery_type_instance: lg_lottery_type) -> List[int]:
-    """Generate random numbers using field theory."""
+def generate_random_numbers(lottery_type_instance: lg_lottery_type, min_num: int, max_num: int, total_numbers: int) -> List[int]:
+    """
+    Generate random numbers using field theory as a fallback mechanism.
+
+    Parameters:
+    - lottery_type_instance: An instance of lg_lottery_type model.
+    - min_num: Minimum number in the lottery range.
+    - max_num: Maximum number in the lottery range.
+    - total_numbers: Total numbers to generate.
+
+    Returns:
+    - A sorted list of randomly generated lottery numbers.
+    """
     numbers = set()
-    required_numbers = lottery_type_instance.pieces_of_draw_numbers
+    required_numbers = total_numbers
 
     # Create potential field
-    field = np.ones(lottery_type_instance.max_number - lottery_type_instance.min_number + 1)
+    field = np.ones(max_num - min_num + 1)
     field = field / np.sum(field)  # Normalize
 
     while len(numbers) < required_numbers:
         # Sample from field distribution
         idx = np.random.choice(len(field), p=field)
-        num = idx + lottery_type_instance.min_number
+        num = idx + min_num
 
         if num not in numbers:
             numbers.add(num)
@@ -329,6 +442,10 @@ def generate_random_numbers(lottery_type_instance: lg_lottery_type) -> List[int]
             x = np.arange(len(field))
             width = len(field) / 20
             field *= (1 - 0.5 * np.exp(-(x - idx) ** 2 / (2 * width ** 2)))
-            field = field / np.sum(field)  # Renormalize
+            if np.sum(field) > 0:
+                field = field / np.sum(field)  # Renormalize
+            else:
+                # Reset field if all probabilities are zero
+                field = np.ones(len(field)) / len(field)
 
     return sorted(list(numbers))
