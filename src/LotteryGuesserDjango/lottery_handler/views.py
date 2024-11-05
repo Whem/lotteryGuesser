@@ -124,7 +124,7 @@ class CalculateLotteryNumbersView(APIView):
 
         lottery_type = lg_lottery_type.objects.get(id=lottery_type_id)
 
-        for x in range(6):
+        for x in range(20):
             algorithms = self.evaluate_algorithms(lottery_type, winning_numbers)
 
         return JsonResponse({"ranked_algorithms": algorithms})
@@ -145,7 +145,7 @@ class CalculateLotteryNumbersView(APIView):
                         start_time = time.time()
 
                         # Execute prediction
-                        predicted_numbers = module.get_numbers(lottery_type)
+                        predicted_numbers,additional_numbers = module.get_numbers(lottery_type)
 
                         # End performance measurement
                         execution_time = (time.time() - start_time) * 1000  # Convert to milliseconds

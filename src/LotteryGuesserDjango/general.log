@@ -12442,3 +12442,2014 @@ IMF -- 6
 Energy ratio -- PASSED
 IMF -- 7
 FINISHED -- RANGE
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/eurojackpot.html HTTP/1.1" 200 331684
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+Watching for file changes with StatReloader
+D:\work\lotteryGuesser\src\LotteryGuesserDjango\lottery_handler\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/get_algorithms_with_scores
+Traceback (most recent call last):
+  File "C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\work\lotteryGuesser\src\LotteryGuesserDjango\lottery_handler\views.py", line 128, in post
+    algorithms = self.evaluate_algorithms(lottery_type, winning_numbers)
+  File "D:\work\lotteryGuesser\src\LotteryGuesserDjango\lottery_handler\views.py", line 140, in evaluate_algorithms
+    module = importlib.import_module(f"processors.{module_name}")
+  File "C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "D:\work\lotteryGuesser\src\LotteryGuesserDjango\processors\empirical_mode_decomposition_prediction.py", line 3, in <module>
+    from PyEMD import EMD
+ModuleNotFoundError: No module named 'PyEMD'
+D:\work\lotteryGuesser\src\LotteryGuesserDjango\lottery_handler\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+CACHEDIR=C:\Users\szabi\.matplotlib
+Using fontManager instance from C:\Users\szabi\.matplotlib\fontlist-v390.json
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+Internal Server Error: /lottery_handler/lottery_handle/get_algorithms_with_scores
+Traceback (most recent call last):
+  File "C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\work\lotteryGuesser\src\LotteryGuesserDjango\lottery_handler\views.py", line 128, in post
+    algorithms = self.evaluate_algorithms(lottery_type, winning_numbers)
+  File "D:\work\lotteryGuesser\src\LotteryGuesserDjango\lottery_handler\views.py", line 140, in evaluate_algorithms
+    module = importlib.import_module(f"processors.{module_name}")
+  File "C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "D:\work\lotteryGuesser\src\LotteryGuesserDjango\processors\kalman_filter_prediction.py", line 8, in <module>
+    from pykalman import KalmanFilter
+ModuleNotFoundError: No module named 'pykalman'
+Watching for file changes with StatReloader
+CACHEDIR=C:\Users\szabi\.matplotlib
+Using fontManager instance from C:\Users\szabi\.matplotlib\fontlist-v390.json
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+D:\work\lotteryGuesser\src\LotteryGuesserDjango\processors\geometric_pattern_prediction.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+CACHEDIR=C:\Users\szabi\.matplotlib
+Using fontManager instance from C:\Users\szabi\.matplotlib\fontlist-v390.json
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Importing plotly failed. Interactive plots will not work.
+cmd: where.exe tbb.dll
+cwd: None
+Adding TBB (C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\prophet\stan_model\cmdstan-2.33.1\stan\lib\stan_math\lib\tbb) to PATH
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpfxh7mdti\8f5hgf8h.json
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpfxh7mdti\f5sap6l4.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\szabi\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=58966', 'data', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfxh7mdti\\8f5hgf8h.json', 'init=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfxh7mdti\\f5sap6l4.json', 'output', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfxh7mdti\\prophet_model_pxq7kq4\\prophet_model-20241101141750.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpfxh7mdti\qvpfgcz4.json
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpfxh7mdti\vf_na1v6.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\szabi\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=31181', 'data', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfxh7mdti\\qvpfgcz4.json', 'init=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfxh7mdti\\vf_na1v6.json', 'output', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfxh7mdti\\prophet_modelsg5kipox\\prophet_model-20241101141751.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+Internal Server Error: /lottery_handler/lottery_handle/get_algorithms_with_scores
+Traceback (most recent call last):
+  File "C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\work\lotteryGuesser\src\LotteryGuesserDjango\lottery_handler\views.py", line 128, in post
+    algorithms = self.evaluate_algorithms(lottery_type, winning_numbers)
+  File "D:\work\lotteryGuesser\src\LotteryGuesserDjango\lottery_handler\views.py", line 140, in evaluate_algorithms
+    module = importlib.import_module(f"processors.{module_name}")
+  File "C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "D:\work\lotteryGuesser\src\LotteryGuesserDjango\processors\recurrence_quantification_analysis_prediction.py", line 4, in <module>
+    from pyunicorn.timeseries import RecurrencePlot
+ModuleNotFoundError: No module named 'pyunicorn'
+C:\Users\szabi\AppData\Local\Programs\Python\Python310\Lib\site-packages\tqdm\_monitor.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+CACHEDIR=C:\Users\szabi\.matplotlib
+Using fontManager instance from C:\Users\szabi\.matplotlib\fontlist-v390.json
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Importing plotly failed. Interactive plots will not work.
+cmd: where.exe tbb.dll
+cwd: None
+Adding TBB (C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\prophet\stan_model\cmdstan-2.33.1\stan\lib\stan_math\lib\tbb) to PATH
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpjl0o0pwe\uqpmj_lu.json
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpjl0o0pwe\tu7l2rjl.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\szabi\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=26480', 'data', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpjl0o0pwe\\uqpmj_lu.json', 'init=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpjl0o0pwe\\tu7l2rjl.json', 'output', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpjl0o0pwe\\prophet_modelqqo87ck0\\prophet_model-20241101150801.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpjl0o0pwe\mk9fpdpi.json
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpjl0o0pwe\x3vs0qa2.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\szabi\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=85598', 'data', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpjl0o0pwe\\mk9fpdpi.json', 'init=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpjl0o0pwe\\x3vs0qa2.json', 'output', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpjl0o0pwe\\prophet_modelbo03hov5\\prophet_model-20241101150801.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpjl0o0pwe\98ew7na9.json
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpjl0o0pwe\hc6vkv6j.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\szabi\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=79132', 'data', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpjl0o0pwe\\98ew7na9.json', 'init=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpjl0o0pwe\\hc6vkv6j.json', 'output', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpjl0o0pwe\\prophet_modelc9t0h5pi\\prophet_model-20241101151921.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpjl0o0pwe\gm0cfg_y.json
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpjl0o0pwe\72cenq55.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\szabi\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=91186', 'data', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpjl0o0pwe\\gm0cfg_y.json', 'init=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpjl0o0pwe\\72cenq55.json', 'output', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpjl0o0pwe\\prophet_modelr8wk8ugy\\prophet_model-20241101151921.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+D:\work\lotteryGuesser\src\LotteryGuesserDjango\processors\topological_dynamic_system_predictor.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+CACHEDIR=C:\Users\szabi\.matplotlib
+Using fontManager instance from C:\Users\szabi\.matplotlib\fontlist-v390.json
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+CACHEDIR=C:\Users\szabi\.matplotlib
+Using fontManager instance from C:\Users\szabi\.matplotlib\fontlist-v390.json
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+Watching for file changes with StatReloader
+CACHEDIR=C:\Users\szabi\.matplotlib
+Using fontManager instance from C:\Users\szabi\.matplotlib\fontlist-v390.json
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Importing plotly failed. Interactive plots will not work.
+cmd: where.exe tbb.dll
+cwd: None
+Adding TBB (C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\prophet\stan_model\cmdstan-2.33.1\stan\lib\stan_math\lib\tbb) to PATH
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpfo_vueez\dzx5jlmj.json
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpfo_vueez\13iojo42.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\szabi\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=71390', 'data', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\dzx5jlmj.json', 'init=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\13iojo42.json', 'output', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\prophet_modelj2uzmlap\\prophet_model-20241101160355.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpfo_vueez\5bj6t7wz.json
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpfo_vueez\n7mcj8ye.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\szabi\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=42090', 'data', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\5bj6t7wz.json', 'init=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\n7mcj8ye.json', 'output', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\prophet_model1yax_csf\\prophet_model-20241101160356.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpfo_vueez\i97522r8.json
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpfo_vueez\qq8w2e_d.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\szabi\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=60888', 'data', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\i97522r8.json', 'init=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\qq8w2e_d.json', 'output', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\prophet_model4djq97xj\\prophet_model-20241101161656.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpfo_vueez\xrkc4nrz.json
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpfo_vueez\yhzl2rhi.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\szabi\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=46360', 'data', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\xrkc4nrz.json', 'init=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\yhzl2rhi.json', 'output', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\prophet_modelzbdb29se\\prophet_model-20241101161657.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpfo_vueez\wcapcuxj.json
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpfo_vueez\xsvykkx3.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\szabi\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=56248', 'data', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\wcapcuxj.json', 'init=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\xsvykkx3.json', 'output', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\prophet_modela5h62bmy\\prophet_model-20241101162949.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpfo_vueez\_t_hbv5r.json
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpfo_vueez\mdl3h7lo.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\szabi\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=6056', 'data', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\_t_hbv5r.json', 'init=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\mdl3h7lo.json', 'output', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\prophet_modelrexl2_ec\\prophet_model-20241101162950.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpfo_vueez\bd3v4mww.json
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpfo_vueez\81_wzkqf.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\szabi\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=51433', 'data', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\bd3v4mww.json', 'init=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\81_wzkqf.json', 'output', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\prophet_modeljokbx8op\\prophet_model-20241101164239.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpfo_vueez\qzp2y3tz.json
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpfo_vueez\_6pyn2op.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\szabi\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=33211', 'data', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\qzp2y3tz.json', 'init=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\_6pyn2op.json', 'output', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\prophet_modell2m3i64b\\prophet_model-20241101164240.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpfo_vueez\avvfd9qy.json
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpfo_vueez\i5bgcd52.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\szabi\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=89422', 'data', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\avvfd9qy.json', 'init=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\i5bgcd52.json', 'output', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\prophet_modelnv0qpc7a\\prophet_model-20241101165530.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpfo_vueez\ng2i0f92.json
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpfo_vueez\mu8l_0y3.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\szabi\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=41686', 'data', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\ng2i0f92.json', 'init=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\mu8l_0y3.json', 'output', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\prophet_modelcckhcp8m\\prophet_model-20241101165530.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpfo_vueez\ta5f42mt.json
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpfo_vueez\4763tj4g.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\szabi\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=79337', 'data', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\ta5f42mt.json', 'init=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\4763tj4g.json', 'output', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\prophet_modelkywbmeux\\prophet_model-20241101170815.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpfo_vueez\arru4_q5.json
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmpfo_vueez\0437sgzy.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\szabi\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=45763', 'data', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\arru4_q5.json', 'init=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\0437sgzy.json', 'output', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmpfo_vueez\\prophet_modeleop9uwni\\prophet_model-20241101170815.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/eurojackpot.html HTTP/1.1" 200 331684
+CACHEDIR=C:\Users\szabi\.matplotlib
+Using fontManager instance from C:\Users\szabi\.matplotlib\fontlist-v390.json
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Importing plotly failed. Interactive plots will not work.
+cmd: where.exe tbb.dll
+cwd: None
+Adding TBB (C:\Users\szabi\AppData\Local\Programs\Python\Python310\lib\site-packages\prophet\stan_model\cmdstan-2.33.1\stan\lib\stan_math\lib\tbb) to PATH
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmp_v3vn22m\n4ri6b2a.json
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmp_v3vn22m\z1jl6yru.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\szabi\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=22369', 'data', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmp_v3vn22m\\n4ri6b2a.json', 'init=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmp_v3vn22m\\z1jl6yru.json', 'output', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmp_v3vn22m\\prophet_modelai67n7pp\\prophet_model-20241101171758.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmp_v3vn22m\tmz4wynh.json
+input tempfile: C:\Users\szabi\AppData\Local\Temp\tmp_v3vn22m\a5jzomu8.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\szabi\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=13157', 'data', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmp_v3vn22m\\tmz4wynh.json', 'init=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmp_v3vn22m\\a5jzomu8.json', 'output', 'file=C:\\Users\\szabi\\AppData\\Local\\Temp\\tmp_v3vn22m\\prophet_modelzzhgetyo\\prophet_model-20241101171758.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+Watching for file changes with StatReloader
