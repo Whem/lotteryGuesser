@@ -14453,3 +14453,1975 @@ CmdStan args: ['C:\\Users\\szabi\\AppData\\Local\\Programs\\Python\\Python310\\L
 Chain [1] start processing
 Chain [1] done processing
 Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/eurojackpot.html HTTP/1.1" 200 332187
+CACHEDIR=C:\Users\birku\.matplotlib
+Using fontManager instance from C:\Users\birku\.matplotlib\fontlist-v390.json
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Importing plotly failed. Interactive plots will not work.
+cmd: where.exe tbb.dll
+cwd: None
+Adding TBB (C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\prophet\stan_model\cmdstan-2.33.1\stan\lib\stan_math\lib\tbb) to PATH
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmpe_1dpbc3\i2mwi727.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmpe_1dpbc3\08iri425.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\PycharmProjects\\GlobalDjango\\venv\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=84598', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmpe_1dpbc3\\i2mwi727.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmpe_1dpbc3\\08iri425.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmpe_1dpbc3\\prophet_modelb6mek0nq\\prophet_model-20241105134923.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmpe_1dpbc3\jt9ixykf.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmpe_1dpbc3\znk3a8lq.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\PycharmProjects\\GlobalDjango\\venv\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=32123', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmpe_1dpbc3\\jt9ixykf.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmpe_1dpbc3\\znk3a8lq.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmpe_1dpbc3\\prophet_modelgfhci6rq\\prophet_model-20241105134923.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+Internal Server Error: /lottery_admin/lottery_admin/lottery_type_fill
+Traceback (most recent call last):
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connection.py", line 198, in _new_conn
+    sock = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\util\connection.py", line 85, in create_connection
+    raise err
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\util\connection.py", line 73, in create_connection
+    sock.connect(sa)
+TimeoutError: [WinError 10060] A kapcsolódási kísérlet nem sikerült, mert a kapcsolódó partner nem válaszolt a megadott idõn belül, vagy a létrehozott kapcsolatban hiba történt, mert a kapcsolódó partner nem volt képes válaszolni
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connectionpool.py", line 793, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connectionpool.py", line 491, in _make_request
+    raise new_e
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connectionpool.py", line 467, in _make_request
+    self._validate_conn(conn)
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connectionpool.py", line 1099, in _validate_conn
+    conn.connect()
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connection.py", line 616, in connect
+    self.sock = sock = self._new_conn()
+                       ^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connection.py", line 207, in _new_conn
+    raise ConnectTimeoutError(
+urllib3.exceptions.ConnectTimeoutError: (<urllib3.connection.HTTPSConnection object at 0x00000243861E2000>, 'Connection to bet.szerencsejatek.hu timed out. (connect timeout=None)')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\requests\adapters.py", line 667, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connectionpool.py", line 847, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\util\retry.py", line 515, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='bet.szerencsejatek.hu', port=443): Max retries exceeded with url: /cmsfiles/skandi.html (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x00000243861E2000>, 'Connection to bet.szerencsejatek.hu timed out. (connect timeout=None)'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\lottery_admin\views.py", line 84, in post
+    download_numbers_from_internet(item)
+  File "H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\lottery_admin\signals.py", line 13, in download_numbers_from_internet
+    response = requests.get(lottery_item.url)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\requests\api.py", line 73, in get
+    return request("get", url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\requests\api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\requests\adapters.py", line 688, in send
+    raise ConnectTimeout(e, request=request)
+requests.exceptions.ConnectTimeout: HTTPSConnectionPool(host='bet.szerencsejatek.hu', port=443): Max retries exceeded with url: /cmsfiles/skandi.html (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x00000243861E2000>, 'Connection to bet.szerencsejatek.hu timed out. (connect timeout=None)'))
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+Internal Server Error: /lottery_admin/lottery_admin/lottery_type_fill
+Traceback (most recent call last):
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connection.py", line 198, in _new_conn
+    sock = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\util\connection.py", line 85, in create_connection
+    raise err
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\util\connection.py", line 73, in create_connection
+    sock.connect(sa)
+TimeoutError: [WinError 10060] A kapcsolódási kísérlet nem sikerült, mert a kapcsolódó partner nem válaszolt a megadott idõn belül, vagy a létrehozott kapcsolatban hiba történt, mert a kapcsolódó partner nem volt képes válaszolni
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connectionpool.py", line 793, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connectionpool.py", line 491, in _make_request
+    raise new_e
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connectionpool.py", line 467, in _make_request
+    self._validate_conn(conn)
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connectionpool.py", line 1099, in _validate_conn
+    conn.connect()
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connection.py", line 616, in connect
+    self.sock = sock = self._new_conn()
+                       ^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connection.py", line 207, in _new_conn
+    raise ConnectTimeoutError(
+urllib3.exceptions.ConnectTimeoutError: (<urllib3.connection.HTTPSConnection object at 0x000002438752C410>, 'Connection to bet.szerencsejatek.hu timed out. (connect timeout=None)')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\requests\adapters.py", line 667, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connectionpool.py", line 847, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\util\retry.py", line 515, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='bet.szerencsejatek.hu', port=443): Max retries exceeded with url: /cmsfiles/skandi.html (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x000002438752C410>, 'Connection to bet.szerencsejatek.hu timed out. (connect timeout=None)'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\lottery_admin\views.py", line 84, in post
+    download_numbers_from_internet(item)
+  File "H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\lottery_admin\signals.py", line 13, in download_numbers_from_internet
+    response = requests.get(lottery_item.url)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\requests\api.py", line 73, in get
+    return request("get", url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\requests\api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\requests\adapters.py", line 688, in send
+    raise ConnectTimeout(e, request=request)
+requests.exceptions.ConnectTimeout: HTTPSConnectionPool(host='bet.szerencsejatek.hu', port=443): Max retries exceeded with url: /cmsfiles/skandi.html (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x000002438752C410>, 'Connection to bet.szerencsejatek.hu timed out. (connect timeout=None)'))
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+Internal Server Error: /lottery_admin/lottery_admin/lottery_type_fill
+Traceback (most recent call last):
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connection.py", line 198, in _new_conn
+    sock = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\util\connection.py", line 85, in create_connection
+    raise err
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\util\connection.py", line 73, in create_connection
+    sock.connect(sa)
+TimeoutError: [WinError 10060] A kapcsolódási kísérlet nem sikerült, mert a kapcsolódó partner nem válaszolt a megadott idõn belül, vagy a létrehozott kapcsolatban hiba történt, mert a kapcsolódó partner nem volt képes válaszolni
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connectionpool.py", line 793, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connectionpool.py", line 491, in _make_request
+    raise new_e
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connectionpool.py", line 467, in _make_request
+    self._validate_conn(conn)
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connectionpool.py", line 1099, in _validate_conn
+    conn.connect()
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connection.py", line 616, in connect
+    self.sock = sock = self._new_conn()
+                       ^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connection.py", line 207, in _new_conn
+    raise ConnectTimeoutError(
+urllib3.exceptions.ConnectTimeoutError: (<urllib3.connection.HTTPSConnection object at 0x00000243861E2900>, 'Connection to bet.szerencsejatek.hu timed out. (connect timeout=None)')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\requests\adapters.py", line 667, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connectionpool.py", line 847, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\util\retry.py", line 515, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='bet.szerencsejatek.hu', port=443): Max retries exceeded with url: /cmsfiles/otos.html (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x00000243861E2900>, 'Connection to bet.szerencsejatek.hu timed out. (connect timeout=None)'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\lottery_admin\views.py", line 84, in post
+    download_numbers_from_internet(item)
+  File "H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\lottery_admin\signals.py", line 13, in download_numbers_from_internet
+    response = requests.get(lottery_item.url)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\requests\api.py", line 73, in get
+    return request("get", url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\requests\api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\requests\adapters.py", line 688, in send
+    raise ConnectTimeout(e, request=request)
+requests.exceptions.ConnectTimeout: HTTPSConnectionPool(host='bet.szerencsejatek.hu', port=443): Max retries exceeded with url: /cmsfiles/otos.html (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x00000243861E2900>, 'Connection to bet.szerencsejatek.hu timed out. (connect timeout=None)'))
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+Internal Server Error: /lottery_admin/lottery_admin/lottery_type_fill
+Traceback (most recent call last):
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connection.py", line 198, in _new_conn
+    sock = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\util\connection.py", line 85, in create_connection
+    raise err
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\util\connection.py", line 73, in create_connection
+    sock.connect(sa)
+TimeoutError: [WinError 10060] A kapcsolódási kísérlet nem sikerült, mert a kapcsolódó partner nem válaszolt a megadott idõn belül, vagy a létrehozott kapcsolatban hiba történt, mert a kapcsolódó partner nem volt képes válaszolni
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connectionpool.py", line 793, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connectionpool.py", line 491, in _make_request
+    raise new_e
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connectionpool.py", line 467, in _make_request
+    self._validate_conn(conn)
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connectionpool.py", line 1099, in _validate_conn
+    conn.connect()
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connection.py", line 616, in connect
+    self.sock = sock = self._new_conn()
+                       ^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connection.py", line 207, in _new_conn
+    raise ConnectTimeoutError(
+urllib3.exceptions.ConnectTimeoutError: (<urllib3.connection.HTTPSConnection object at 0x0000023C188F0E00>, 'Connection to bet.szerencsejatek.hu timed out. (connect timeout=None)')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\requests\adapters.py", line 667, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\connectionpool.py", line 847, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\urllib3\util\retry.py", line 515, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='bet.szerencsejatek.hu', port=443): Max retries exceeded with url: /cmsfiles/otos.html (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x0000023C188F0E00>, 'Connection to bet.szerencsejatek.hu timed out. (connect timeout=None)'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\lottery_admin\views.py", line 84, in post
+    download_numbers_from_internet(item)
+  File "H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\lottery_admin\signals.py", line 13, in download_numbers_from_internet
+    response = requests.get(lottery_item.url)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\requests\api.py", line 73, in get
+    return request("get", url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\requests\api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\requests\adapters.py", line 688, in send
+    raise ConnectTimeout(e, request=request)
+requests.exceptions.ConnectTimeout: HTTPSConnectionPool(host='bet.szerencsejatek.hu', port=443): Max retries exceeded with url: /cmsfiles/otos.html (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x0000023C188F0E00>, 'Connection to bet.szerencsejatek.hu timed out. (connect timeout=None)'))
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/otos.html HTTP/1.1" 200 719407
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/skandi.html HTTP/1.1" 200 418628
+CACHEDIR=C:\Users\birku\.matplotlib
+Using fontManager instance from C:\Users\birku\.matplotlib\fontlist-v390.json
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+FINISHED -- RANGE
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Importing plotly failed. Interactive plots will not work.
+cmd: where.exe tbb.dll
+cwd: None
+Adding TBB (C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\prophet\stan_model\cmdstan-2.33.1\stan\lib\stan_math\lib\tbb) to PATH
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmpbqvj7iqt\2ix3a8zh.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmpbqvj7iqt\n8ye9ywc.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\PycharmProjects\\GlobalDjango\\venv\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=80955', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmpbqvj7iqt\\2ix3a8zh.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmpbqvj7iqt\\n8ye9ywc.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmpbqvj7iqt\\prophet_modelera55cqi\\prophet_model-20241106140521.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/keno.html HTTP/1.1" 200 2767467
+Internal Server Error: /lottery_admin/lottery_admin/lottery_type_fill
+Traceback (most recent call last):
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\lottery_admin\views.py", line 84, in post
+    download_numbers_from_internet(item)
+  File "H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\lottery_admin\signals.py", line 33, in download_numbers_from_internet
+    sum_of_numbers = sum(numbers)
+                         ^^^^^^^
+UnboundLocalError: cannot access local variable 'numbers' where it is not associated with a value
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/keno.html HTTP/1.1" 200 2767467
+Using proactor: IocpProactor
+Watching for file changes with StatReloader
+Bad Request: /lottery_admin/lottery_admin/lottery_type
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/keno.html HTTP/1.1" 200 2767467
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/keno.html HTTP/1.1" 200 2767467
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/keno.html HTTP/1.1" 200 2767467
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+CACHEDIR=C:\Users\birku\.matplotlib
+Using fontManager instance from C:\Users\birku\.matplotlib\fontlist-v390.json
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 10
+Energy ratio -- PASSED
+IMF -- 11
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+Energy ratio -- PASSED
+IMF -- 11
+Energy ratio -- PASSED
+IMF -- 12
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+Energy ratio -- PASSED
+IMF -- 11
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+Energy ratio -- PASSED
+IMF -- 11
+Energy ratio -- PASSED
+IMF -- 12
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+Energy ratio -- PASSED
+IMF -- 11
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+Energy ratio -- PASSED
+IMF -- 11
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+Energy ratio -- PASSED
+IMF -- 11
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+Energy ratio -- PASSED
+IMF -- 11
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+Energy ratio -- PASSED
+IMF -- 11
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Watching for file changes with StatReloader
+H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\lottery_handler\signals.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+CACHEDIR=C:\Users\birku\.matplotlib
+Using fontManager instance from C:\Users\birku\.matplotlib\fontlist-v390.json
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 10
+Energy ratio -- PASSED
+IMF -- 11
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+Energy ratio -- PASSED
+IMF -- 11
+Energy ratio -- PASSED
+IMF -- 12
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+Energy ratio -- PASSED
+IMF -- 11
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+Energy ratio -- PASSED
+IMF -- 11
+Energy ratio -- PASSED
+IMF -- 12
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+Energy ratio -- PASSED
+IMF -- 11
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+Energy ratio -- PASSED
+IMF -- 11
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+Energy ratio -- PASSED
+IMF -- 11
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+Energy ratio -- PASSED
+IMF -- 11
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+Energy ratio -- PASSED
+IMF -- 11
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+Energy ratio -- PASSED
+IMF -- 11
+FINISHED -- RANGE
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/eurojackpot.html HTTP/1.1" 200 332686
+CACHEDIR=C:\Users\birku\.matplotlib
+Using fontManager instance from C:\Users\birku\.matplotlib\fontlist-v390.json
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/otos.html HTTP/1.1" 200 719407
+CACHEDIR=C:\Users\birku\.matplotlib
+Using fontManager instance from C:\Users\birku\.matplotlib\fontlist-v390.json
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+Energy ratio -- PASSED
+IMF -- 11
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 9
+Energy ratio -- PASSED
+IMF -- 10
+FINISHED -- RANGE
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/hatos.html HTTP/1.1" 200 438694
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/hatos.html HTTP/1.1" 200 438694
+Using proactor: IocpProactor
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/hatos.html HTTP/1.1" 200 438694
+CACHEDIR=C:\Users\birku\.matplotlib
+Using fontManager instance from C:\Users\birku\.matplotlib\fontlist-v390.json
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/eurojackpot.html HTTP/1.1" 200 333186
+CACHEDIR=C:\Users\birku\.matplotlib
+Using fontManager instance from C:\Users\birku\.matplotlib\fontlist-v390.json
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/eurojackpot.html HTTP/1.1" 200 333682
+CACHEDIR=C:\Users\birku\.matplotlib
+Using fontManager instance from C:\Users\birku\.matplotlib\fontlist-v390.json
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+Energy ratio -- PASSED
+IMF -- 8
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
