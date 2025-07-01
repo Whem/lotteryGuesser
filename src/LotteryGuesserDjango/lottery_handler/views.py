@@ -101,6 +101,7 @@ from .serializers import (PostCalculateLotteryNumbersSerializer, LotteryNumbers,
                          AlgorithmPerformanceSerializer, DetailedStatisticsSerializer,
                          GetStatisticsQuerySerializer, QuickStatisticsSerializer, 
                          QuickAlgorithmRankingSerializer)
+from .performance_monitor import performance_monitor, DatabasePerformanceAnalyzer
 from .models import  lg_algorithm_score, lg_prediction_history, lg_generated_lottery_draw, lg_algorithm_performance, lg_performance_history
 import json
 import os
@@ -754,5 +755,156 @@ class QuickStatisticsView(APIView):
             'improving_count': len([a for a in top_algorithms if a['trend'] == 'javulo']),
             'declining_count': len([a for a in top_algorithms if a['trend'] == 'romlo'])
         }
+
+
+class RealTimeMonitoringView(APIView):
+    """
+    Real-time performance monitoring dashboard
+    """
+    permission_classes = (AllowAny,)
+
+    @extend_schema(
+        summary="Real-time Performance Monitoring",
+        description="Get real-time performance data and alerts for all algorithms",
+        responses={200: "Real-time monitoring data"}
+    )
+    def get(self, request):
+        """Get real-time monitoring overview"""
+        try:
+            # Get system overview
+            system_overview = performance_monitor.get_system_overview()
+            
+            # Get alerts
+            alerts = performance_monitor.get_performance_alerts()
+            
+            # Get database optimization report
+            optimization_report = DatabasePerformanceAnalyzer.get_optimization_report()
+            
+            return JsonResponse({
+                'status': 'success',
+                'system_overview': system_overview,
+                'alerts': [
+                    {
+                        'type': alert['type'],
+                        'algorithm': alert['algorithm'],
+                        'message': alert['message'],
+                        'severity': alert['severity'],
+                        'timestamp': alert['timestamp'].isoformat()
+                    } for alert in alerts
+                ],
+                'optimization_summary': optimization_report['summary'],
+                'timestamp': timezone.now().isoformat()
+            })
+            
+        except Exception as e:
+            return JsonResponse({
+                'status': 'error',
+                'message': str(e)
+            }, status=500)
+
+
+class AlgorithmMonitoringView(APIView):
+    """
+    Individual algorithm monitoring
+    """
+    permission_classes = (AllowAny,)
+
+    @extend_schema(
+        summary="Algorithm Specific Monitoring",
+        description="Get detailed monitoring data for a specific algorithm",
+        responses={200: "Algorithm monitoring data"}
+    )
+    def get(self, request, algorithm_name):
+        """Get detailed monitoring data for specific algorithm"""
+        try:
+            # Get real-time stats
+            real_time_stats = performance_monitor.get_real_time_stats(algorithm_name)
+            
+            # Get database trends
+            trends = DatabasePerformanceAnalyzer.get_algorithm_trends(days=7)
+            algorithm_trends = trends.get(algorithm_name, {})
+            
+            # Export recent performance data
+            performance_export = performance_monitor.export_performance_data(
+                algorithm_name=algorithm_name, 
+                hours=24
+            )
+            
+            return JsonResponse({
+                'status': 'success',
+                'algorithm_name': algorithm_name,
+                'real_time_stats': real_time_stats,
+                'database_trends': algorithm_trends,
+                'recent_performance': performance_export['data'].get(algorithm_name, {}),
+                'timestamp': timezone.now().isoformat()
+            })
+            
+        except Exception as e:
+            return JsonResponse({
+                'status': 'error',
+                'message': str(e)
+            }, status=500)
+
+
+class OptimizationReportView(APIView):
+    """
+    Comprehensive optimization report
+    """
+    permission_classes = (AllowAny,)
+
+    @extend_schema(
+        summary="Optimization Report",
+        description="Get comprehensive optimization report showing performance improvements",
+        responses={200: "Optimization report data"}
+    )
+    def get(self, request):
+        """Get comprehensive optimization report"""
+        try:
+            # Get full optimization report
+            optimization_report = DatabasePerformanceAnalyzer.get_optimization_report()
+            
+            # Get algorithm trends for context
+            recent_trends = DatabasePerformanceAnalyzer.get_algorithm_trends(days=7)
+            older_trends = DatabasePerformanceAnalyzer.get_algorithm_trends(days=30)
+            
+            # Performance categories
+            performance_categories = {
+                'ultra_fast': [],     # < 1ms
+                'very_fast': [],      # 1-10ms
+                'fast': [],           # 10-100ms
+                'moderate': [],       # 100-1000ms
+                'slow': [],           # 1000-5000ms
+                'very_slow': []       # > 5000ms
+            }
+            
+            for alg_name, data in recent_trends.items():
+                avg_time = data.get('performance', {}).get('avg_execution_time', 0)
+                
+                if avg_time < 1:
+                    performance_categories['ultra_fast'].append(alg_name)
+                elif avg_time < 10:
+                    performance_categories['very_fast'].append(alg_name)
+                elif avg_time < 100:
+                    performance_categories['fast'].append(alg_name)
+                elif avg_time < 1000:
+                    performance_categories['moderate'].append(alg_name)
+                elif avg_time < 5000:
+                    performance_categories['slow'].append(alg_name)
+                else:
+                    performance_categories['very_slow'].append(alg_name)
+            
+            return JsonResponse({
+                'status': 'success',
+                'optimization_report': optimization_report,
+                'performance_categories': performance_categories,
+                'total_algorithms_analyzed': len(recent_trends),
+                'timestamp': timezone.now().isoformat()
+            })
+            
+        except Exception as e:
+            return JsonResponse({
+                'status': 'error',
+                'message': str(e)
+            }, status=500)
 
 

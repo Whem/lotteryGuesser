@@ -21,9 +21,18 @@ class FastQuantumLayer:
         self.phases = np.random.rand(size) * 2 * np.pi
     
     def process(self, inputs: np.ndarray) -> np.ndarray:
-        """Gyors kvantum feldolgozás"""
+        """Fast quantum processing"""
+        # Ensure input compatibility
+        if len(inputs) != len(self.weights):
+            # Resize weights to match input dimension
+            if len(inputs) > len(self.weights):
+                self.weights = np.resize(self.weights, len(inputs))
+                self.phases = np.resize(self.phases, len(inputs))
+            else:
+                inputs = np.resize(inputs, len(self.weights))
+        
         amplitudes = np.dot(self.weights, inputs)
-        return amplitudes ** 2  # Egyszerűsített aktiváció
+        return amplitudes ** 2  # Simplified activation
 
 
 class PatternEvolutionEngine:
@@ -162,6 +171,12 @@ class OptimizedHybridPredictor:
             recent_draw = np.array(draws[0])
             if len(recent_draw) > 0:
                 quantum_influence = self.quantum_layer.process(recent_draw / self.max_num)
+                # Ensure quantum_influence is iterable
+                if np.isscalar(quantum_influence):
+                    quantum_influence = [quantum_influence]
+                elif not hasattr(quantum_influence, '__iter__'):
+                    quantum_influence = [quantum_influence]
+                
                 for i, influence in enumerate(quantum_influence):
                     projected_num = int((i / len(quantum_influence)) * (self.max_num - self.min_num) + self.min_num)
                     if self.min_num <= projected_num <= self.max_num:
