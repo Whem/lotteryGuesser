@@ -19369,3 +19369,8 @@ IMF -- 5
 Energy ratio -- PASSED
 IMF -- 6
 FINISHED -- RANGE
+Watching for file changes with StatReloader
+Not Found: /lottery_handle/quick_statistics
+Not Found: /lottery_handle/lottery_alogrithm
+Not Found: /lottery_handler/quick_statistics
+Not Found: /lottery_handler/detailed_statistics
