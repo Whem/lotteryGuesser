@@ -1,0 +1,117 @@
+{
+  "optimized_hybrid_predictor": {
+    "status": "failed",
+    "execution_data": {
+      "successful_runs": 0,
+      "total_iterations": 5,
+      "execution_times": [],
+      "average_time": 0,
+      "min_time": 0,
+      "max_time": 0,
+      "errors": [
+        "Iteration 1: 'numpy.float64' object is not iterable",
+        "Iteration 2: 'numpy.float64' object is not iterable",
+        "Iteration 3: 'numpy.float64' object is not iterable",
+        "Iteration 4: 'numpy.float64' object is not iterable",
+        "Iteration 5: 'numpy.float64' object is not iterable"
+      ]
+    },
+    "database_data": {
+      "current_score": null,
+      "db_avg_execution_time": null,
+      "total_executions": null
+    }
+  },
+  "quantum_neuroplasticity_resonance_predictor": {
+    "status": "success",
+    "execution_data": {
+      "successful_runs": 5,
+      "total_iterations": 5,
+      "execution_times": [
+        7.0095062255859375,
+        7.508039474487305,
+        8.006095886230469,
+        7.775545120239258,
+        7.39741325378418
+      ],
+      "average_time": 7.53931999206543,
+      "min_time": 7.0095062255859375,
+      "max_time": 8.006095886230469,
+      "errors": []
+    },
+    "database_data": {
+      "current_score": 30.0,
+      "db_avg_execution_time": 6792.459453855242,
+      "total_executions": 14
+    }
+  },
+  "recurrence_quantification_analysis_prediction": {
+    "status": "success",
+    "execution_data": {
+      "successful_runs": 5,
+      "total_iterations": 5,
+      "execution_times": [
+        15.522480010986328,
+        15.597343444824219,
+        15.468835830688477,
+        16.378402709960938,
+        16.635656356811523
+      ],
+      "average_time": 15.920543670654297,
+      "min_time": 15.468835830688477,
+      "max_time": 16.635656356811523,
+      "errors": []
+    },
+    "database_data": {
+      "current_score": 10.0,
+      "db_avg_execution_time": 11181.40288761684,
+      "total_executions": 14
+    }
+  },
+  "seasonal_trend_prediction": {
+    "status": "success",
+    "execution_data": {
+      "successful_runs": 5,
+      "total_iterations": 5,
+      "execution_times": [
+        4.689931869506836,
+        2.0608901977539062,
+        2.554655075073242,
+        2.557992935180664,
+        2.0792484283447266
+      ],
+      "average_time": 2.788543701171875,
+      "min_time": 2.0608901977539062,
+      "max_time": 4.689931869506836,
+      "errors": []
+    },
+    "database_data": {
+      "current_score": 10.0,
+      "db_avg_execution_time": 3.5383871623447964,
+      "total_executions": 14
+    }
+  },
+  "advanced_ensemble_prediction": {
+    "status": "success",
+    "execution_data": {
+      "successful_runs": 5,
+      "total_iterations": 5,
+      "execution_times": [
+        64.25952911376953,
+        49.82137680053711,
+        64.62359428405762,
+        48.43783378601074,
+        64.07928466796875
+      ],
+      "average_time": 58.24432373046875,
+      "min_time": 48.43783378601074,
+      "max_time": 64.62359428405762,
+      "errors": []
+    },
+    "database_data": {
+      "current_score": null,
+      "db_avg_execution_time": null,
+      "total_executions": null
+    }
+  }
+}

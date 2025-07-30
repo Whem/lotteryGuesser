@@ -61,3 +61,8 @@ networkx
 mlxtend
 lightgbm
 pykalman
+transformers>=4.20.0
+torch>=1.12.0
+scikit-optimize>=0.9.0
+optuna>=3.0.0
+shap>=0.41.0

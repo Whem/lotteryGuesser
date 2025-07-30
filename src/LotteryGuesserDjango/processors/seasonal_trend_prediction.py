@@ -5,7 +5,6 @@ import datetime
 from collections import Counter
 from typing import List, Tuple
 import numpy as np
-from pyunicorn.timeseries import RecurrencePlot
 from algorithms.models import lg_lottery_winner_number, lg_lottery_type
 
 
