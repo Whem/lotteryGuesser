@@ -112,7 +112,9 @@ def generate_number_set(
         )
 
     if len(past_draws) < 20:  # Csökkentett minimum
-        return sorted(set(np.random.choice(range(min_num, max_num + 1), total_numbers, replace=False)))
+        fallback_numbers = list(set(np.random.choice(range(min_num, max_num + 1), total_numbers, replace=False)))
+        # Ensure Python int types for JSON serialization
+        return sorted([int(num.item()) if hasattr(num, 'item') else int(num) for num in fallback_numbers])
 
     # Gyorsabb normalizálás
     normalized_draws = []
@@ -124,7 +126,9 @@ def generate_number_set(
             normalized_draws.append(normalized_draw)
 
     if not normalized_draws:
-        return sorted(set(np.random.choice(range(min_num, max_num + 1), total_numbers, replace=False)))
+        fallback_numbers = list(set(np.random.choice(range(min_num, max_num + 1), total_numbers, replace=False)))
+        # Ensure Python int types for JSON serialization
+        return sorted([int(num.item()) if hasattr(num, 'item') else int(num) for num in fallback_numbers])
 
     input_dim = len(normalized_draws[0])
     ar_layer = OptimizedAdaptiveResonanceLayer(input_dim, num_neurons=6)  # Kevesebb neuron
@@ -168,17 +172,22 @@ def generate_number_set(
     # Gyorsabb mapping
     predicted_numbers = []
     for index in selected_indices:
-        num = int(round(index * range_size / (input_dim - 1) + min_num))
+        # Convert numpy types to Python int explicitly
+        index_val = int(index) if hasattr(index, 'item') else int(index)
+        num = int(round(index_val * range_size / (input_dim - 1) + min_num))
         if min_num <= num <= max_num and num not in predicted_numbers:
-            predicted_numbers.append(num)
+            predicted_numbers.append(int(num))  # Ensure Python int
 
     # Gyors feltöltés ha szükséges
     while len(predicted_numbers) < total_numbers:
         candidates = list(range(min_num, max_num + 1))
         remaining = [x for x in candidates if x not in predicted_numbers]
         if remaining:
-            predicted_numbers.append(np.random.choice(remaining))
+            selected_num = int(np.random.choice(remaining))  # Convert to Python int
+            predicted_numbers.append(selected_num)
         else:
             break
 
-    return sorted(predicted_numbers[:total_numbers])
+    # Ensure all numbers are Python int type (not numpy)
+    final_numbers = [int(num) for num in predicted_numbers[:total_numbers]]
+    return sorted(final_numbers)

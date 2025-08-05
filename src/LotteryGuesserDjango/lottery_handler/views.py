@@ -908,3 +908,232 @@ class OptimizationReportView(APIView):
             }, status=500)
 
 
+class AutomaticAlgorithmTestView(APIView):
+    """
+    Automatic algorithm testing endpoint - runs all algorithms 10 times 
+    and saves top 5 to file
+    """
+    permission_classes = (AllowAny,)
+
+    @extend_schema(
+        summary="Automatic Algorithm Testing",
+        description="Run all algorithms 10 times and save top 5 performers to file",
+        responses={200: "Algorithm test results"}
+    )
+    def get(self, request):
+        """Run automatic algorithm testing"""
+        try:
+            # EuroJackpot winning numbers (latest draw)
+            main_numbers = [4, 14, 26, 29, 50]
+            additional_numbers = [3, 12]
+            
+            # Get EuroJackpot lottery type
+            eurojackpot = lg_lottery_type.objects.filter(lottery_type__icontains='euro').first()
+            if not eurojackpot:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': 'EuroJackpot lottery type not found'
+                }, status=404)
+            
+            print(f"🎯 Starting automatic algorithm test with EuroJackpot numbers:")
+            print(f"   Main: {main_numbers}")
+            print(f"   Additional: {additional_numbers}")
+            
+            # Run algorithms 10 times
+            all_results = []
+            processors_dir = "processors"
+            
+            for iteration in range(1, 11):
+                print(f"\n🔄 Iteration {iteration}/10")
+                iteration_results = []
+                
+                for filename in os.listdir(processors_dir):
+                    if filename.endswith(".py") and not filename.startswith("__"):
+                        module_name = filename[:-3]
+                        
+                        try:
+                            # Import and execute algorithm
+                            module = importlib.import_module(f"processors.{module_name}")
+                            
+                            if hasattr(module, 'get_numbers'):
+                                # Measure execution time
+                                start_time = time.time()
+                                predicted_main, predicted_additional = module.get_numbers(eurojackpot)
+                                execution_time = (time.time() - start_time) * 1000
+                                
+                                # Calculate score
+                                score = self.calculate_eurojackpot_score(
+                                    predicted_main, predicted_additional,
+                                    main_numbers, additional_numbers
+                                )
+                                
+                                iteration_results.append({
+                                    'algorithm': module_name,
+                                    'iteration': iteration,
+                                    'score': score,
+                                    'execution_time': execution_time,
+                                    'predicted_main': predicted_main,
+                                    'predicted_additional': predicted_additional
+                                })
+                                
+                                print(f"   ✅ {module_name}: {score} points ({execution_time:.2f}ms)")
+                                
+                        except Exception as e:
+                            print(f"   ❌ {module_name}: Error - {str(e)}")
+                            iteration_results.append({
+                                'algorithm': module_name,
+                                'iteration': iteration,
+                                'score': 0,
+                                'execution_time': 0,
+                                'error': str(e)
+                            })
+                
+                all_results.extend(iteration_results)
+            
+            # Calculate average scores per algorithm
+            algorithm_averages = {}
+            algorithm_details = {}
+            
+            for result in all_results:
+                alg_name = result['algorithm']
+                if alg_name not in algorithm_averages:
+                    algorithm_averages[alg_name] = []
+                    algorithm_details[alg_name] = {
+                        'scores': [],
+                        'execution_times': [],
+                        'errors': [],
+                        'iterations_run': 0
+                    }
+                
+                if 'error' not in result:
+                    algorithm_averages[alg_name].append(result['score'])
+                    algorithm_details[alg_name]['scores'].append(result['score'])
+                    algorithm_details[alg_name]['execution_times'].append(result['execution_time'])
+                    algorithm_details[alg_name]['iterations_run'] += 1
+                else:
+                    algorithm_details[alg_name]['errors'].append(result['error'])
+            
+            # Calculate final rankings
+            final_rankings = []
+            for alg_name, scores in algorithm_averages.items():
+                if scores:  # Only algorithms with successful runs
+                    details = algorithm_details[alg_name]
+                    avg_score = sum(scores) / len(scores)
+                    avg_execution_time = sum(details['execution_times']) / len(details['execution_times'])
+                    
+                    final_rankings.append({
+                        'algorithm': alg_name,
+                        'average_score': avg_score,
+                        'max_score': max(scores),
+                        'min_score': min(scores),
+                        'average_execution_time': avg_execution_time,
+                        'successful_iterations': len(scores),
+                        'failed_iterations': len(details['errors']),
+                        'error_count': len(details['errors'])
+                    })
+            
+            # Sort by average score (descending)
+            final_rankings.sort(key=lambda x: x['average_score'], reverse=True)
+            
+            # Get top 5
+            top_5 = final_rankings[:5]
+            
+            # Save to file
+            timestamp = timezone.now().strftime("%Y%m%d_%H%M%S")
+            filename = f"top_5_algorithms_{timestamp}.json"
+            
+            file_data = {
+                'test_timestamp': timezone.now().isoformat(),
+                'eurojackpot_numbers': {
+                    'main': main_numbers,
+                    'additional': additional_numbers
+                },
+                'test_parameters': {
+                    'iterations_per_algorithm': 10,
+                    'lottery_type': 'EuroJackpot',
+                    'total_algorithms_tested': len(algorithm_averages)
+                },
+                'top_5_algorithms': top_5,
+                'all_rankings': final_rankings
+            }
+            
+            # Write to file
+            with open(filename, 'w', encoding='utf-8') as f:
+                json.dump(file_data, f, indent=2, ensure_ascii=False)
+            
+            print(f"\n🏆 TOP 5 ALGORITHMS SAVED TO: {filename}")
+            for i, alg in enumerate(top_5, 1):
+                print(f"   {i}. {alg['algorithm']}: {alg['average_score']:.2f} avg score ({alg['average_execution_time']:.2f}ms)")
+            
+            return JsonResponse({
+                'status': 'success',
+                'message': f'Algorithm testing complete. Results saved to {filename}',
+                'results_file': filename,
+                'test_summary': {
+                    'total_algorithms_tested': len(algorithm_averages),
+                    'successful_algorithms': len([a for a in final_rankings if a['successful_iterations'] > 0]),
+                    'iterations_per_algorithm': 10,
+                    'eurojackpot_numbers': {
+                        'main': main_numbers,
+                        'additional': additional_numbers
+                    }
+                },
+                'top_5_algorithms': top_5,
+                'timestamp': timezone.now().isoformat()
+            })
+            
+        except Exception as e:
+            return JsonResponse({
+                'status': 'error',
+                'message': f'Error during algorithm testing: {str(e)}'
+            }, status=500)
+    
+    def calculate_eurojackpot_score(self, predicted_main, predicted_additional, winning_main, winning_additional):
+        """
+        Calculate EuroJackpot score based on matches
+        """
+        if not predicted_main or not predicted_additional:
+            return 0
+        
+        # Main numbers matches
+        main_matches = len(set(predicted_main) & set(winning_main))
+        
+        # Additional numbers matches  
+        additional_matches = len(set(predicted_additional) & set(winning_additional))
+        
+        # EuroJackpot scoring system (simplified)
+        score = 0
+        
+        # Main number scoring (exponential for more matches)
+        if main_matches == 5:
+            score += 100  # Jackpot!
+        elif main_matches == 4:
+            score += 50
+        elif main_matches == 3:
+            score += 20
+        elif main_matches == 2:
+            score += 10
+        elif main_matches == 1:
+            score += 2
+        
+        # Additional number scoring
+        if additional_matches == 2:
+            score += 30
+        elif additional_matches == 1:
+            score += 10
+        
+        # Bonus for combination matches (realistic EuroJackpot prizes)
+        if main_matches == 5 and additional_matches == 2:
+            score += 200  # Jackpot + bonus
+        elif main_matches == 5 and additional_matches == 1:
+            score += 100
+        elif main_matches == 4 and additional_matches == 2:
+            score += 75
+        elif main_matches == 4 and additional_matches == 1:
+            score += 40
+        elif main_matches == 3 and additional_matches == 2:
+            score += 35
+        
+        return score
+
+

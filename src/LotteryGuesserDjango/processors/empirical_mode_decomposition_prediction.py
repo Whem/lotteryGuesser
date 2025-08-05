@@ -1,9 +1,17 @@
 # empirical_mode_decomposition_prediction.py
 import numpy as np
-from PyEMD import EMD
+import random
 from typing import List, Tuple, Set, Dict
 from algorithms.models import lg_lottery_winner_number, lg_lottery_type
 from collections import Counter
+
+# Try to import PyEMD, use fallback if not available
+try:
+    from PyEMD import EMD
+    HAS_EMD = True
+except ImportError:
+    HAS_EMD = False
+    print("PyEMD not available, using mathematical fallback")
 
 
 def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
@@ -96,43 +104,91 @@ def perform_emd_analysis(
         max_num: int,
         required_numbers: int
 ) -> List[int]:
-    """Perform EMD analysis on the draw matrix."""
+    """Perform EMD analysis on the draw matrix or use mathematical fallback."""
     predicted_numbers = []
-    emd = EMD()
 
-    # Analyze each position
-    for i in range(draw_matrix.shape[1]):
-        series = draw_matrix[:, i]
+    if HAS_EMD:
+        # Use real EMD analysis
+        emd = EMD()
+        
+        # Analyze each position
+        for i in range(draw_matrix.shape[1]):
+            series = draw_matrix[:, i]
 
-        try:
-            # Apply EMD
-            IMFs = emd.emd(series)
+            try:
+                # Apply EMD
+                IMFs = emd.emd(series)
 
-            # Reconstruct signal without first IMF (noise)
-            if IMFs.shape[0] > 1:
-                reconstructed = np.sum(IMFs[1:], axis=0)
-            else:
-                reconstructed = series
+                # Reconstruct signal without first IMF (noise)
+                if IMFs.shape[0] > 1:
+                    reconstructed = np.sum(IMFs[1:], axis=0)
+                else:
+                    reconstructed = series
 
-            # Predict next value
-            if len(reconstructed) >= 2:
-                trend = reconstructed[-1] - reconstructed[-2]
-                next_value = reconstructed[-1] + trend
-            else:
-                next_value = reconstructed[-1]
+                # Predict next value
+                if len(reconstructed) >= 2:
+                    trend = reconstructed[-1] - reconstructed[-2]
+                    next_value = reconstructed[-1] + trend
+                else:
+                    next_value = reconstructed[-1]
 
-            # Round and adjust to range
-            predicted_number = int(round(next_value))
-            predicted_number = max(min_num, min(max_num, predicted_number))
+                # Round and adjust to range
+                predicted_number = int(round(next_value))
+                predicted_number = max(min_num, min(max_num, predicted_number))
+                predicted_numbers.append(predicted_number)
+
+            except Exception as e:
+                print(f"EMD analysis error for position {i}: {str(e)}")
+                # Fallback to trend analysis
+                predicted_numbers.append(trend_analysis_fallback(series, min_num, max_num))
+    else:
+        # Use mathematical fallback - advanced trend analysis
+        for i in range(draw_matrix.shape[1]):
+            series = draw_matrix[:, i]
+            predicted_number = advanced_trend_analysis(series, min_num, max_num)
             predicted_numbers.append(predicted_number)
 
-        except Exception as e:
-            print(f"EMD analysis error for position {i}: {str(e)}")
-            # Fallback to last value if error occurs
-            if len(series) > 0:
-                predicted_numbers.append(int(series[-1]))
-
     return predicted_numbers
+
+def trend_analysis_fallback(series: np.ndarray, min_num: int, max_num: int) -> int:
+    """Fallback trend analysis when EMD fails."""
+    if len(series) < 2:
+        return min_num + (max_num - min_num) // 2
+    
+    # Calculate trend using recent values
+    recent_values = series[-5:] if len(series) >= 5 else series
+    trend = np.mean(np.diff(recent_values)) if len(recent_values) > 1 else 0
+    
+    # Predict next value
+    next_value = series[-1] + trend
+    predicted_number = int(round(next_value))
+    return max(min_num, min(max_num, predicted_number))
+
+def advanced_trend_analysis(series: np.ndarray, min_num: int, max_num: int) -> int:
+    """Advanced mathematical analysis without EMD."""
+    if len(series) < 3:
+        return random.randint(min_num, max_num)
+    
+    # Moving average with different windows
+    short_ma = np.mean(series[-3:])
+    long_ma = np.mean(series[-6:]) if len(series) >= 6 else np.mean(series)
+    
+    # Calculate momentum
+    momentum = short_ma - long_ma
+    
+    # Fourier-like frequency analysis (simplified)
+    diffs = np.diff(series)
+    avg_change = np.mean(diffs)
+    std_change = np.std(diffs)
+    
+    # Predict next value combining trend and oscillation
+    base_prediction = series[-1] + avg_change
+    oscillation = np.sin(len(series) * np.pi / 6) * std_change * 0.5
+    
+    next_value = base_prediction + momentum * 0.3 + oscillation
+    predicted_number = int(round(next_value))
+    
+    return max(min_num, min(max_num, predicted_number))
 
 
 def ensure_unique_numbers(

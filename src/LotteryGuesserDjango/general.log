@@ -19380,3 +19380,1941 @@ H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\lottery_handler\views.py 
 Watching for file changes with StatReloader
 H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\lottery_handler\urls.py changed, reloading.
 Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/optimization_report
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/eurojackpot.html HTTP/1.1" 200 None
+H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\lottery_handler\views.py changed, reloading.
+Watching for file changes with StatReloader
+H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\lottery_handler\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Optimalizációs könyvtárak nem elérhetõk, fallback módra váltás
+Optimalizációs könyvtárak nem elérhetõk, fallback módra váltás
+Optimalizációs könyvtárak nem elérhetõk, fallback módra váltás
+Watching for file changes with StatReloader
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+matplotlib data path: C:\Users\birku\AppData\Local\Programs\Python\Python312\Lib\site-packages\matplotlib\mpl-data
+CONFIGDIR=C:\Users\birku\.matplotlib
+interactive is False
+platform is win32
+CACHEDIR=C:\Users\birku\.matplotlib
+Using fontManager instance from C:\Users\birku\.matplotlib\fontlist-v390.json
+From C:\Users\birku\AppData\Local\Programs\Python\Python312\Lib\site-packages\keras\src\backend\tensorflow\core.py:232: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_12" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+LSTM model trained with 16 epochs
+LSTM model trained with 19 epochs
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_32" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_44" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Optimalizációs könyvtárak nem elérhetõk, fallback módra váltás
+LSTM model trained with 16 epochs
+Watching for file changes with StatReloader
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+matplotlib data path: C:\Users\birku\AppData\Local\Programs\Python\Python312\Lib\site-packages\matplotlib\mpl-data
+CONFIGDIR=C:\Users\birku\.matplotlib
+interactive is False
+platform is win32
+CACHEDIR=C:\Users\birku\.matplotlib
+Using fontManager instance from C:\Users\birku\.matplotlib\fontlist-v390.json
+From C:\Users\birku\AppData\Local\Programs\Python\Python312\Lib\site-packages\keras\src\backend\tensorflow\core.py:232: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_12" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+LSTM model trained with 16 epochs
+LSTM model trained with 18 epochs
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_32" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_44" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Optimalizációs könyvtárak nem elérhetõk, fallback módra váltás
+LSTM model trained with 24 epochs
+LSTM model trained with 16 epochs
+Importing plotly failed. Interactive plots will not work.
+cmd: where.exe tbb.dll
+cwd: None
+Adding TBB (C:\Users\birku\AppData\Local\Programs\Python\Python312\Lib\site-packages\prophet\stan_model\cmdstan-2.33.1\stan\lib\stan_math\lib\tbb) to PATH
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmptye0tzfh\kqwwvhsh.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmptye0tzfh\zc77te0n.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=37583', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmptye0tzfh\\kqwwvhsh.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmptye0tzfh\\zc77te0n.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmptye0tzfh\\prophet_modelvx0vdj2y\\prophet_model-20250701152457.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmptye0tzfh\o3a5jlal.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmptye0tzfh\lxjvf4yw.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=68776', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmptye0tzfh\\o3a5jlal.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmptye0tzfh\\lxjvf4yw.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmptye0tzfh\\prophet_modelqm941rra\\prophet_model-20250701152458.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_66" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_78" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+LSTM model trained with 16 epochs
+LSTM model trained with 18 epochs
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_98" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_110" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Optimalizációs könyvtárak nem elérhetõk, fallback módra váltás
+LSTM model trained with 16 epochs
+LSTM model trained with 17 epochs
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmptye0tzfh\jj5mh4as.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmptye0tzfh\7ji8il8p.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=30478', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmptye0tzfh\\jj5mh4as.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmptye0tzfh\\7ji8il8p.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmptye0tzfh\\prophet_modelnymrgvev\\prophet_model-20250701152831.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmptye0tzfh\wimu76e7.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmptye0tzfh\xeqpomg7.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=176', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmptye0tzfh\\wimu76e7.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmptye0tzfh\\xeqpomg7.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmptye0tzfh\\prophet_model7_pxol0p\\prophet_model-20250701152831.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_132" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_144" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+LSTM model trained with 17 epochs
+LSTM model trained with 18 epochs
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_164" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_176" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Optimalizációs könyvtárak nem elérhetõk, fallback módra váltás
+H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\processors\naive_bayes_prediction.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+matplotlib data path: C:\Users\birku\AppData\Local\Programs\Python\Python312\Lib\site-packages\matplotlib\mpl-data
+CONFIGDIR=C:\Users\birku\.matplotlib
+interactive is False
+platform is win32
+CACHEDIR=C:\Users\birku\.matplotlib
+Using fontManager instance from C:\Users\birku\.matplotlib\fontlist-v390.json
+From C:\Users\birku\AppData\Local\Programs\Python\Python312\Lib\site-packages\keras\src\backend\tensorflow\core.py:232: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_12" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+LSTM model trained with 18 epochs
+LSTM model trained with 16 epochs
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_32" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_44" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Optimalizációs könyvtárak nem elérhetõk, fallback módra váltás
+LSTM model trained with 16 epochs
+LSTM model trained with 17 epochs
+Importing plotly failed. Interactive plots will not work.
+cmd: where.exe tbb.dll
+cwd: None
+Adding TBB (C:\Users\birku\AppData\Local\Programs\Python\Python312\Lib\site-packages\prophet\stan_model\cmdstan-2.33.1\stan\lib\stan_math\lib\tbb) to PATH
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\25eux5gw.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\mhyies_e.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=92353', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\25eux5gw.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\mhyies_e.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\prophet_modelyubfnn64\\prophet_model-20250701153446.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\4rocamgd.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\64hlgr0f.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=23961', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\4rocamgd.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\64hlgr0f.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\prophet_model6prkltfs\\prophet_model-20250701153447.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_66" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_78" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+LSTM model trained with 16 epochs
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_12" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+LSTM model trained with 16 epochs
+LSTM model trained with 17 epochs
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_98" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_110" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+LSTM model trained with 17 epochs
+Optimalizációs könyvtárak nem elérhetõk, fallback módra váltás
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_32" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_44" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+LSTM model trained with 17 epochs
+Optimalizációs könyvtárak nem elérhetõk, fallback módra váltás
+LSTM model trained with 18 epochs
+LSTM model trained with 16 epochs
+LSTM model trained with 16 epochs
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\9ovn_djf.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\7x0fmwht.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=55347', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\9ovn_djf.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\7x0fmwht.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\prophet_modeln7xp63g_\\prophet_model-20250701154154.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\i4fj6w9p.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\7dbcjmib.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=37485', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\i4fj6w9p.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\7dbcjmib.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\prophet_modeleb6mx2qk\\prophet_model-20250701154155.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_132" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_144" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\ywpm6vy6.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\7hhjh9e4.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=15433', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\ywpm6vy6.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\7hhjh9e4.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\prophet_model8bytbz7o\\prophet_model-20250701154204.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\orjwjedn.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\u5uosdr6.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=69892', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\orjwjedn.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\u5uosdr6.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\prophet_model5f4f0lfw\\prophet_model-20250701154204.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_66" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_78" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+LSTM model trained with 16 epochs
+LSTM model trained with 20 epochs
+LSTM model trained with 17 epochs
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_164" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+LSTM model trained with 16 epochs
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_176" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Optimalizációs könyvtárak nem elérhetõk, fallback módra váltás
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_98" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_110" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+LSTM model trained with 19 epochs
+Optimalizációs könyvtárak nem elérhetõk, fallback módra váltás
+LSTM model trained with 16 epochs
+LSTM model trained with 18 epochs
+LSTM model trained with 17 epochs
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\1fb3tqqt.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\1i7z_z92.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=3103', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\1fb3tqqt.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\1i7z_z92.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\prophet_modelrwosmi__\\prophet_model-20250701154920.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\6n0s4lrq.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\akt3btsz.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=78863', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\6n0s4lrq.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\akt3btsz.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\prophet_modelj8wc8egw\\prophet_model-20250701154920.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_198" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_210" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\eo73p_gg.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\aeloqeka.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=58097', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\eo73p_gg.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\aeloqeka.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\prophet_modeliymst0qu\\prophet_model-20250701154938.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\9215zdxw.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\1c_b84gp.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=73956', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\9215zdxw.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\1c_b84gp.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\prophet_modell0x4hq0f\\prophet_model-20250701154938.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_132" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_144" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+LSTM model trained with 16 epochs
+LSTM model trained with 17 epochs
+LSTM model trained with 20 epochs
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_230" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_242" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+LSTM model trained with 16 epochs
+Optimalizációs könyvtárak nem elérhetõk, fallback módra váltás
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_164" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_176" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+LSTM model trained with 20 epochs
+Optimalizációs könyvtárak nem elérhetõk, fallback módra váltás
+LSTM model trained with 16 epochs
+LSTM model trained with 17 epochs
+LSTM model trained with 18 epochs
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\tdaaozr3.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\3d9b_zbj.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=14767', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\tdaaozr3.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\3d9b_zbj.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\prophet_model5s_8ylmo\\prophet_model-20250701155651.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\xcygysvv.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\gcp08poa.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=48385', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\xcygysvv.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\gcp08poa.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\prophet_modeloxjefrro\\prophet_model-20250701155651.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_264" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_276" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\228h7246.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\jwueafmb.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=75179', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\228h7246.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\jwueafmb.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\prophet_modelcx95j5j3\\prophet_model-20250701155659.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\vuq3jqo0.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\tspeqmil.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=99515', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\vuq3jqo0.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\tspeqmil.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\prophet_modelzg1xg3xd\\prophet_model-20250701155700.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_198" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_210" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+LSTM model trained with 18 epochs
+LSTM model trained with 16 epochs
+LSTM model trained with 16 epochs
+LSTM model trained with 20 epochs
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_296" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_308" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Optimalizációs könyvtárak nem elérhetõk, fallback módra váltás
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_230" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_242" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+LSTM model trained with 16 epochs
+Optimalizációs könyvtárak nem elérhetõk, fallback módra váltás
+LSTM model trained with 18 epochs
+LSTM model trained with 16 epochs
+LSTM model trained with 19 epochs
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\agews638.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\41rups0h.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=83301', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\agews638.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\41rups0h.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\prophet_modelu9zfamtw\\prophet_model-20250701160406.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\ocra3tmv.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\pkqglb56.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=53900', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\ocra3tmv.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\pkqglb56.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\prophet_model01papm44\\prophet_model-20250701160406.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_330" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_342" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\jkso_6qz.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\b1fjoxtv.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=92140', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\jkso_6qz.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\b1fjoxtv.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\prophet_modelto3_nj0i\\prophet_model-20250701160414.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\iilhza0c.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2452arf7\qd3ysnyh.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=7249', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\iilhza0c.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\qd3ysnyh.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2452arf7\\prophet_model21tp8hld\\prophet_model-20250701160415.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_264" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_276" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+LSTM model trained with 16 epochs
+LSTM model trained with 27 epochs
+LSTM model trained with 17 epochs
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_362" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_374" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+LSTM model trained with 18 epochs
+Optimalizációs könyvtárak nem elérhetõk, fallback módra váltás
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_296" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_308" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+LSTM model trained with 16 epochs
+Optimalizációs könyvtárak nem elérhetõk, fallback módra váltás
+LSTM model trained with 23 epochs
+LSTM model trained with 21 epochs
+LSTM model trained with 16 epochs
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_12" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+LSTM model trained with 22 epochs
+LSTM model trained with 22 epochs
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_32" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_44" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None
+  • kwargs=<class 'inspect._empty'>, using fallback
+Optimalizációs könyvtárak nem elérhetõk, fallback módra váltás
+LSTM model trained with 19 epochs
+LSTM model trained with 16 epochs
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Not Found: /lottery_handler/
+Bad Request: /lottery_handler/lottery_handle/lottery_numbers
+Bad Request: /lottery_handler/lottery_handle/lottery_numbers
+Bad Request: /lottery_handler/lottery_handle/lottery_numbers
+Method Not Allowed: /lottery_handler/lottery_handle/get_algorithms_with_scores
+Bad Request: /lottery_handler/lottery_handle/get_algorithms_with_scores
+Method Not Allowed: /lottery_handler/lottery_handle/lottery_numbers
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\lottery_handler\signals.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\lottery_handler\signals.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /lottery_handler/lottery_handle/lottery_numbers
+H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\lottery_handler\signals.py changed, reloading.
+Watching for file changes with StatReloader
+H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\lottery_handler\signals.py changed, reloading.
+Watching for file changes with StatReloader
+H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\processors\cross_draw_correlation_prediction.py changed, reloading.
+Watching for file changes with StatReloader
+H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\processors\quantum_neuroplasticity_resonance_predictor.py changed, reloading.
+Watching for file changes with StatReloader
+H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\processors\spline_momentum_evolution_prediction.py changed, reloading.
+Watching for file changes with StatReloader
+H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\lottery_handler\signals.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/eurojackpot.html HTTP/1.1" 200 None
+CACHEDIR=C:\Users\birku\.matplotlib
+Using fontManager instance from C:\Users\birku\.matplotlib\fontlist-v390.json
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/eurojackpot.html HTTP/1.1" 200 None
+CACHEDIR=C:\Users\birku\.matplotlib
+Using fontManager instance from C:\Users\birku\.matplotlib\fontlist-v390.json
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+H:\work\github\lotteryGuesser\src\LotteryGuesserDjango\lottery_handler\signals.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+CACHEDIR=C:\Users\birku\.matplotlib
+Using fontManager instance from C:\Users\birku\.matplotlib\fontlist-v390.json
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/eurojackpot.html HTTP/1.1" 200 None
+Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+Creating converter from 7 to 5
+Creating converter from 5 to 7
+From C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\keras\src\backend\tensorflow\core.py:204: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_12" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None, using fallback
+LSTM model trained with 16 epochs
+LSTM model trained with 16 epochs
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_32" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_44" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None, using fallback
+CACHEDIR=C:\Users\birku\.matplotlib
+Using fontManager instance from C:\Users\birku\.matplotlib\fontlist-v390.json
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+Optimalizációs könyvtárak nem elérhetõk, fallback módra váltás
+LSTM model trained with 22 epochs
+LSTM model trained with 17 epochs
+Importing plotly failed. Interactive plots will not work.
+cmd: where.exe tbb.dll
+cwd: None
+Adding TBB (C:\Users\birku\PycharmProjects\GlobalDjango\venv\Lib\site-packages\prophet\stan_model\cmdstan-2.33.1\stan\lib\stan_math\lib\tbb) to PATH
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2h4d3hiq\8l2abgo8.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2h4d3hiq\a33gryxx.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\PycharmProjects\\GlobalDjango\\venv\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=74529', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2h4d3hiq\\8l2abgo8.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2h4d3hiq\\a33gryxx.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2h4d3hiq\\prophet_modeljfqtbmu2\\prophet_model-20250718180508.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2h4d3hiq\ao0ehwxo.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2h4d3hiq\576ycjqk.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\PycharmProjects\\GlobalDjango\\venv\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=11570', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2h4d3hiq\\ao0ehwxo.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2h4d3hiq\\576ycjqk.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2h4d3hiq\\prophet_model934qnm13\\prophet_model-20250718180509.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_66" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_78" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None, using fallback
+LSTM model trained with 24 epochs
+LSTM model trained with 18 epochs
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_98" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_110" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None, using fallback
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+Optimalizációs könyvtárak nem elérhetõk, fallback módra váltás
+LSTM model trained with 32 epochs
+LSTM model trained with 16 epochs
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2h4d3hiq\scs7esi7.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2h4d3hiq\7d3i0w08.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\PycharmProjects\\GlobalDjango\\venv\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=43389', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2h4d3hiq\\scs7esi7.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2h4d3hiq\\7d3i0w08.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2h4d3hiq\\prophet_modelr87gkg1r\\prophet_model-20250718181752.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2h4d3hiq\7kkfiwjt.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2h4d3hiq\k5w5vjvb.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\PycharmProjects\\GlobalDjango\\venv\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=94704', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2h4d3hiq\\7kkfiwjt.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2h4d3hiq\\k5w5vjvb.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2h4d3hiq\\prophet_modelkdfwfclj\\prophet_model-20250718181753.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_132" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_144" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None, using fallback
+LSTM model trained with 17 epochs
+LSTM model trained with 16 epochs
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_164" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_176" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None, using fallback
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+FINISHED -- RANGE
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+Energy ratio -- PASSED
+IMF -- 7
+IMF -- 0
+Energy ratio -- PASSED
+IMF -- 1
+Energy ratio -- PASSED
+IMF -- 2
+Energy ratio -- PASSED
+Energy ratio -- PASSED
+IMF -- 3
+Energy ratio -- PASSED
+IMF -- 4
+Energy ratio -- PASSED
+IMF -- 5
+Energy ratio -- PASSED
+IMF -- 6
+FINISHED -- RANGE
+Optimalizációs könyvtárak nem elérhetõk, fallback módra váltás
+LSTM model trained with 17 epochs
+LSTM model trained with 18 epochs
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2h4d3hiq\adq9i9q3.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2h4d3hiq\png3b1em.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\PycharmProjects\\GlobalDjango\\venv\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=55807', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2h4d3hiq\\adq9i9q3.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2h4d3hiq\\png3b1em.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2h4d3hiq\\prophet_modelrw4c_rma\\prophet_model-20250718182947.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+cmd: where.exe tbb.dll
+cwd: None
+TBB already found in load path
+Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2h4d3hiq\3exfz6kw.json
+input tempfile: C:\Users\birku\AppData\Local\Temp\tmp2h4d3hiq\_k8wqeq8.json
+idx 0
+running CmdStan, num_threads: None
+CmdStan args: ['C:\\Users\\birku\\PycharmProjects\\GlobalDjango\\venv\\Lib\\site-packages\\prophet\\stan_model\\prophet_model.bin', 'random', 'seed=21900', 'data', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2h4d3hiq\\3exfz6kw.json', 'init=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2h4d3hiq\\_k8wqeq8.json', 'output', 'file=C:\\Users\\birku\\AppData\\Local\\Temp\\tmp2h4d3hiq\\prophet_modelmdla6g_g\\prophet_model-20250718182948.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+Chain [1] start processing
+Chain [1] done processing
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_198" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_210" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None, using fallback
+LSTM model trained with 18 epochs
+LSTM model trained with 17 epochs
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_230" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 5)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 5), dtype=int32)
+  • training=True
+  • mask=None, using fallback
+Transformer prediction failed: Exception encountered when calling Functional.call().
+
+[1mInput 0 of layer "dense_242" is incompatible with the layer: expected axis -1 of input shape to have value 1, but received input with shape (32, 20, 2)[0m
+
+Arguments received by Functional.call():
+  • inputs=tf.Tensor(shape=(32, 20, 2), dtype=int32)
+  • training=True
+  • mask=None, using fallback
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): bet.szerencsejatek.hu:443
+https://bet.szerencsejatek.hu:443 "GET /cmsfiles/eurojackpot.html HTTP/1.1" 200 None
