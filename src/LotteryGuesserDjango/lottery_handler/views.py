@@ -23,6 +23,9 @@ import time
 import traceback
 from contextlib import contextmanager
 from django.utils import timezone
+import logging
+
+logger = logging.getLogger(__name__)
 class LotteryNumbersApiView(APIView, CustomPagination):
     permission_classes = (AllowAny,)
     pagination_class = CustomPagination
@@ -34,40 +37,96 @@ class LotteryNumbersApiView(APIView, CustomPagination):
             200: LotteryNumbers(many=True), })
     @action(methods=['GET'], detail=True, pagination_class=CustomPagination)
     def get(self, request):
-        serializer = GetLotteryNumbersWithAlgorithm(data=request.GET)
-        serializer.is_valid(raise_exception=True)
-
-        lottery_type_id = serializer.validated_data["lottery_type_id"]
-        lottery_type = lg_lottery_type.objects.filter(id=lottery_type_id).first()
-        if lottery_type is None:
-            return JsonResponse({"error": "Item not found"}, status=404)
-
-        response = []
-
         try:
+            serializer = GetLotteryNumbersWithAlgorithm(data=request.GET)
+            serializer.is_valid(raise_exception=True)
+
+            lottery_type_id = serializer.validated_data["lottery_type_id"]
+            lottery_type = lg_lottery_type.objects.select_related().filter(id=lottery_type_id).first()
+            if lottery_type is None:
+                return JsonResponse({"error": "Lottery type not found"}, status=404)
+
+            response = []
+
+            # Optimalizált predikció futtatás
             results = call_get_numbers_dynamically(lottery_type)
 
-            # Lekérjük az összes algoritmus score-ját
-            algorithm_scores = {score.algorithm_name: score.current_score for score in lg_algorithm_score.objects.all()}
+            # Batch lekérés az algoritmus score-okhoz
+            algorithm_scores = {
+                score.algorithm_name: score.current_score 
+                for score in lg_algorithm_score.objects.only('algorithm_name', 'current_score')
+            }
 
+            # Eredmények feldolgozása
             for result in results:
-                data = {
-                    "numbers": result.lottery_type_number,
-                    'algorithm': result.lottery_algorithm,
-                    'score': algorithm_scores.get(result.lottery_algorithm, 0)  # Ha nincs score, 0-t adunk
-                }
-                response_serializer = LotteryNumbers(data=data)
-                response_serializer.is_valid(raise_exception=True)
-                response.append(response_serializer.data)
+                # Számok formázása
+                numbers = result.lottery_type_number
+                if isinstance(numbers, dict):
+                    # Main és additional számok kezelése
+                    formatted_numbers = {
+                        "main": numbers.get("main", []),
+                        "additional": numbers.get("additional", [])
+                    }
+                else:
+                    # Legacy formátum
+                    formatted_numbers = numbers
 
-            # Rendezzük az eredményeket score alapján csökkenő sorrendben
+                data = {
+                    "numbers": formatted_numbers,
+                    'algorithm': result.lottery_algorithm,
+                    'score': algorithm_scores.get(result.lottery_algorithm, 0),
+                    'execution_time': getattr(result, 'execution_time', None),
+                    'created_at': result.created_at.isoformat() if result.created_at else None,
+                    'statistics': {
+                        'sum': getattr(result, 'sum', None),
+                        'average': getattr(result, 'average', None),
+                        'median': getattr(result, 'median', None),
+                        'std_dev': getattr(result, 'standard_deviation', None)
+                    }
+                }
+                
+                # Validáció optimalizálva
+                response_serializer = LotteryNumbers(data={
+                    'numbers': data['numbers'],
+                    'algorithm': data['algorithm'],
+                    'score': data['score']
+                })
+                if response_serializer.is_valid():
+                    # Teljes adatokat hozzáadjuk
+                    response_data = response_serializer.data
+                    response_data.update({
+                        'execution_time': data['execution_time'],
+                        'created_at': data['created_at'],
+                        'statistics': data['statistics']
+                    })
+                    response.append(response_data)
+
+            # Rendezés score szerint
             response.sort(key=lambda x: x['score'], reverse=True)
 
-        except Exception as e:
-            return JsonResponse({"error": str(e)}, status=500)
+            # Teljesítménystatisztikák hozzáadása
+            performance_summary = {
+                'total_algorithms': len(response),
+                'average_score': sum(r['score'] for r in response) / len(response) if response else 0,
+                'top_score': response[0]['score'] if response else 0,
+                'response_time': timezone.now().isoformat()
+            }
 
-        results = self.paginate_queryset(response, request, view=self)
-        return self.get_paginated_response(results)
+            # Paginált válasz teljesítménystatisztikákkal
+            paginated_results = self.paginate_queryset(response, request, view=self)
+            paginated_response = self.get_paginated_response(paginated_results)
+            
+            # Statisztikák hozzáadása a válaszhoz
+            paginated_response.data['performance_summary'] = performance_summary
+            
+            return paginated_response
+
+        except Exception as e:
+            logger.error(f"Hiba a lottery numbers endpoint-ban: {e}")
+            return JsonResponse({
+                "error": "Internal server error",
+                "message": str(e) if hasattr(e, '__str__') else "Unknown error occurred"
+            }, status=500)
 
 
 class LotteryAlgorithmsApiView(APIView):
@@ -122,45 +181,134 @@ class CalculateLotteryNumbersView(APIView):
         responses={
             200: LotteryNumbers(many=True), })
     def post(self, request):
-        data = json.loads(request.body)
-        lottery_type_id = data.get('lottery_type_id')
-        winning_numbers = data.get('winning_numbers')
+        logger.info("="*60)
+        logger.info("LOTTERY ALGORITHM TESTING STARTED")
+        logger.info("="*60)
+        
+        try:
+            data = request.data
+            lottery_type_id = data.get('lottery_type_id')
+            winning_numbers = data.get('winning_numbers')
+            additional_numbers = data.get('additional_numbers', [])
+            test_iterations = data.get('test_iterations', 10)  # Configurable iterations
 
-        if not lottery_type_id or not winning_numbers:
-            return JsonResponse({"error": "Missing lottery_type_id or winning_numbers"}, status=400)
+            logger.info(f"Lottery Type ID: {lottery_type_id}")
+            logger.info(f"Winning Numbers: {winning_numbers}")
+            logger.info(f"Additional Numbers: {additional_numbers}")
+            logger.info(f"Test Iterations: {test_iterations}")
 
-        lottery_type = lg_lottery_type.objects.get(id=lottery_type_id)
+            # Validáció
+            if not lottery_type_id:
+                logger.error("VALIDATION ERROR: lottery_type_id kotelzo")
+                return JsonResponse({"error": "Missing lottery_type_id"}, status=400)
+            if not winning_numbers or not isinstance(winning_numbers, list):
+                logger.error("VALIDATION ERROR: winning_numbers kotelzo es listanak kell lennie")
+                return JsonResponse({"error": "Invalid winning_numbers format"}, status=400)
 
-        for x in range(20):
-            algorithms = self.evaluate_algorithms(lottery_type, winning_numbers)
+            lottery_type = lg_lottery_type.objects.select_related().filter(id=lottery_type_id).first()
+            if not lottery_type:
+                logger.error(f"LOTTERY TYPE NOT FOUND: {lottery_type_id}")
+                return JsonResponse({"error": "Lottery type not found"}, status=404)
+            
+            logger.info(f"Lottery Type Found: {lottery_type.lottery_type}")
 
-        return JsonResponse({"ranked_algorithms": algorithms})
+            # Optimalizált algoritmus tesztelés
+            start_time = timezone.now()
+            test_results = []
+            
+            for iteration in range(test_iterations):
+                algorithms = self.evaluate_algorithms(lottery_type, winning_numbers, additional_numbers)
+                test_results.append(algorithms)
 
-    def evaluate_algorithms(self, lottery_type, winning_numbers):
+            # Eredmények aggregálása
+            aggregated_results = self.aggregate_test_results(test_results)
+            
+            end_time = timezone.now()
+            execution_duration = (end_time - start_time).total_seconds()
+            
+            # Teszt befejezése
+            logger.info("="*60)
+            logger.info("LOTTERY ALGORITHM TESTING COMPLETED")
+            logger.info(f"Total algorithms tested: {len(aggregated_results)}")
+            logger.info(f"Total execution time: {execution_duration:.2f} seconds")
+            logger.info("="*60)
+
+            return JsonResponse({
+                "status": "success",
+                "test_summary": {
+                    "lottery_type_id": lottery_type_id,
+                    "winning_numbers": winning_numbers,
+                    "additional_numbers": additional_numbers,
+                    "test_iterations": test_iterations,
+                    "execution_time_seconds": execution_duration,
+                    "timestamp": end_time.isoformat()
+                },
+                "ranked_algorithms": aggregated_results,
+                "performance_metrics": {
+                    "total_algorithms_tested": len(aggregated_results),
+                    "average_score": sum(a['average_score'] for a in aggregated_results) / len(aggregated_results) if aggregated_results else 0,
+                    "best_performer": aggregated_results[0]['name'] if aggregated_results else None
+                }
+            })
+
+        except json.JSONDecodeError as e:
+            logger.error(f"JSON DECODE ERROR: {str(e)}")
+            return JsonResponse({"error": "Invalid JSON format"}, status=400)
+        except Exception as e:
+            logger.error(f"GENERAL ERROR in algorithm testing: {str(e)}")
+            logger.error("GENERAL ERROR TRACEBACK:")
+            import traceback
+            logger.error(traceback.format_exc())
+            logger.info("="*60)
+            logger.info("LOTTERY ALGORITHM TESTING FAILED")
+            logger.info("="*60)
+            return JsonResponse({"error": f"Internal server error: {str(e)}"}, status=500)
+
+    def evaluate_algorithms(self, lottery_type, winning_numbers, additional_numbers=None):
         algorithms = []
         processors_dir = "processors"
+        
+        # Optimalizált fájllista
+        try:
+            processor_files = [f[:-3] for f in os.listdir(processors_dir) 
+                             if f.endswith(".py") and not f.startswith("__")]
+        except OSError as e:
+            logger.error(f"Nem sikerült betölteni a processors könyvtárat: {e}")
+            return []
 
-        for filename in os.listdir(processors_dir):
-            if filename.endswith(".py") and not filename.startswith("__"):
-                module_name = filename[:-3]
-                print(f"Calling get_numbers function in {module_name} module...")
+        for module_name in processor_files:
+            try:
+                logger.info(f"START: {module_name}")
+                
+                # Dinamikus import optimalizálva
                 module = importlib.import_module(f"processors.{module_name}")
 
                 if hasattr(module, 'get_numbers'):
+                    # Teljesítménymérés kezdete
+                    start_time = time.time()
+
+                    # Predikció végrehajtása
+                    prediction_result = module.get_numbers(lottery_type)
+                    
+                    # Tuple format kezelése
+                    if isinstance(prediction_result, tuple) and len(prediction_result) == 2:
+                        predicted_numbers, predicted_additional = prediction_result
+                    else:
+                        predicted_numbers = prediction_result
+                        predicted_additional = []
+
+                    # Végrehajtási idő mérése
+                    execution_time = (time.time() - start_time) * 1000
+
+                    # Pontszám számítása (fő és kiegészítő számokat is figyelembe véve)
+                    score = self.calculate_enhanced_score(
+                        predicted_numbers, predicted_additional,
+                        winning_numbers, additional_numbers or []
+                    )
+
+                    # Batch adatbázis műveletek - teljesítményoptimalizálás
                     try:
-                        # Start performance measurement
-                        start_time = time.time()
-
-                        # Execute prediction
-                        predicted_numbers,additional_numbers = module.get_numbers(lottery_type)
-
-                        # End performance measurement
-                        execution_time = (time.time() - start_time) * 1000  # Convert to milliseconds
-
-                        # Calculate score
-                        score = self.calculate_score(predicted_numbers, winning_numbers)
-
-                        # Save prediction history
+                        # Predikciótörténet mentése
                         lg_prediction_history.objects.create(
                             algorithm_name=module_name,
                             predicted_numbers=predicted_numbers,
@@ -168,66 +316,85 @@ class CalculateLotteryNumbersView(APIView):
                             score=score
                         )
 
-                        # Save performance history
+                        # Teljesítménytörténet mentése
                         lg_performance_history.objects.create(
                             algorithm_name=module_name,
                             execution_time=execution_time,
                             success=True
                         )
 
-                        # Update performance metrics
-                        performance, created = lg_algorithm_performance.objects.get_or_create(
-                            algorithm_name=module_name,
-                            defaults={
-                                'average_execution_time': execution_time,
-                                'fastest_execution': execution_time,
-                                'slowest_execution': execution_time,
-                                'total_executions': 1,
-                                'last_execution_time': execution_time
-                            }
-                        )
+                        # Teljesítménymetrikák frissítése (optimalizált)
+                        self.update_performance_metrics(module_name, execution_time)
 
-                        if not created:
-                            # Update average execution time
-                            total_time = (
-                                                     performance.average_execution_time * performance.total_executions) + execution_time
-                            performance.total_executions += 1
-                            performance.average_execution_time = total_time / performance.total_executions
-
-                            # Update fastest/slowest times
-                            performance.fastest_execution = min(performance.fastest_execution, execution_time)
-                            performance.slowest_execution = max(performance.slowest_execution, execution_time)
-
-                            # Update last execution time
-                            performance.last_execution_time = execution_time
-                            performance.save()
-
-                        # Save generated lottery draw
+                        # Generált számok mentése
                         self.save_generated_lottery_draw(lottery_type, predicted_numbers, module_name)
 
-                        # Update algorithm score
+                        # Algoritmus pontszám frissítése
                         self.update_algorithm_score(module_name)
 
-                        current_score = lg_algorithm_score.objects.get(algorithm_name=module_name).current_score
+                        # Jelenlegi pontszám lekérése
+                        current_score = lg_algorithm_score.objects.filter(
+                            algorithm_name=module_name
+                        ).values_list('current_score', flat=True).first() or 0
+
                         algorithms.append({
                             "name": module_name,
                             "score": current_score,
-                            "execution_time": execution_time
+                            "execution_time": execution_time,
+                            "predicted_main": predicted_numbers,
+                            "predicted_additional": predicted_additional,
+                            "success": True
+                        })
+                        
+                        # Részletes logging
+                        from .utils import log_algorithm_performance
+                        log_algorithm_performance(
+                            module_name, current_score, execution_time, 
+                            predicted_numbers, predicted_additional
+                        )
+                        logger.info(f"SUCCESS: {module_name}")
+
+                    except Exception as db_error:
+                        logger.error(f"DATABASE ERROR in {module_name}: {str(db_error)}")
+                        logger.error(f"DATABASE ERROR TRACEBACK:")
+                        import traceback
+                        logger.error(traceback.format_exc())
+                        # Folytatás hibánál is
+                        algorithms.append({
+                            "name": module_name,
+                            "score": 0,
+                            "execution_time": execution_time if 'execution_time' in locals() else 0,
+                            "success": False,
+                            "error": str(db_error)
                         })
 
-                    except Exception as e:
-                        print(f"Error calling get_numbers function in {module_name} module: {e}")
-                        # Log error in performance history
-                        lg_performance_history.objects.create(
-                            algorithm_name=module_name,
-                            execution_time=0,
-                            success=False,
-                            error_message=str(e)
-                        )
+            except Exception as e:
+                logger.error(f"ALGORITHM ERROR in {module_name}: {str(e)}")
+                logger.error(f"ALGORITHM ERROR TRACEBACK:")
+                import traceback
+                logger.error(traceback.format_exc())
+                logger.info(f"FAILED: {module_name}")
+                # Hiba naplózása
+                try:
+                    lg_performance_history.objects.create(
+                        algorithm_name=module_name,
+                        execution_time=0,
+                        success=False,
+                        error_message=str(e)
+                    )
+                except:
+                    pass  # Ha az adatbázis írás is hibázik
 
-        # Rendezzük az algoritmusokat pontszám szerint csökkenő sorrendbe
-        ranked_algorithms = sorted(algorithms, key=lambda x: x['score'], reverse=True)
+                algorithms.append({
+                    "name": module_name,
+                    "score": 0,
+                    "execution_time": 0,
+                    "success": False,
+                    "error": str(e)
+                })
 
+        # Rendezés pontszám szerint
+        ranked_algorithms = sorted(algorithms, key=lambda x: x.get('score', 0), reverse=True)
         return ranked_algorithms
 
     def calculate_score(self, predicted_numbers, winning_numbers):
@@ -269,6 +436,154 @@ class CalculateLotteryNumbersView(APIView):
             standard_deviation=statistics.stdev(predicted_numbers),
             lottery_algorithm=algorithm_name
         )
+
+    def calculate_enhanced_score(self, predicted_main, predicted_additional, winning_main, winning_additional):
+        """Fejlett pontszám számítás fő és kiegészítő számokkal."""
+        
+        if not predicted_main:
+            return 0
+        
+        # Fő számok pontszáma
+        main_matches = len(set(predicted_main) & set(winning_main))
+        main_score = main_matches * 10  # Alap pont
+        
+        # Pozíciós bónusz a fő számoknál
+        position_bonus = 0
+        for i, num in enumerate(predicted_main):
+            if i < len(winning_main) and num == winning_main[i]:
+                position_bonus += 5  # Helyes pozíció bónusz
+        
+        # Kiegészítő számok pontszáma
+        additional_score = 0
+        if predicted_additional and winning_additional:
+            additional_matches = len(set(predicted_additional) & set(winning_additional))
+            additional_score = additional_matches * 8  # Kiegészítő számok értéke
+        
+        # Kombinációs bónusz
+        combination_bonus = 0
+        if main_matches >= 3 and len(set(predicted_additional) & set(winning_additional)) >= 1:
+            combination_bonus = 15  # Kombinációs bónusz
+        
+        # Teljes pontszám
+        total_score = main_score + position_bonus + additional_score + combination_bonus
+        
+        return total_score
+    
+    def update_performance_metrics(self, algorithm_name, execution_time):
+        """Optimalizált teljesítménymetrika frissítés."""
+        
+        performance, created = lg_algorithm_performance.objects.get_or_create(
+            algorithm_name=algorithm_name,
+            defaults={
+                'average_execution_time': execution_time,
+                'fastest_execution': execution_time,
+                'slowest_execution': execution_time,
+                'total_executions': 1,
+                'last_execution_time': execution_time
+            }
+        )
+
+        if not created:
+            # Optimalizált frissítés bulk művelettel
+            performance.total_executions += 1
+            
+            # Mozgó átlag számítás (teljesítményoptimalizálás)
+            alpha = 0.1  # Súlyozási faktor az új értéknek
+            performance.average_execution_time = (
+                performance.average_execution_time * (1 - alpha) + 
+                execution_time * alpha
+            )
+            
+            # Min/max frissítése
+            performance.fastest_execution = min(performance.fastest_execution, execution_time)
+            performance.slowest_execution = max(performance.slowest_execution, execution_time)
+            performance.last_execution_time = execution_time
+            
+            performance.save(update_fields=[
+                'total_executions', 'average_execution_time', 
+                'fastest_execution', 'slowest_execution', 'last_execution_time'
+            ])
+    
+    def aggregate_test_results(self, test_results):
+        """Teszt eredmények aggregálása több iterációból."""
+        
+        algorithm_stats = {}
+        
+        # Összes eredmény összegyűjtése
+        for iteration_results in test_results:
+            for result in iteration_results:
+                alg_name = result['name']
+                
+                if alg_name not in algorithm_stats:
+                    algorithm_stats[alg_name] = {
+                        'scores': [],
+                        'execution_times': [],
+                        'success_count': 0,
+                        'error_count': 0,
+                        'errors': []
+                    }
+                
+                if result.get('success', True):
+                    algorithm_stats[alg_name]['scores'].append(result.get('score', 0))
+                    algorithm_stats[alg_name]['execution_times'].append(result.get('execution_time', 0))
+                    algorithm_stats[alg_name]['success_count'] += 1
+                else:
+                    algorithm_stats[alg_name]['error_count'] += 1
+                    algorithm_stats[alg_name]['errors'].append(result.get('error', 'Unknown error'))
+        
+        # Aggregált statisztikák számítása
+        aggregated = []
+        for alg_name, stats in algorithm_stats.items():
+            scores = stats['scores']
+            exec_times = stats['execution_times']
+            
+            if scores:  # Van legalább egy sikeres futtatás
+                aggregated.append({
+                    'name': alg_name,
+                    'average_score': sum(scores) / len(scores),
+                    'max_score': max(scores),
+                    'min_score': min(scores),
+                    'score_std': np.std(scores) if len(scores) > 1 else 0,
+                    'average_execution_time': sum(exec_times) / len(exec_times),
+                    'min_execution_time': min(exec_times),
+                    'max_execution_time': max(exec_times),
+                    'success_rate': (stats['success_count'] / (stats['success_count'] + stats['error_count'])) * 100,
+                    'total_runs': stats['success_count'] + stats['error_count'],
+                    'successful_runs': stats['success_count'],
+                    'failed_runs': stats['error_count'],
+                    'consistency_rating': self.calculate_consistency_rating(scores, exec_times)
+                })
+            else:  # Csak hibás futtatások
+                aggregated.append({
+                    'name': alg_name,
+                    'average_score': 0,
+                    'success_rate': 0,
+                    'total_runs': stats['error_count'],
+                    'failed_runs': stats['error_count'],
+                    'errors': stats['errors'][:3]  # Első 3 hiba
+                })
+        
+        # Rendezés átlagos pontszám szerint
+        return sorted(aggregated, key=lambda x: x.get('average_score', 0), reverse=True)
+    
+    def calculate_consistency_rating(self, scores, execution_times):
+        """Konzisztencia értékelés számítása."""
+        
+        if len(scores) < 2:
+            return 100.0  # Egyetlen futtatás = teljes konzisztencia
+        
+        # Pontszám konzisztencia (alacsony szórás = jó)
+        score_cv = (np.std(scores) / np.mean(scores)) * 100 if np.mean(scores) > 0 else 100
+        score_consistency = max(0, 100 - score_cv)
+        
+        # Végrehajtási idő konzisztencia
+        time_cv = (np.std(execution_times) / np.mean(execution_times)) * 100 if np.mean(execution_times) > 0 else 100
+        time_consistency = max(0, 100 - time_cv)
+        
+        # Kombinált konzisztencia (pontszám fontosabb)
+        overall_consistency = score_consistency * 0.7 + time_consistency * 0.3
+        
+        return round(overall_consistency, 2)
 
 
 class DetailedAlgorithmStatisticsView(APIView):
@@ -944,7 +1259,7 @@ class AutomaticAlgorithmTestView(APIView):
             processors_dir = "processors"
             
             for iteration in range(1, 11):
-                print(f"\n🔄 Iteration {iteration}/10")
+                print(f"\n[ITER] Iteration {iteration}/10")
                 iteration_results = []
                 
                 for filename in os.listdir(processors_dir):
@@ -976,7 +1291,7 @@ class AutomaticAlgorithmTestView(APIView):
                                     'predicted_additional': predicted_additional
                                 })
                                 
-                                print(f"   ✅ {module_name}: {score} points ({execution_time:.2f}ms)")
+                                print(f"   [OK] {module_name}: {score} points ({execution_time:.2f}ms)")
                                 
                         except Exception as e:
                             print(f"   ❌ {module_name}: Error - {str(e)}")

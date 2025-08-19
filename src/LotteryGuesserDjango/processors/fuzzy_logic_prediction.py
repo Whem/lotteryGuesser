@@ -1,4 +1,5 @@
 # fuzzy_logic_prediction.py
+import random
 import numpy as np
 from collections import defaultdict, Counter
 from typing import List, Tuple, Dict, Callable
@@ -162,20 +163,38 @@ def generate_predictions(
                                 consequent == 'HIGH' and membership_functions['HIGH'](num) > 0.5):
                             possible_numbers[num] += degree * frequency_data['counts'][num]
 
-        # Select best number
+        # Select from top numbers with randomization
         if possible_numbers:
-            next_num = max(possible_numbers.items(), key=lambda x: x[1])[0]
+            # Sort by score and select from top candidates
+            sorted_numbers = sorted(possible_numbers.items(), key=lambda x: x[1], reverse=True)
+            top_candidates_count = min(3, len(sorted_numbers))  # Top 3 candidates
+            top_candidates = [num for num, _ in sorted_numbers[:top_candidates_count]]
+            
+            # Random selection from top candidates
+            next_num = random.choice(top_candidates)
             if next_num not in predicted_numbers:
                 predicted_numbers.append(next_num)
 
-    # Fill remaining numbers if needed
-    while len(predicted_numbers) < required_numbers:
-        for num in frequency_data['most_common']:
-            if num not in predicted_numbers:
-                predicted_numbers.append(num)
-                break
-        if len(predicted_numbers) >= required_numbers:
-            break
+    # Fill remaining numbers if needed with randomization
+    remaining_needed = required_numbers - len(predicted_numbers)
+    if remaining_needed > 0:
+        available_numbers = [num for num in frequency_data['most_common'] if num not in predicted_numbers]
+        
+        if len(available_numbers) >= remaining_needed:
+            # Random selection from available numbers
+            random_selection = random.sample(available_numbers, remaining_needed)
+            predicted_numbers.extend(random_selection)
+        else:
+            # Add all available and fill with more numbers if needed
+            predicted_numbers.extend(available_numbers)
+            still_needed = required_numbers - len(predicted_numbers)
+            
+            if still_needed > 0:
+                all_numbers = list(range(min_num, max_num + 1))
+                unused_numbers = [num for num in all_numbers if num not in predicted_numbers]
+                if unused_numbers:
+                    additional_selection = random.sample(unused_numbers, min(still_needed, len(unused_numbers)))
+                    predicted_numbers.extend(additional_selection)
 
     return predicted_numbers[:required_numbers]
 

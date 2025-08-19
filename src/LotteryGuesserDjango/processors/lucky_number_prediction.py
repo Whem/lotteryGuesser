@@ -127,7 +127,7 @@ def generate_predictions(
         max_num: int,
         required_numbers: int
 ) -> List[int]:
-    """Generate predictions based on luck scores."""
+    """Generate predictions based on luck scores with randomization."""
     # Sort by luck score
     sorted_numbers = sorted(
         luck_scores.keys(),
@@ -140,11 +140,35 @@ def generate_predictions(
         remaining = set(range(min_num, max_num + 1)) - set(sorted_numbers)
         sorted_numbers.extend(list(remaining))
 
-    # Convert to standard Python int
-    lucky_numbers = [
-        int(num)
-        for num in sorted_numbers[:required_numbers]
-    ]
+    # Randomized selection from top candidates
+    top_candidates_count = min(required_numbers * 3, len(sorted_numbers))
+    top_candidates = sorted_numbers[:top_candidates_count]
+    
+    # Mix guaranteed top picks with random selection
+    guaranteed_count = max(1, int(required_numbers * 0.7))  # 70% guaranteed
+    guaranteed_numbers = top_candidates[:guaranteed_count]
+    
+    # Random selection for remaining slots
+    remaining_needed = required_numbers - len(guaranteed_numbers)
+    if remaining_needed > 0:
+        remaining_candidates = top_candidates[guaranteed_count:]
+        if len(remaining_candidates) >= remaining_needed:
+            random_selection = random.sample(remaining_candidates, remaining_needed)
+        else:
+            random_selection = remaining_candidates[:]
+            # Fill with additional random numbers if needed
+            all_numbers = set(range(min_num, max_num + 1))
+            unused_numbers = list(all_numbers - set(guaranteed_numbers) - set(random_selection))
+            if unused_numbers:
+                additional_needed = remaining_needed - len(random_selection)
+                random_selection.extend(random.sample(unused_numbers, min(additional_needed, len(unused_numbers))))
+        
+        lucky_numbers = guaranteed_numbers + random_selection[:remaining_needed]
+    else:
+        lucky_numbers = guaranteed_numbers
+
+    # Convert to standard Python int and ensure correct count
+    lucky_numbers = [int(num) for num in lucky_numbers[:required_numbers]]
 
     return lucky_numbers
 

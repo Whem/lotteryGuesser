@@ -6,7 +6,7 @@ from algorithms.models import lg_lottery_winner_number, lg_lottery_type
 
 
 def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
-    """Generates numbers for both main and additional sets using geometric progression."""
+    """Generates numbers for both main and additional sets using genetic algorithm analysis."""
     main_numbers = generate_number_set(
         lottery_type_instance,
         lottery_type_instance.min_number,

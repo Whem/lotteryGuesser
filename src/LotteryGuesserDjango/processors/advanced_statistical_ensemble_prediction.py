@@ -9,7 +9,6 @@ import pandas as pd
 from typing import List, Tuple, Dict, Optional, Set
 from collections import Counter, defaultdict
 from datetime import datetime, timedelta
-import random
 import math
 from scipy import stats
 from sklearn.preprocessing import StandardScaler
@@ -81,7 +80,7 @@ class AdvancedStatisticalEnsemble:
         historical_data = self._get_historical_data(lottery_type_instance, is_main)
         
         if len(historical_data) < self.min_historical_draws:
-            return self._generate_smart_random(min_num, max_num, required_numbers)
+            return self._generate_smart_deterministic(min_num, max_num, required_numbers)
         
         # Ensemble predikciók generálása
         predictions = {}
@@ -159,14 +158,13 @@ class AdvancedStatisticalEnsemble:
                 if min_num <= number <= max_num:
                     weighted_counter[number] += weight
         
-        # Leggyakoribb számok kiválasztása
-        most_common = [num for num, _ in weighted_counter.most_common()]
+        # Leggyakoribb számok kiválasztása determinisztikus tie-break-kel
+        sorted_counts = sorted(weighted_counter.items(), key=lambda x: (-x[1], x[0]))
+        most_common = [num for num, _ in sorted_counts]
         
-        # Kiegészítés hiányzó számokkal
+        # Kiegészítés hiányzó számokkal (determin.: növekvő)
         if len(most_common) < required_numbers:
-            missing_numbers = [num for num in range(min_num, max_num + 1) 
-                             if num not in most_common]
-            random.shuffle(missing_numbers)
+            missing_numbers = [num for num in range(min_num, max_num + 1) if num not in most_common]
             most_common.extend(missing_numbers)
         
         return most_common[:required_numbers]
@@ -178,7 +176,7 @@ class AdvancedStatisticalEnsemble:
         Időbeli minták elemzése és predikció
         """
         if len(historical_data) < 20:
-            return self._generate_smart_random(min_num, max_num, required_numbers)
+            return self._generate_smart_deterministic(min_num, max_num, required_numbers)
         
         # Különböző időablakok elemzése
         pattern_scores = defaultdict(float)
@@ -204,14 +202,14 @@ class AdvancedStatisticalEnsemble:
                     
                     pattern_scores[num] += trend / len(self.temporal_window_sizes)
         
-        # Legmagasabb trend score-ú számok kiválasztása
-        sorted_numbers = sorted(pattern_scores.items(), key=lambda x: x[1], reverse=True)
+        # Legmagasabb trend score-ú számok kiválasztása (determin. tie-break)
+        sorted_numbers = sorted(pattern_scores.items(), key=lambda x: (-x[1], x[0]))
         selected = [num for num, _ in sorted_numbers[:required_numbers]]
         
         # Kiegészítés szükség esetén
         if len(selected) < required_numbers:
             remaining = [num for num in range(min_num, max_num + 1) if num not in selected]
-            random.shuffle(remaining)
+            # Determinisztikus kiegészítés
             selected.extend(remaining[:required_numbers - len(selected)])
         
         return selected[:required_numbers]
@@ -223,7 +221,7 @@ class AdvancedStatisticalEnsemble:
         Statisztikai modell alapú predikció
         """
         if len(historical_data) < 30:
-            return self._generate_smart_random(min_num, max_num, required_numbers)
+            return self._generate_smart_deterministic(min_num, max_num, required_numbers)
         
         try:
             # Adatok előkészítése
@@ -240,7 +238,7 @@ class AdvancedStatisticalEnsemble:
                         })
             
             if not df_data:
-                return self._generate_smart_random(min_num, max_num, required_numbers)
+                return self._generate_smart_deterministic(min_num, max_num, required_numbers)
             
             df = pd.DataFrame(df_data)
             
@@ -262,20 +260,21 @@ class AdvancedStatisticalEnsemble:
                 pred = model.predict(next_draw_features)[0]
                 predictions.append(max(min_num, min(max_num, int(round(pred)))))
             
-            # Leggyakoribb predikciók kiválasztása
+            # Leggyakoribb predikciók kiválasztása (determin. tie-break)
             pred_counter = Counter(predictions)
-            selected = [num for num, _ in pred_counter.most_common(required_numbers)]
+            sorted_preds = sorted(pred_counter.items(), key=lambda x: (-x[1], x[0]))
+            selected = [num for num, _ in sorted_preds[:required_numbers]]
             
             # Kiegészítés szükség esetén
             if len(selected) < required_numbers:
                 remaining = [num for num in range(min_num, max_num + 1) if num not in selected]
-                random.shuffle(remaining)
+                # Determinisztikus kiegészítés
                 selected.extend(remaining[:required_numbers - len(selected)])
             
             return selected[:required_numbers]
             
         except Exception:
-            return self._generate_smart_random(min_num, max_num, required_numbers)
+            return self._generate_smart_deterministic(min_num, max_num, required_numbers)
     
     def _gap_analysis_prediction(self, historical_data: List[List[int]], 
                                min_num: int, max_num: int, 
@@ -308,8 +307,8 @@ class AdvancedStatisticalEnsemble:
             else:
                 gap_scores[num] = len(historical_data)  # Soha nem jelent meg
         
-        # Legmagasabb gap score-ú számok
-        sorted_by_gap = sorted(gap_scores.items(), key=lambda x: x[1], reverse=True)
+        # Legmagasabb gap score-ú számok (determin. tie-break)
+        sorted_by_gap = sorted(gap_scores.items(), key=lambda x: (-x[1], x[0]))
         selected = [num for num, _ in sorted_by_gap[:required_numbers]]
         
         return selected
@@ -321,7 +320,7 @@ class AdvancedStatisticalEnsemble:
         Klaszterezés alapú predikció
         """
         if len(historical_data) < 20:
-            return self._generate_smart_random(min_num, max_num, required_numbers)
+            return self._generate_smart_deterministic(min_num, max_num, required_numbers)
         
         try:
             # Húzások vektorizálása
@@ -334,7 +333,7 @@ class AdvancedStatisticalEnsemble:
                 vectors.append(vector)
             
             if len(vectors) < 10:
-                return self._generate_smart_random(min_num, max_num, required_numbers)
+                return self._generate_smart_deterministic(min_num, max_num, required_numbers)
             
             # K-means klaszterezés
             n_clusters = min(5, len(vectors) // 3)
@@ -348,16 +347,16 @@ class AdvancedStatisticalEnsemble:
             # Klaszter centroid alapján számok kiválasztása
             centroid = kmeans.cluster_centers_[most_common_cluster]
             
-            # Legmagasabb értékű pozíciók kiválasztása
+            # Legmagasabb értékű pozíciók kiválasztása (determin. tie-break)
             number_scores = [(i + min_num, score) for i, score in enumerate(centroid)]
-            number_scores.sort(key=lambda x: x[1], reverse=True)
+            number_scores.sort(key=lambda x: (-x[1], x[0]))
             
             selected = [num for num, _ in number_scores[:required_numbers]]
             
             return selected
             
         except Exception:
-            return self._generate_smart_random(min_num, max_num, required_numbers)
+            return self._generate_smart_deterministic(min_num, max_num, required_numbers)
     
     def _ensemble_voting(self, predictions: Dict[str, List[int]], 
                         min_num: int, max_num: int, 
@@ -374,16 +373,16 @@ class AdvancedStatisticalEnsemble:
                 position_weight = 1.0 / (i + 1)
                 vote_scores[num] += weight * position_weight
         
-        # Legmagasabb score-ú számok kiválasztása
-        sorted_votes = sorted(vote_scores.items(), key=lambda x: x[1], reverse=True)
+        # Legmagasabb score-ú számok kiválasztása (determin. tie-break)
+        sorted_votes = sorted(vote_scores.items(), key=lambda x: (-x[1], x[0]))
         selected = [num for num, _ in sorted_votes[:required_numbers]]
         
         # Kiegészítés szükség esetén
         if len(selected) < required_numbers:
             remaining = [num for num in range(min_num, max_num + 1) if num not in selected]
-            random.shuffle(remaining)
+            # Determinisztikus kiegészítés: növekvő sorrendben
             selected.extend(remaining[:required_numbers - len(selected)])
-        
+
         return selected[:required_numbers]
     
     def _validate_and_refine(self, numbers: List[int], historical_data: List[List[int]], 
@@ -391,8 +390,13 @@ class AdvancedStatisticalEnsemble:
         """
         Validáció és finomhangolás
         """
-        # Duplikátumok eltávolítása
-        unique_numbers = list(set(numbers))
+        # Duplikátumok eltávolítása determinisztikusan (eredeti sorrend megőrzése)
+        seen: Set[int] = set()
+        unique_numbers: List[int] = []
+        for n in numbers:
+            if n not in seen:
+                seen.add(n)
+                unique_numbers.append(n)
         
         # Tartomány ellenőrzés
         valid_numbers = [num for num in unique_numbers if min_num <= num <= max_num]
@@ -421,42 +425,47 @@ class AdvancedStatisticalEnsemble:
         if len(refined_numbers) < required_numbers:
             remaining = [num for num in range(min_num, max_num + 1) 
                         if num not in refined_numbers]
-            random.shuffle(remaining)
+            # Determinisztikus kiegészítés
             refined_numbers.extend(remaining[:required_numbers - len(refined_numbers)])
         
         return refined_numbers[:required_numbers]
     
-    def _generate_smart_random(self, min_num: int, max_num: int, 
+    def _generate_smart_deterministic(self, min_num: int, max_num: int, 
                              required_numbers: int) -> List[int]:
         """
-        Intelligens véletlen számgenerálás
+        Determinisztikus "intelligens" számgenerálás: középponttól kifelé terjeszkedő minta
         """
-        # Normál eloszlás alapú generálás
-        center = (min_num + max_num) / 2
-        std = (max_num - min_num) / 6
-        
-        numbers = set()
-        attempts = 0
-        
-        while len(numbers) < required_numbers and attempts < 1000:
-            num = int(np.random.normal(center, std))
-            if min_num <= num <= max_num:
-                numbers.add(num)
-            attempts += 1
-        
-        # Kiegészítés egyenletes eloszlással
-        if len(numbers) < required_numbers:
-            remaining = [num for num in range(min_num, max_num + 1) if num not in numbers]
-            random.shuffle(remaining)
-            numbers.update(remaining[:required_numbers - len(numbers)])
-        
-        return list(numbers)[:required_numbers]
+        if required_numbers <= 0 or min_num > max_num:
+            return []
+        center = int(round((min_num + max_num) / 2))
+        selected: List[int] = []
+        used = set()
+        k = 0
+        while len(selected) < required_numbers:
+            offsets = [0] if k == 0 else [k, -k]
+            for off in offsets:
+                candidate = center + off
+                if min_num <= candidate <= max_num and candidate not in used:
+                    selected.append(int(candidate))
+                    used.add(int(candidate))
+                    if len(selected) >= required_numbers:
+                        break
+            k += 1
+            # Biztonsági kiegészítés, ha kiléptünk a tartományból, de még nem telt meg
+            if center - k < min_num and center + k > max_num and len(selected) < required_numbers:
+                for c in range(min_num, max_num + 1):
+                    if c not in used:
+                        selected.append(int(c))
+                        used.add(int(c))
+                        if len(selected) >= required_numbers:
+                            break
+        return selected[:required_numbers]
     
     def _generate_fallback_numbers(self, lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
         """
         Fallback számgenerálás hiba esetén
         """
-        main_numbers = self._generate_smart_random(
+        main_numbers = self._generate_smart_deterministic(
             int(lottery_type_instance.min_number),
             int(lottery_type_instance.max_number),
             int(lottery_type_instance.pieces_of_draw_numbers)
@@ -464,7 +473,7 @@ class AdvancedStatisticalEnsemble:
         
         additional_numbers = []
         if lottery_type_instance.has_additional_numbers:
-            additional_numbers = self._generate_smart_random(
+            additional_numbers = self._generate_smart_deterministic(
                 int(lottery_type_instance.additional_min_number),
                 int(lottery_type_instance.additional_max_number),
                 int(lottery_type_instance.additional_numbers_count)

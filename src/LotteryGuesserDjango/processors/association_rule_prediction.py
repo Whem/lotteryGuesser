@@ -1,4 +1,5 @@
 #association_rule_prediction.py
+import random
 import numpy as np
 from collections import Counter
 from mlxtend.frequent_patterns import apriori, association_rules
@@ -40,8 +41,26 @@ def get_numbers(lottery_type_instance: lg_lottery_type, min_support=0.05, metric
     if frequent_itemsets.empty:
         all_numbers = [num for draw in past_draws for num in draw]
         number_counts = Counter(all_numbers)
-        most_common = number_counts.most_common(total_numbers)
-        predicted_main_numbers = [num for num, count in most_common]
+        
+        # Randomized selection from top candidates
+        top_candidates_count = min(total_numbers * 2, len(number_counts))
+        top_candidates = [num for num, count in number_counts.most_common(top_candidates_count)]
+        
+        # Mix guaranteed top picks with random selection
+        guaranteed_count = max(1, int(total_numbers * 0.7))
+        guaranteed_numbers = top_candidates[:guaranteed_count]
+        
+        # Random selection for remaining
+        remaining_needed = total_numbers - len(guaranteed_numbers)
+        if remaining_needed > 0 and len(top_candidates) > guaranteed_count:
+            remaining_candidates = top_candidates[guaranteed_count:]
+            if len(remaining_candidates) >= remaining_needed:
+                random_selection = random.sample(remaining_candidates, remaining_needed)
+            else:
+                random_selection = remaining_candidates
+            predicted_main_numbers = guaranteed_numbers + random_selection
+        else:
+            predicted_main_numbers = guaranteed_numbers
     else:
         rules = association_rules(frequent_itemsets, metric=metric, min_threshold=min_threshold)
         last_draw = past_draws[-1]
@@ -59,12 +78,19 @@ def get_numbers(lottery_type_instance: lg_lottery_type, min_support=0.05, metric
         if len(predicted_main_numbers) < total_numbers:
             all_numbers = [num for draw in past_draws for num in draw]
             number_counts = Counter(all_numbers)
-            most_common_numbers = [num for num, count in number_counts.most_common() if num not in predicted_main_numbers]
-
-            for num in most_common_numbers:
-                predicted_main_numbers.append(num)
-                if len(predicted_main_numbers) == total_numbers:
-                    break
+            
+            # Get top candidates with randomization
+            available_numbers = [num for num, count in number_counts.most_common() if num not in predicted_main_numbers]
+            needed_count = total_numbers - len(predicted_main_numbers)
+            
+            if len(available_numbers) >= needed_count:
+                # Random selection from top 2x candidates
+                top_candidates_count = min(needed_count * 2, len(available_numbers))
+                top_candidates = available_numbers[:top_candidates_count]
+                additional_numbers = random.sample(top_candidates, needed_count)
+                predicted_main_numbers.extend(additional_numbers)
+            else:
+                predicted_main_numbers.extend(available_numbers)
 
     predicted_main_numbers = [int(num) for num in predicted_main_numbers if min_num <= num <= max_num]
 

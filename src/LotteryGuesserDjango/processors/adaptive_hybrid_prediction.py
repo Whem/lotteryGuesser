@@ -2,6 +2,7 @@
 import numpy as np
 from typing import List, Tuple
 from algorithms.models import lg_lottery_winner_number, lg_lottery_type
+from collections import defaultdict
 
 
 def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
@@ -55,34 +56,24 @@ def generate_number_set(
                         isinstance(draw.additional_numbers, list)]
 
     if len(past_numbers) < 20:
-        return sorted(np.random.choice(
-            range(min_num, max_num + 1),
-            required_numbers,
-            replace=False
-        ).tolist())
+        return deterministic_fallback(min_num, max_num, required_numbers)
 
     # Define prediction methods
     methods = [
-        # Method 1: Pure random selection
-        lambda: np.random.choice(
-            range(min_num, max_num + 1),
-            required_numbers,
-            replace=False
-        ).tolist(),
+        # Method 1: Top frequency selection (deterministic)
+        lambda: select_top_frequency_numbers(
+            past_numbers, min_num, max_num, required_numbers
+        ),
 
-        # Method 2: Use most recent draw
+        # Method 2: Use most recent draw (deterministic fallback if unusable)
         lambda: (sorted(past_numbers[0])[:required_numbers]
                  if past_numbers and len(past_numbers[0]) >= required_numbers
-                 else np.random.choice(range(min_num, max_num + 1),
-                                       required_numbers,
-                                       replace=False).tolist()),
+                 else deterministic_fallback(min_num, max_num, required_numbers)),
 
-        # Method 3: Historical frequency-based selection
-        lambda: np.random.choice(
-            np.unique([num for draw in past_numbers for num in draw]),
-            required_numbers,
-            replace=False
-        ).tolist(),
+        # Method 3: Historical frequency-based selection (same as Method 1 to keep deterministic)
+        lambda: select_top_frequency_numbers(
+            past_numbers, min_num, max_num, required_numbers
+        ),
 
         # Method 4: Mean-based selection
         lambda: generate_mean_based_numbers(
@@ -112,20 +103,12 @@ def generate_number_set(
             if len(pred) == required_numbers:
                 predictions.append(pred)
             else:
-                # Fallback to random if method fails
-                predictions.append(np.random.choice(
-                    range(min_num, max_num + 1),
-                    required_numbers,
-                    replace=False
-                ).tolist())
+                # Deterministic fallback if method fails
+                predictions.append(deterministic_fallback(min_num, max_num, required_numbers))
         except Exception as e:
             print(f"Method error: {e}")
-            # Fallback to random
-            predictions.append(np.random.choice(
-                range(min_num, max_num + 1),
-                required_numbers,
-                replace=False
-            ).tolist())
+            # Deterministic fallback
+            predictions.append(deterministic_fallback(min_num, max_num, required_numbers))
 
     # Evaluate recent performance
     if past_numbers:
@@ -139,27 +122,28 @@ def generate_number_set(
         else:
             weights = [1.0 / len(methods)] * len(methods)
 
-    # Generate final prediction using weighted selection
-    final_prediction = set()
-    attempts = 0
-    max_attempts = 1000  # Prevent infinite loops
+    # Deterministic weighted aggregation: sum weights per number and pick top-K
+    score = defaultdict(float)
+    for idx, pred in enumerate(predictions):
+        w = float(weights[idx]) if idx < len(weights) else 0.0
+        for n in pred:
+            if min_num <= n <= max_num:
+                score[int(n)] += w
 
-    while len(final_prediction) < required_numbers and attempts < max_attempts:
-        method_index = int(np.random.choice(len(methods), p=weights))
-        number = int(np.random.choice(predictions[method_index]))
+    ranked = sorted(score.items(), key=lambda x: (-x[1], x[0]))
+    final = [n for n, _ in ranked][:required_numbers]
 
-        if min_num <= number <= max_num and number not in final_prediction:
-            final_prediction.add(number)
+    # Fill deterministically with smallest remaining numbers
+    if len(final) < required_numbers:
+        existing = set(final)
+        for candidate in range(min_num, max_num + 1):
+            if candidate not in existing:
+                final.append(candidate)
+                existing.add(candidate)
+                if len(final) >= required_numbers:
+                    break
 
-        attempts += 1
-
-    # If we still don't have enough numbers, fill with random ones
-    while len(final_prediction) < required_numbers:
-        number = np.random.randint(min_num, max_num + 1)
-        if number not in final_prediction:
-            final_prediction.add(number)
-
-    return sorted(list(final_prediction))
+    return sorted(final[:required_numbers])
 
 
 def generate_mean_based_numbers(
@@ -170,40 +154,41 @@ def generate_mean_based_numbers(
 ) -> List[int]:
     """Generate numbers based on historical means."""
     if not past_numbers:
-        return np.random.choice(range(min_num, max_num + 1),
-                                required_numbers,
-                                replace=False).tolist()
+        return deterministic_fallback(min_num, max_num, required_numbers)
 
     # Calculate mean for each position
     position_means = []
     for pos in range(required_numbers):
         position_numbers = [draw[pos] for draw in past_numbers if len(draw) > pos]
         if position_numbers:
-            position_means.append(int(np.mean(position_numbers)))
+            position_means.append(int(round(np.mean(position_numbers))))
         else:
-            position_means.append(np.random.randint(min_num, max_num + 1))
+            position_means.append(min_num + pos)
 
     # Adjust means to ensure unique numbers within bounds
-    result = set()
-    for mean in position_means:
-        number = mean
-        attempts = 0
-        while (number in result or number < min_num or number > max_num) and attempts < 100:
-            offset = np.random.randint(-5, 6)  # Random adjustment
-            number = mean + offset
-            attempts += 1
-
-        if attempts >= 100 or number < min_num or number > max_num:
-            # If we failed to find a valid number, pick a random one
-            available = set(range(min_num, max_num + 1)) - result
-            if available:
-                number = np.random.choice(list(available))
+    result: List[int] = []
+    used = set()
+    # Deterministic offset sequence: 0, +1, -1, +2, -2, ...
+    def offsets():
+        k = 0
+        while True:
+            if k == 0:
+                yield 0
+                k = 1
             else:
-                number = np.random.randint(min_num, max_num + 1)
+                yield k
+                yield -k
+                k += 1
 
-        result.add(number)
+    for mean in position_means:
+        for off in offsets():
+            candidate = mean + off
+            if min_num <= candidate <= max_num and candidate not in used:
+                result.append(int(candidate))
+                used.add(int(candidate))
+                break
 
-    return sorted(list(result))
+    return sorted(result[:required_numbers])
 
 
 def generate_pattern_based_numbers(
@@ -214,9 +199,7 @@ def generate_pattern_based_numbers(
 ) -> List[int]:
     """Generate numbers based on common patterns in past draws."""
     if not past_numbers or len(past_numbers) < 2:
-        return np.random.choice(range(min_num, max_num + 1),
-                                required_numbers,
-                                replace=False).tolist()
+        return deterministic_fallback(min_num, max_num, required_numbers)
 
     # Calculate common differences between consecutive numbers
     differences = []
@@ -228,23 +211,53 @@ def generate_pattern_based_numbers(
     # Use median difference to generate new numbers
     median_diff = int(np.median(differences)) if differences else 1
 
-    # Start with a random first number
-    result = set()
-    start_num = np.random.randint(min_num, max_num - (required_numbers - 1) * median_diff)
-    result.add(start_num)
+    # Start with deterministic first number: smallest from most recent draw if available, else min_num
+    result: List[int] = []
+    used = set()
+    first_draw = sorted(past_numbers[0]) if past_numbers and past_numbers[0] else []
+    start_num = first_draw[0] if first_draw else min_num
+    start_num = max(min_num, min(max_num, start_num))
+    result.append(int(start_num))
+    used.add(int(start_num))
 
-    # Generate subsequent numbers using the pattern
+    # Generate subsequent numbers using the pattern deterministically
     current = start_num
     while len(result) < required_numbers:
         next_num = current + median_diff
         if next_num > max_num:
-            # If we exceed the maximum, start a new sequence
-            available = set(range(min_num, max_num + 1)) - result
-            if available:
-                next_num = np.random.choice(list(available))
-            else:
-                next_num = np.random.randint(min_num, max_num + 1)
+            # Restart from smallest available within range
+            for candidate in range(min_num, max_num + 1):
+                if candidate not in used:
+                    next_num = candidate
+                    break
+        if next_num < min_num:
+            next_num = min_num
+        if next_num not in used:
+            result.append(int(next_num))
+            used.add(int(next_num))
         current = next_num
-        result.add(current)
 
-    return sorted(list(result))
+    return sorted(result[:required_numbers])
+
+
+def select_top_frequency_numbers(past_numbers: List[List[int]], min_num: int, max_num: int, k: int) -> List[int]:
+    from collections import Counter
+    freq = Counter()
+    for draw in past_numbers:
+        for n in draw:
+            if min_num <= int(n) <= max_num:
+                freq[int(n)] += 1
+    if not freq:
+        return deterministic_fallback(min_num, max_num, k)
+    ranked = sorted(freq.items(), key=lambda x: (-x[1], x[0]))
+    return [n for n, _ in ranked][:k]
+
+
+def deterministic_fallback(min_num: int, max_num: int, count: int) -> List[int]:
+    """Return the smallest 'count' numbers within [min_num, max_num]."""
+    span = max_num - min_num + 1
+    if count <= 0 or span <= 0:
+        return []
+    if count >= span:
+        return [int(x) for x in range(min_num, max_num + 1)][:count]
+    return [int(x) for x in range(min_num, min_num + count)]

@@ -157,7 +157,6 @@ def train_and_predict(
         return predicted_numbers
 
     except Exception as e:
-        print(f"Error in training/prediction: {str(e)}")
         return random_number_set(min_num, max_num, required_numbers)
 
 

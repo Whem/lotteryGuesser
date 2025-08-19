@@ -1,5 +1,4 @@
 # random_walk_prediction.py
-import random
 from typing import List, Tuple
 from algorithms.models import lg_lottery_winner_number, lg_lottery_type
 
@@ -63,22 +62,22 @@ def generate_number_set(
     ).order_by('-id').values_list(number_field, flat=True)
 
     if past_draws.exists():
-        # Start from the most recent draw
+        # Start from the most recent draw if usable
         last_draw = past_draws.first()
         if isinstance(last_draw, list) and len(last_draw) == total_numbers:
             current_numbers = sorted(last_draw)
         else:
-            # If last draw is not usable, start from random numbers
-            current_numbers = sorted(random.sample(range(min_num, max_num + 1), total_numbers))
+            # Deterministic fallback when last draw unusable
+            current_numbers = deterministic_fallback(min_num, max_num, total_numbers)
     else:
-        # If no past draws, start from random numbers
-        current_numbers = sorted(random.sample(range(min_num, max_num + 1), total_numbers))
+        # Deterministic fallback when no past draws
+        current_numbers = deterministic_fallback(min_num, max_num, total_numbers)
 
-    # Perform a random walk
+    # Perform a deterministic walk using a fixed move pattern [0, +1, -1, 0, +1, -1, ...]
     predicted_numbers = []
-    for num in current_numbers:
-        # Decide to move up, down, or stay the same
-        move = random.choice([-1, 0, 1])
+    move_pattern = [0, 1, -1]
+    for idx, num in enumerate(current_numbers):
+        move = move_pattern[idx % len(move_pattern)]
         new_num = num + move
 
         # Ensure the new number is within bounds
@@ -90,17 +89,35 @@ def generate_number_set(
         predicted_numbers.append(new_num)
 
     # Ensure unique numbers
-    predicted_numbers = list(set(predicted_numbers))
+    predicted_unique = []
+    seen = set()
+    for n in predicted_numbers:
+        if n not in seen:
+            predicted_unique.append(n)
+            seen.add(n)
 
-    # If not enough numbers, fill with random numbers
-    if len(predicted_numbers) < total_numbers:
-        all_numbers = set(range(min_num, max_num + 1))
-        remaining_numbers = list(all_numbers - set(predicted_numbers))
-        random.shuffle(remaining_numbers)
-        predicted_numbers.extend(remaining_numbers[:total_numbers - len(predicted_numbers)])
-    elif len(predicted_numbers) > total_numbers:
-        predicted_numbers = predicted_numbers[:total_numbers]
+    # If not enough numbers, fill deterministically with smallest remaining numbers
+    if len(predicted_unique) < total_numbers:
+        needed = total_numbers - len(predicted_unique)
+        for candidate in range(min_num, max_num + 1):
+            if candidate not in seen:
+                predicted_unique.append(candidate)
+                seen.add(candidate)
+                if len(predicted_unique) >= total_numbers:
+                    break
+    elif len(predicted_unique) > total_numbers:
+        predicted_unique = predicted_unique[:total_numbers]
 
     # Sort and return the selected numbers
-    predicted_numbers.sort()
-    return predicted_numbers
+    predicted_unique.sort()
+    return predicted_unique
+
+
+def deterministic_fallback(min_num: int, max_num: int, count: int) -> List[int]:
+    """Return the first 'count' numbers in range [min_num, max_num] deterministically."""
+    span = max_num - min_num + 1
+    if count <= 0 or span <= 0:
+        return []
+    if count >= span:
+        return list(range(min_num, max_num + 1))[:count]
+    return list(range(min_num, min_num + count))

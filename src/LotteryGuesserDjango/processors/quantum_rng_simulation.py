@@ -1,6 +1,5 @@
 # quantum_rng_simulation.py
 
-import numpy as np
 from typing import List, Tuple
 from algorithms.models import lg_lottery_type
 
@@ -38,33 +37,42 @@ def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List
 
 def generate_number_set(min_num: int, max_num: int, total_numbers: int) -> List[int]:
     """
-    Generates a set of lottery numbers using quantum RNG simulation.
-
-    Parameters:
-    - min_num: Minimum number in the lottery range.
-    - max_num: Maximum number in the lottery range.
-    - total_numbers: Total numbers to generate.
-
-    Returns:
-    - A sorted list of predicted lottery numbers.
+    Deterministically generates a set of lottery numbers using a low-discrepancy
+    sequence (Van der Corput) to simulate uniform coverage without randomness.
     """
-    def quantum_measurement():
-        # Simulated quantum measurement
-        return np.random.choice([0, 1], p=[0.5, 0.5])
+    span = max_num - min_num + 1
+    if total_numbers <= 0 or span <= 0:
+        return []
+    picks = []
+    used = set()
+    i = 1  # 1-based index for Van der Corput
+    while len(picks) < total_numbers and i < 100000:
+        u = _van_der_corput(i, base=2)
+        idx = int(u * span)
+        if idx >= span:
+            idx = span - 1
+        candidate = min_num + idx
+        if candidate not in used:
+            picks.append(candidate)
+            used.add(candidate)
+        i += 1
+    # Fill deterministically with smallest remaining if needed
+    if len(picks) < total_numbers:
+        for candidate in range(min_num, max_num + 1):
+            if candidate not in used:
+                picks.append(candidate)
+                used.add(candidate)
+                if len(picks) >= total_numbers:
+                    break
+    return sorted(picks)[:total_numbers]
 
-    def generate_quantum_number(min_num, max_num):
-        range_size = max_num - min_num + 1
-        bits_needed = int(np.ceil(np.log2(range_size)))
 
-        while True:
-            quantum_bits = [quantum_measurement() for _ in range(bits_needed)]
-            number = sum(bit << i for i, bit in enumerate(quantum_bits))
-            if number < range_size:
-                return int(min_num + number)
-
-    predicted_numbers = set()
-    while len(predicted_numbers) < total_numbers:
-        num = generate_quantum_number(min_num, max_num)
-        predicted_numbers.add(num)
-
-    return sorted(predicted_numbers)[:total_numbers]
+def _van_der_corput(n: int, base: int = 2) -> float:
+    """Van der Corput sequence for n (1-based) in the given base."""
+    vdc = 0.0
+    denom = 1.0
+    while n > 0:
+        n, remainder = divmod(n, base)
+        denom *= base
+        vdc += remainder / denom
+    return vdc

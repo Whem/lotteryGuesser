@@ -144,7 +144,6 @@ def generate_predictions(
         return sorted(predicted_numbers)
 
     except Exception as e:
-        print(f"HMM prediction error: {str(e)}")
         return random_selection(min_num, max_num, required_numbers)
 
 

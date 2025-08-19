@@ -1,5 +1,6 @@
 # linear_regression_prediction.py
 import numpy as np
+import random
 from sklearn.linear_model import LinearRegression
 from typing import List, Tuple
 from algorithms.models import lg_lottery_winner_number, lg_lottery_type

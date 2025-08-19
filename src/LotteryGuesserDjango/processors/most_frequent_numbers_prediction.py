@@ -7,7 +7,6 @@ Tartalmazz időbeli súlyozást, validációt és statisztikai elemzést
 import numpy as np
 from collections import Counter
 from typing import List, Tuple, Optional
-import random
 import logging
 from algorithms.models import lg_lottery_winner_number, lg_lottery_type
 
@@ -85,14 +84,15 @@ def generate_improved_frequent_numbers(
 
 def get_historical_data(lottery_type_instance: lg_lottery_type, numbers_field: str) -> List[List[int]]:
     """
-    Történeti adatok lekérése és tisztítása.
+    Történeti adatok lekérése és tisztítása determinisztikus feldolgozással.
     """
     try:
+        # Legutóbbi 150 húzás lekérése
         queryset = lg_lottery_winner_number.objects.filter(
             lottery_type=lottery_type_instance
-        ).order_by('-id').values_list(numbers_field, flat=True)[:100]  # Legutóbbi 100 húzás
+        ).order_by('-id').values_list(numbers_field, flat=True)[:150]
         
-        past_draws = []
+        all_past_draws = []
         for draw in queryset:
             if isinstance(draw, list) and len(draw) > 0:
                 # Csak érvényes számokat tartunk meg
@@ -106,7 +106,14 @@ def get_historical_data(lottery_type_instance: lg_lottery_type, numbers_field: s
                         continue
                 
                 if valid_numbers:
-                    past_draws.append(valid_numbers)
+                    all_past_draws.append(valid_numbers)
+        
+        # Determinisztikus mintavételezés: a legutóbbi ~70% húzás megtartása
+        if len(all_past_draws) > 20:
+            sample_size = max(20, int(len(all_past_draws) * 0.7))
+            past_draws = all_past_draws[:sample_size]
+        else:
+            past_draws = all_past_draws
         
         return past_draws
     
@@ -168,20 +175,36 @@ def apply_statistical_validation(frequency: Counter, past_draws: List[List[int]]
 def select_numbers_with_diversity(frequency: Counter, min_number: int, max_number: int, 
                                 pieces_of_draw_numbers: int) -> List[int]:
     """
-    Számok kiválasztása diverzitással.
+    Számok kiválasztása diverzitással determinisztikusan.
     """
-    # Leggyakoribb számok
-    most_common = [num for num, _ in frequency.most_common()]
+    # Leggyakoribb számok (bővebb választás)
+    top_candidates_count = min(pieces_of_draw_numbers * 3, len(frequency))
+    top_candidates = [num for num, _ in frequency.most_common(top_candidates_count)]
     
-    # Alapvető kiválasztás
-    selected = most_common[:pieces_of_draw_numbers]
+    # Determinisztikus kiválasztás a top jelöltek közül (70% top + 30% determinisztikus kiegészítés)
+    guaranteed_count = max(1, int(pieces_of_draw_numbers * 0.7))
+    selected = top_candidates[:guaranteed_count]
+    
+    # Kiegészítés determinisztikusan a maradék helyekre
+    remaining_needed = pieces_of_draw_numbers - len(selected)
+    if remaining_needed > 0:
+        remaining_candidates = top_candidates[guaranteed_count:]
+        if len(remaining_candidates) >= remaining_needed:
+            selected.extend(remaining_candidates[:remaining_needed])
+        else:
+            selected.extend(remaining_candidates)
+            # Ha még mindig kell több, determinisztikusan a legkisebb elérhető számokkal töltjük fel
+            all_numbers = set(range(min_number, max_number + 1))
+            unused_numbers = sorted(list(all_numbers - set(selected)))
+            if unused_numbers and len(selected) < pieces_of_draw_numbers:
+                needed = pieces_of_draw_numbers - len(selected)
+                selected.extend(unused_numbers[:needed])
     
     # Diverzitás biztosítása
     if len(selected) >= 3:
-        # Ellenőrizzük, hogy ne legyenek túl közel egymáshoz
         selected = ensure_number_diversity(selected, min_number, max_number)
     
-    return selected
+    return selected[:pieces_of_draw_numbers]
 
 
 def ensure_number_diversity(numbers: List[int], min_number: int, max_number: int) -> List[int]:
@@ -201,9 +224,9 @@ def ensure_number_diversity(numbers: List[int], min_number: int, max_number: int
     
     # Ha túl kevés diverzitást értünk el, kiegészítjük
     if len(diverse_numbers) < len(numbers):
-        remaining = [num for num in range(min_number, max_number + 1) 
-                    if num not in diverse_numbers]
-        random.shuffle(remaining)
+        remaining = [num for num in range(min_number, max_number + 1)
+                     if num not in diverse_numbers]
+        # Determinisztikus kiegészítés: a legkisebb elérhető számokkal
         diverse_numbers.extend(remaining[:len(numbers) - len(diverse_numbers)])
     
     return diverse_numbers[:len(numbers)]
@@ -226,7 +249,7 @@ def validate_final_selection(selected_numbers: List[int], min_number: int, max_n
             num for num in range(min_number, max_number + 1) 
             if num not in valid_numbers
         ]
-        random.shuffle(remaining_numbers)
+        # Determinisztikus kiegészítés: a legkisebb elérhető számokkal
         valid_numbers.extend(remaining_numbers[:pieces_of_draw_numbers - len(valid_numbers)])
     
     # Típus konverzió
@@ -237,27 +260,38 @@ def validate_final_selection(selected_numbers: List[int], min_number: int, max_n
 
 def generate_intelligent_random(min_number: int, max_number: int, count: int) -> List[int]:
     """
-    Intelligens véletlen számgenerálás normál eloszlással.
+    Determinisztikus "intelligens" generálás: középről kifelé terjedő mintázattal.
     """
-    center = (min_number + max_number) / 2
-    std = (max_number - min_number) / 6
-    
-    numbers = set()
-    attempts = 0
-    
-    while len(numbers) < count and attempts < 1000:
-        num = int(np.random.normal(center, std))
-        if min_number <= num <= max_number:
-            numbers.add(num)
-        attempts += 1
-    
-    # Kiegészítés egyenletes eloszlással
-    if len(numbers) < count:
-        remaining = [num for num in range(min_number, max_number + 1) if num not in numbers]
-        random.shuffle(remaining)
-        numbers.update(remaining[:count - len(numbers)])
-    
-    return list(numbers)[:count]
+    if count <= 0 or min_number > max_number:
+        return []
+    center = int(round((min_number + max_number) / 2))
+    selected: List[int] = []
+    used = set()
+    # Offsetek: 0, +1, -1, +2, -2, ...
+    k = 0
+    while len(selected) < count:
+        if k == 0:
+            offsets = [0]
+        else:
+            offsets = [k, -k]
+        for off in offsets:
+            candidate = center + off
+            if min_number <= candidate <= max_number and candidate not in used:
+                selected.append(int(candidate))
+                used.add(int(candidate))
+                if len(selected) >= count:
+                    break
+        k += 1
+        # Biztonsági megszakítás szélsőséges esetben
+        if center - k < min_number and center + k > max_number and len(selected) < count:
+            # Töltés a legkisebb elérhetőkkel
+            for c in range(min_number, max_number + 1):
+                if c not in used:
+                    selected.append(int(c))
+                    used.add(int(c))
+                    if len(selected) >= count:
+                        break
+    return selected[:count]
 
 
 def generate_fallback_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:

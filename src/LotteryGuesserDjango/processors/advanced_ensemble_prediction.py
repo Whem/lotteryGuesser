@@ -7,7 +7,7 @@ Kombinálja a legjobb algoritmusokat súlyozott módon a teljesítmény alapján
 import numpy as np
 from typing import List, Tuple, Dict
 from collections import Counter, defaultdict
-import random
+
 from algorithms.models import lg_lottery_winner_number, lg_lottery_type
 from lottery_handler.models import lg_algorithm_score, lg_algorithm_performance
 
@@ -190,11 +190,15 @@ class AdvancedEnsemblePredictor:
                     if len(final_main) >= required_main:
                         break
         
-        # Végső fallback random számokkal
-        while len(final_main) < required_main:
-            num = random.randint(min_main, max_main)
-            if num not in final_main:
-                final_main.append(num)
+        # Végső determinisztikus feltöltés
+        if len(final_main) < required_main:
+            existing = set(final_main)
+            for candidate in range(min_main, max_main + 1):
+                if candidate not in existing:
+                    final_main.append(candidate)
+                    existing.add(candidate)
+                    if len(final_main) >= required_main:
+                        break
         
         final_main = sorted(final_main[:required_main])
         
@@ -222,15 +226,29 @@ class AdvancedEnsemblePredictor:
                         if len(final_additional) >= required_additional:
                             break
             
-            # Végső fallback
-            while len(final_additional) < required_additional:
-                num = random.randint(min_additional, max_additional)
-                if num not in final_additional:
-                    final_additional.append(num)
+            # Végső determinisztikus feltöltés
+            if len(final_additional) < required_additional:
+                existing = set(final_additional)
+                for candidate in range(min_additional, max_additional + 1):
+                    if candidate not in existing:
+                        final_additional.append(candidate)
+                        existing.add(candidate)
+                        if len(final_additional) >= required_additional:
+                            break
             
             final_additional = sorted(final_additional[:required_additional])
         
         return final_main, final_additional
+
+
+def deterministic_fallback(min_num: int, max_num: int, count: int) -> List[int]:
+    """Deterministic fallback: return the smallest 'count' unique numbers within [min_num, max_num]."""
+    span = max_num - min_num + 1
+    if count <= 0 or span <= 0:
+        return []
+    if count >= span:
+        return [int(x) for x in range(min_num, max_num + 1)][:count]
+    return [int(x) for x in range(min_num, min_num + count)]
 
 
 def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List[int]]:
@@ -247,7 +265,7 @@ def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List
         predictions = predictor.generate_predictions(lottery_type_instance)
         
         if not predictions:
-            # Ha minden algoritmus hibázik, fallback random számokra
+            # Ha minden algoritmus hibázik, fallback determinisztikus számokra
             return generate_fallback_numbers(lottery_type_instance)
         
         # Ensemble szavazás
@@ -273,21 +291,21 @@ def generate_fallback_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[L
     """
     Fallback számgenerálás amikor minden más hibázik
     """
-    # Fő számok
-    main_numbers = sorted(random.sample(
-        range(int(lottery_type_instance.min_number), 
-              int(lottery_type_instance.max_number) + 1),
+    # Fő számok determinisztikus feltöltése (legkisebb elérhető számok)
+    main_numbers = deterministic_fallback(
+        int(lottery_type_instance.min_number),
+        int(lottery_type_instance.max_number),
         int(lottery_type_instance.pieces_of_draw_numbers)
-    ))
+    )
     
     # Kiegészítő számok
     additional_numbers = []
     if lottery_type_instance.has_additional_numbers:
-        additional_numbers = sorted(random.sample(
-            range(int(lottery_type_instance.additional_min_number),
-                  int(lottery_type_instance.additional_max_number) + 1),
+        additional_numbers = deterministic_fallback(
+            int(lottery_type_instance.additional_min_number),
+            int(lottery_type_instance.additional_max_number),
             int(lottery_type_instance.additional_numbers_count)
-        ))
+        )
     
     return main_numbers, additional_numbers
 

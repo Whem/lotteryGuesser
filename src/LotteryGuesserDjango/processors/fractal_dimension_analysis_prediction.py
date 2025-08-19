@@ -1,4 +1,5 @@
 # fractal_dimension_analysis_prediction.py
+import random
 import numpy as np
 from typing import List, Tuple, Dict
 from algorithms.models import lg_lottery_winner_number, lg_lottery_type
@@ -147,19 +148,35 @@ def generate_predictions(
             key=lambda x: x[1],
             reverse=True
         )
-
-        # Select unique valid numbers
+        
+        # Create candidate pools for randomization
+        top_count = min(required_numbers * 3, len(sorted_numbers))
+        top_candidates = [num for num, _ in sorted_numbers[:top_count] if min_num <= num <= max_num]
+        
+        # Select numbers with randomization
         predicted_numbers = []
         used_numbers = set()
-
-        for number, _ in sorted_numbers:
-            if (min_num <= number <= max_num and
-                    number not in used_numbers):
+        
+        # Guarantee some top performers (60%)
+        guaranteed_count = max(1, int(required_numbers * 0.6))
+        for i, (number, _) in enumerate(sorted_numbers):
+            if (min_num <= number <= max_num and 
+                number not in used_numbers and 
+                len(predicted_numbers) < guaranteed_count):
                 predicted_numbers.append(number)
                 used_numbers.add(number)
-
-            if len(predicted_numbers) >= required_numbers:
-                break
+        
+        # Random selection from remaining candidates
+        remaining_needed = required_numbers - len(predicted_numbers)
+        remaining_candidates = [num for num in top_candidates if num not in used_numbers]
+        
+        if remaining_needed > 0 and remaining_candidates:
+            random_selection = random.sample(
+                remaining_candidates, 
+                min(remaining_needed, len(remaining_candidates))
+            )
+            predicted_numbers.extend(random_selection)
+            used_numbers.update(random_selection)
 
         # Fill remaining if needed
         while len(predicted_numbers) < required_numbers:

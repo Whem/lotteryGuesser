@@ -1,8 +1,8 @@
 # weighted_random_selection.py
 
-import random
 from typing import List, Tuple, Set, Dict
 from collections import Counter, defaultdict
+import statistics
 from algorithms.models import lg_lottery_winner_number, lg_lottery_type
 
 
@@ -49,18 +49,18 @@ def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List
     except Exception as e:
         # Log the error (consider using a proper logging system)
         print(f"Error in get_numbers: {str(e)}")
-        # Fall back to random number generation
+        # Deterministic fallback
         min_num = int(lottery_type_instance.min_number)
         max_num = int(lottery_type_instance.max_number)
         total_numbers = int(lottery_type_instance.pieces_of_draw_numbers)
-        main_numbers = generate_random_numbers(min_num, max_num, total_numbers)
+        main_numbers = deterministic_fallback(min_num, max_num, total_numbers)
 
         additional_numbers = []
         if lottery_type_instance.has_additional_numbers:
             additional_min_num = int(lottery_type_instance.additional_min_number)
             additional_max_num = int(lottery_type_instance.additional_max_number)
             additional_total_numbers = int(lottery_type_instance.additional_numbers_count)
-            additional_numbers = generate_random_numbers(additional_min_num, additional_max_num, additional_total_numbers)
+            additional_numbers = deterministic_fallback(additional_min_num, additional_max_num, additional_total_numbers)
 
         return main_numbers, additional_numbers
 
@@ -107,8 +107,8 @@ def generate_numbers(
         ]
 
         if len(past_draws) < 10:
-            # If not enough past draws, generate random numbers
-            return generate_random_numbers(min_num, max_num, total_numbers)
+            # If not enough past draws, return deterministic fallback
+            return deterministic_fallback(min_num, max_num, total_numbers)
 
         # Count frequency of each number in past draws
         number_counter = Counter()
@@ -130,69 +130,35 @@ def generate_numbers(
             total_freq = sum(frequencies)
             weights = [freq / total_freq for freq in frequencies]
 
-        # Select numbers based on weights without replacement
-        selected_numbers = []
-        available_numbers = all_numbers.copy()
-        available_weights = weights.copy()
-
-        for _ in range(total_numbers):
-            if not available_numbers:
-                break
-            selected_number = random.choices(available_numbers, weights=available_weights, k=1)[0]
-            selected_numbers.append(selected_number)
-            # Remove selected number and its weight
-            index = available_numbers.index(selected_number)
-            del available_numbers[index]
-            del available_weights[index]
-
-        # Ensure uniqueness and correct count
-        selected_numbers = list(set(selected_numbers))
-        if len(selected_numbers) < total_numbers:
-            # Fill the remaining slots with the most common numbers
-            most_common = number_counter.most_common(total_numbers - len(selected_numbers))
-            for num, _ in most_common:
-                if num not in selected_numbers:
-                    selected_numbers.append(num)
-                if len(selected_numbers) == total_numbers:
-                    break
-
-        # Trim to the required number of numbers and sort
-        selected_numbers = selected_numbers[:total_numbers]
-        selected_numbers.sort()
+        # Deterministic selection: pick top-k by weight, then by number ascending
+        number_weights = {num: w for num, w in zip(all_numbers, weights)}
+        ranked = sorted(all_numbers, key=lambda n: (-number_weights.get(n, 0.0), n))
+        selected_numbers = sorted(ranked[:total_numbers])
         return selected_numbers
 
     except Exception as e:
         # Log the error (consider using a proper logging system)
         print(f"Error in generate_numbers: {str(e)}")
-        # Fall back to random number generation
-        return generate_random_numbers(min_num, max_num, total_numbers)
+        # Deterministic fallback
+        return deterministic_fallback(min_num, max_num, total_numbers)
 
 
-def generate_random_numbers(min_num: int, max_num: int, total_numbers: int) -> List[int]:
+def deterministic_fallback(min_num: int, max_num: int, total_numbers: int) -> List[int]:
     """
-    Generates a sorted list of unique random numbers within the specified range.
+    Deterministic fallback: returns the smallest available numbers in range.
 
-    This function serves as a fallback mechanism to ensure that a valid set of numbers is always returned,
-    even when historical data is insufficient or prediction algorithms fail.
-
-    Parameters:
-    - min_num: Minimum number in the lottery range.
-    - max_num: Maximum number in the lottery range.
-    - total_numbers: Number of numbers to generate.
-
-    Returns:
-    - A sorted list of randomly generated lottery numbers.
+    Ensures uniqueness and validity without any randomness.
     """
     try:
-        numbers = set()
-        while len(numbers) < total_numbers:
-            num = random.randint(min_num, max_num)
-            numbers.add(num)
-        return sorted(list(numbers))
-    except Exception as e:
-        print(f"Error in generate_random_numbers: {str(e)}")
-        # As a last resort, return a sequential list
+        span = max_num - min_num + 1
+        if total_numbers <= 0 or span <= 0:
+            return []
+        if total_numbers >= span:
+            return list(range(min_num, max_num + 1))[:total_numbers]
         return list(range(min_num, min_num + total_numbers))
+    except Exception as e:
+        print(f"Error in deterministic_fallback: {str(e)}")
+        return []
 
 
 def calculate_weights(
@@ -255,26 +221,14 @@ def calculate_weights(
     return weights
 
 
-def weighted_random_choice(weights: Dict[int, float], available_numbers: Set[int]) -> int:
+def weighted_deterministic_choice(weights: Dict[int, float], available_numbers: Set[int]) -> int | None:
     """
-    Selects a random number based on weighted probabilities.
-
-    Parameters:
-    - weights: A dictionary mapping numbers to their weights.
-    - available_numbers: A set of numbers available for selection.
-
-    Returns:
-    - A single selected number.
+    Deterministically select the highest-weight number (ties broken by smaller number).
     """
     try:
-        numbers = list(available_numbers)
-        number_weights = [weights.get(num, 1.0) for num in numbers]
-        total = sum(number_weights)
-        if total == 0:
-            return random.choice(numbers)
-        probabilities = [w / total for w in number_weights]
-        selected = random.choices(numbers, weights=probabilities, k=1)[0]
-        return selected
+        if not available_numbers:
+            return None
+        return sorted(list(available_numbers), key=lambda n: (-weights.get(n, 0.0), n))[0]
     except Exception as e:
-        print(f"Weighted random choice error: {e}")
-        return random.choice(list(available_numbers)) if available_numbers else None
+        print(f"Weighted deterministic choice error: {e}")
+        return min(available_numbers) if available_numbers else None

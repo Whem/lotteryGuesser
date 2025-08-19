@@ -2,10 +2,10 @@
 
 import random
 import math
+import statistics
 from typing import List, Tuple, Set, Dict
 from collections import defaultdict
 from algorithms.models import lg_lottery_winner_number, lg_lottery_type
-from collections import defaultdict
 
 class LotteryOrganism:
     def __init__(self, genome: List[int], min_num: int, max_num: int):
@@ -49,22 +49,25 @@ def create_initial_population(pop_size: int, genome_size: int, min_num: int, max
     ]
 
 
-def fitness_function(organism: LotteryOrganism, past_draws: List[List[int]]) -> int:
+def fitness_function(organism: LotteryOrganism, past_draws: List[List[int]]) -> float:
     """
-    Calculates the fitness of an organism based on past draws.
+    Calculates the fitness of an organism based on past draws with randomization.
 
     Parameters:
     - organism: The LotteryOrganism instance.
     - past_draws: List of past lottery number draws.
 
     Returns:
-    - An integer representing the fitness score.
+    - A float representing the fitness score.
     """
     fitness = 0
     for draw in past_draws:
         matches = len(set(organism.genome) & set(draw))
         fitness += matches ** 2  # Quadratic reward for matches
-    return fitness
+    
+    # Add small random noise to avoid identical fitness scores
+    noise = random.uniform(-0.1, 0.1)
+    return fitness + noise
 
 
 def symbiotic_crossover(parent1: LotteryOrganism, parent2: LotteryOrganism) -> Tuple[LotteryOrganism, LotteryOrganism]:
@@ -163,8 +166,8 @@ def calculate_field_weights(
     try:
         # Calculate overall mean from past draws
         all_numbers = [num for draw in past_draws for num in draw]
-        overall_mean = mean(all_numbers)
-        overall_stdev = stdev(all_numbers) if len(all_numbers) > 1 else 1.0
+        overall_mean = statistics.mean(all_numbers)
+        overall_stdev = statistics.stdev(all_numbers) if len(all_numbers) > 1 else 1.0
 
         for num in range(min_num, max_num + 1):
             if num in excluded_numbers:
@@ -267,15 +270,23 @@ def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List
         max_num = int(lottery_type_instance.max_number)
         total_numbers = int(lottery_type_instance.pieces_of_draw_numbers)
 
-        # Retrieve past winning numbers
+        # Retrieve past winning numbers with randomization
         past_draws_queryset = lg_lottery_winner_number.objects.filter(
             lottery_type=lottery_type_instance
         ).order_by('-id').values_list('lottery_type_number', flat=True)
 
-        past_draws = [
+        all_past_draws = [
             draw for draw in past_draws_queryset
             if isinstance(draw, list) and len(draw) == total_numbers
         ]
+        
+        # Randomize the selection of past draws for variety
+        if len(all_past_draws) > 20:
+            # Use random sample of past draws (70-90% of available data)
+            sample_size = max(20, int(len(all_past_draws) * (0.7 + random.random() * 0.2)))
+            past_draws = random.sample(all_past_draws, min(sample_size, len(all_past_draws)))
+        else:
+            past_draws = all_past_draws
 
         if len(past_draws) < 10:
             # If not enough past draws, generate random main numbers
@@ -289,8 +300,10 @@ def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List
             # Evolve population
             evolved_population = evolve_population(population, past_draws)
 
-            # Select the best organism
-            best_organism = max(evolved_population, key=lambda x: x.fitness)
+            # Select from top organisms with randomization
+            sorted_population = sorted(evolved_population, key=lambda x: x.fitness, reverse=True)
+            top_count = max(1, len(sorted_population) // 10)  # Top 10% of population
+            best_organism = random.choice(sorted_population[:top_count])
 
             # Ensure uniqueness and correct range
             predicted_numbers = list(set(best_organism.genome))
@@ -320,15 +333,22 @@ def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List
             additional_max_num = int(lottery_type_instance.additional_max_number)
             additional_total_numbers = int(lottery_type_instance.additional_numbers_count)
 
-            # Retrieve past additional numbers
+            # Retrieve past additional numbers with randomization
             past_additional_draws_queryset = lg_lottery_winner_number.objects.filter(
                 lottery_type=lottery_type_instance
             ).order_by('-id').values_list('additional_numbers', flat=True)
 
-            past_additional_draws = [
+            all_past_additional_draws = [
                 draw for draw in past_additional_draws_queryset
                 if isinstance(draw, list) and len(draw) == additional_total_numbers
             ]
+            
+            # Randomize the selection of past additional draws
+            if len(all_past_additional_draws) > 10:
+                sample_size = max(10, int(len(all_past_additional_draws) * (0.7 + random.random() * 0.2)))
+                past_additional_draws = random.sample(all_past_additional_draws, min(sample_size, len(all_past_additional_draws)))
+            else:
+                past_additional_draws = all_past_additional_draws
 
             if len(past_additional_draws) < 5:
                 # If not enough past draws, generate random additional numbers
@@ -343,8 +363,10 @@ def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List
                 # Evolve population for additional numbers
                 evolved_population = evolve_population(population, past_additional_draws, generations=30, mutation_rate=0.05)
 
-                # Select the best organism
-                best_organism = max(evolved_population, key=lambda x: x.fitness)
+                # Select from top organisms with randomization
+                sorted_population = sorted(evolved_population, key=lambda x: x.fitness, reverse=True)
+                top_count = max(1, len(sorted_population) // 10)  # Top 10% of population
+                best_organism = random.choice(sorted_population[:top_count])
 
                 # Ensure uniqueness and correct range
                 predicted_additional = list(set(best_organism.genome))

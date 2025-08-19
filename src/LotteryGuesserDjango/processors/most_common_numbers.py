@@ -1,5 +1,6 @@
 # most_common_numbers.py
 
+import random
 from collections import Counter
 from typing import List, Tuple
 from algorithms.models import lg_lottery_winner_number, lg_lottery_type
@@ -58,8 +59,34 @@ def generate_most_common_numbers(
     for num in never_drawn:
         number_counter[num] = 0
 
-    # Get the most common numbers
-    most_common = number_counter.most_common(pieces_of_draw_numbers)
-    predicted_numbers = [int(num) for num, _ in most_common]
-
+    # Get a broader selection of common numbers for randomization
+    top_candidates_count = min(pieces_of_draw_numbers * 3, len(number_counter))
+    top_candidates = number_counter.most_common(top_candidates_count)
+    
+    # Mix of guaranteed top picks and random selection
+    guaranteed_count = max(1, int(pieces_of_draw_numbers * 0.6))  # 60% guaranteed top
+    guaranteed_numbers = [int(num) for num, _ in top_candidates[:guaranteed_count]]
+    
+    # Random selection from remaining candidates
+    remaining_needed = pieces_of_draw_numbers - len(guaranteed_numbers)
+    if remaining_needed > 0:
+        remaining_candidates = [int(num) for num, _ in top_candidates[guaranteed_count:]]
+        if len(remaining_candidates) >= remaining_needed:
+            random_selection = random.sample(remaining_candidates, remaining_needed)
+        else:
+            # If not enough candidates, fill with all remaining and add random numbers
+            random_selection = remaining_candidates[:]
+            all_numbers = list(range(min_number, max_number + 1))
+            unused_numbers = [n for n in all_numbers if n not in guaranteed_numbers + random_selection]
+            if unused_numbers:
+                additional_needed = remaining_needed - len(random_selection)
+                random_selection.extend(random.sample(unused_numbers, min(additional_needed, len(unused_numbers))))
+        
+        predicted_numbers = guaranteed_numbers + random_selection[:remaining_needed]
+    else:
+        predicted_numbers = guaranteed_numbers
+    
+    # Ensure we have exactly the right number
+    predicted_numbers = predicted_numbers[:pieces_of_draw_numbers]
+    
     return predicted_numbers

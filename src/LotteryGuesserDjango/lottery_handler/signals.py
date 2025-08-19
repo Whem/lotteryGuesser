@@ -1,12 +1,16 @@
 import os
 import importlib
 import numpy as np
+import statistics
+import logging
 
 from django.utils import timezone
 from django.http import JsonResponse
 
 from lottery_handler.models import lg_generated_lottery_draw, lg_algorithm_score
 from algorithms.models import lg_lottery_type, lg_lottery_winner_number
+
+logger = logging.getLogger(__name__)
 
 
 def list_processor_files():
@@ -20,9 +24,9 @@ def list_processor_files():
     return processor_files
 
 
-def get_top_algorithms():
-    # Get the top 5 performing algorithms based on their scores
-    return [score.algorithm_name for score in lg_algorithm_score.objects.all().order_by('-current_score')[:5]]
+def get_top_algorithms(limit=10):
+    # Get the top performing algorithms based on their scores
+    return [score.algorithm_name for score in lg_algorithm_score.objects.all().order_by('-current_score')[:limit]]
 
 
 def convert_numpy_to_python_types(obj):
@@ -53,6 +57,9 @@ def convert_numpy_to_python_types(obj):
 
 
 def call_get_numbers_dynamically(lottery_type_id):
+    import time
+    import random
+    
     processor_files = list_processor_files()
     results = []
 
@@ -61,15 +68,33 @@ def call_get_numbers_dynamically(lottery_type_id):
     if lottery_type is None:
         return JsonResponse({"error": "Item not found"}, status=404)
 
-    # Get the top 10 performing algorithms
-    top_algorithms = get_top_algorithms()
+    # Get the top 15 performing algorithms (increased from 5)
+    top_algorithms = get_top_algorithms(limit=15)
 
     # Filter processor_files to only include top performing algorithms
     processor_files = [file for file in processor_files if file in top_algorithms]
 
+    # Randomize algorithm order for variety
+    random.shuffle(processor_files)
+
     for file in processor_files:
         try:
-            print(f"Calling get_numbers function in {file} module...")
+            # Set random seed with current timestamp for variety
+            current_time = int(time.time() * 1000000)  # Microsecond precision
+            random.seed(current_time)
+            
+            # Also seed numpy if the algorithm uses it
+            try:
+                import numpy as np
+                np.random.seed(current_time % (2**32))  # NumPy seed must be < 2^32
+            except ImportError:
+                pass
+            
+            logger.info(f"EXECUTING: {file} (seed: {current_time})")
+            print(f"Executing algorithm: {file} with seed: {current_time}")
+
+            # Small delay to ensure different seeds between algorithms
+            time.sleep(0.001)  # 1 millisecond delay
 
             module = importlib.import_module(f"processors.{file}")
 
@@ -92,19 +117,45 @@ def call_get_numbers_dynamically(lottery_type_id):
                     # Handle legacy format or single list
                     final_numbers = convert_numpy_to_python_types(lottery_numbers)
 
+                # Create result with enhanced data
+                current_time = timezone.now()
+                
+                # Calculate statistics only for main numbers (list format)
+                main_nums = main_numbers if isinstance(lottery_numbers, tuple) else final_numbers
+                if isinstance(main_nums, list) and all(isinstance(n, (int, float)) for n in main_nums):
+                    sum_val = sum(main_nums)
+                    average_val = statistics.mean(main_nums)
+                    median_val = statistics.median(main_nums)
+                    try:
+                        mode_val = statistics.mode(main_nums)
+                    except statistics.StatisticsError:
+                        mode_val = main_nums[0] if main_nums else 0
+                    std_val = statistics.stdev(main_nums) if len(main_nums) > 1 else 0.0
+                else:
+                    sum_val = average_val = median_val = mode_val = std_val = 0
+
                 result = lg_generated_lottery_draw.objects.create(
                     lottery_type=lottery_type,
                     lottery_type_number=final_numbers,
-                    lottery_type_number_year=timezone.now().year,
-                    lottery_type_number_week=timezone.now().isocalendar()[1],
+                    lottery_type_number_year=current_time.year,
+                    lottery_type_number_week=current_time.isocalendar()[1],
+                    sum=sum_val,
+                    average=average_val,
+                    median=median_val,
+                    mode=mode_val,
+                    standard_deviation=std_val,
                     lottery_algorithm=file,
-                    created_at=timezone.now())
+                    created_at=current_time)
                 results.append(result)
         except Exception as e:
-            print(f"Error calling get_numbers function in {file} module: {e}")
-            import traceback
-            traceback.print_exc()
-            # Don't return error, just skip this algorithm and continue with others
+            logger.error(f"Hiba a {file} algoritmus futtatásakor: {e}")
+            # Hibák naplózása teljesítményfigyeléshez
+            try:
+                import traceback
+                logger.debug(f"Teljes stacktrace: {traceback.format_exc()}")
+            except:
+                pass
+            # Folytatás a következő algoritmussal
             continue
 
     return results

@@ -11,6 +11,16 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 from datetime import timedelta
 from pathlib import Path
+import os
+import warnings
+
+# TensorFlow figyelmeztetések elnémítása
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # 0=ALL, 1=INFO, 2=WARNING, 3=ERROR
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'  # oneDNN optimalizációk kikapcsolása
+
+# MLxtend deprecation warnings elnémítása
+warnings.filterwarnings('ignore', category=DeprecationWarning, module='mlxtend')
+warnings.filterwarnings('ignore', message='DataFrames with non-bool types*')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

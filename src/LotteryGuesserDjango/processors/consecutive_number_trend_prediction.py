@@ -103,34 +103,53 @@ def generate_predictions(
     common_trends = consecutive_trends.most_common(N)
 
     for trend, _ in common_trends:
-        predicted_numbers.update(trend)
+        # Csak érvényes számokat adjunk hozzá
+        for num in trend:
+            if min_num <= num <= max_num:
+                predicted_numbers.add(num)
+                
         if len(predicted_numbers) >= required_numbers:
             break
 
-        # Extend trends in both directions
-        extend_trend(predicted_numbers, trend[0] - 1, min_num, -1, required_numbers)
+        # Extend trends in both directions with proper bounds
+        extend_trend_bounded(predicted_numbers, trend[0] - 1, min_num, max_num, -1, required_numbers)
         if len(predicted_numbers) >= required_numbers:
             break
-        extend_trend(predicted_numbers, trend[1] + 1, max_num, 1, required_numbers)
+        extend_trend_bounded(predicted_numbers, trend[1] + 1, min_num, max_num, 1, required_numbers)
         if len(predicted_numbers) >= required_numbers:
             break
 
     return predicted_numbers
 
 
-def extend_trend(
+def extend_trend_bounded(
         numbers: Set[int],
         start: int,
-        limit: int,
+        min_num: int,
+        max_num: int,
         step: int,
         max_numbers: int
 ) -> None:
-    """Extend a trend in a given direction."""
+    """Extend a trend in a given direction with proper bounds checking."""
     current = start
-    while len(numbers) < max_numbers and current != limit:
-        if limit <= current <= limit:
+    
+    while len(numbers) < max_numbers:
+        # Ellenőrizzük, hogy a tartományon belül vagyunk-e
+        if current < min_num or current > max_num:
+            break
+            
+        if step == 0:  # Biztonsági ellenőrzés
+            break
+            
+        # Hozzáadjuk a számot (csak ha még nincs benne)
+        if current not in numbers:
             numbers.add(current)
+            
         current += step
+        
+        # Extra biztonsági ellenőrzés - ha túl messzire mennénk
+        if abs(current - start) > (max_num - min_num):
+            break
 
 
 def fill_remaining_numbers(

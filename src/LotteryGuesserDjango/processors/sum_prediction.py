@@ -148,8 +148,8 @@ def calculate_field_weights(
 
             # Weight based on how much adding this number would approach the overall_mean
             # Assume average_sum = sum(selected_numbers), so adding num affects the sum
-            # Here, a simplistic approach: numbers closer to the overall_mean / total_numbers are preferred
-            target_num = overall_mean / total_numbers
+            # Here, a simplistic approach: numbers closer to the overall_mean / 5 are preferred (assuming 5 numbers typical)
+            target_num = overall_mean / 5  # Use typical lottery size as fallback
             weight = 1 / (1 + abs(num - target_num))
             weights[num] = weight
 
