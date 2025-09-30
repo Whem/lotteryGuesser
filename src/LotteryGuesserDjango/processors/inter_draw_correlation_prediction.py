@@ -42,20 +42,17 @@ def generate_numbers(
     """
     Generate a set of numbers using inter-draw correlation analysis.
     """
-    # Retrieve past draws
+    # Retrieve past draws from correct field
+    field_name = 'lottery_type_number' if is_main else 'additional_numbers'
     past_draws_queryset = lg_lottery_winner_number.objects.filter(
         lottery_type=lottery_type_instance
-    ).values_list('lottery_type_number', flat=True)
+    ).values_list(field_name, flat=True)
 
     # Extract numbers based on whether they are main or additional
     past_draws = []
     for draw in past_draws_queryset:
         if isinstance(draw, list):
-            if is_main:
-                numbers = [num for num in draw if min_num <= num <= max_num]
-            else:
-                # Assuming additional numbers are stored separately
-                numbers = [num for num in draw if min_num <= num <= max_num]
+            numbers = [num for num in draw if min_num <= num <= max_num]
             if numbers:
                 past_draws.append(numbers)
 

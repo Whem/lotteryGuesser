@@ -104,6 +104,26 @@ class LotteryNumbersApiView(APIView, CustomPagination):
             # Rendezés score szerint
             response.sort(key=lambda x: x['score'], reverse=True)
 
+            # Deduplikálás: azonos számsorok összevonása (a legmagasabb score marad)
+            def _canonical_key(numbers):
+                # Normalizált kulcs a számokhoz: rendezett tuple
+                if isinstance(numbers, dict):
+                    main = numbers.get('main', [])
+                    additional = numbers.get('additional', [])
+                    return ('dict', tuple(sorted(main)), tuple(sorted(additional)))
+                else:
+                    return ('list', tuple(sorted(numbers)))
+
+            seen = set()
+            deduped = []
+            for item in response:
+                key = _canonical_key(item.get('numbers', []))
+                if key in seen:
+                    continue
+                seen.add(key)
+                deduped.append(item)
+            response = deduped
+
             # Teljesítménystatisztikák hozzáadása
             performance_summary = {
                 'total_algorithms': len(response),
@@ -270,8 +290,10 @@ class CalculateLotteryNumbersView(APIView):
         
         # Optimalizált fájllista
         try:
-            processor_files = [f[:-3] for f in os.listdir(processors_dir) 
-                             if f.endswith(".py") and not f.startswith("__")]
+            processor_files = sorted([
+                f[:-3] for f in os.listdir(processors_dir)
+                if f.endswith(".py") and not f.startswith("__")
+            ])
         except OSError as e:
             logger.error(f"Nem sikerült betölteni a processors könyvtárat: {e}")
             return []

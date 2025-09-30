@@ -42,9 +42,10 @@ def generate_numbers(
     Generate a set of numbers using inverse frequency analysis.
     """
     # Fetch past draws
+    field_name = 'lottery_type_number' if is_main else 'additional_numbers'
     past_draws_queryset = lg_lottery_winner_number.objects.filter(
         lottery_type=lottery_type_instance
-    ).values_list('lottery_type_number', flat=True)
+    ).values_list(field_name, flat=True)
 
     # Extract numbers based on whether they are main or additional
     past_draws = []

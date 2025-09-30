@@ -108,9 +108,19 @@ def get_numbers(lottery_type_instance: lg_lottery_type, min_support=0.05, metric
         additional_max = lottery_type_instance.additional_max_number
         additional_total = lottery_type_instance.additional_numbers_count
 
-        all_additional_numbers = [num for draw in past_draws for num in draw if additional_min <= num <= additional_max]
+        # Use additional number history (not main) for counts
+        past_additional_draws = lg_lottery_winner_number.objects.filter(
+            lottery_type=lottery_type_instance
+        ).order_by('id').values_list('additional_numbers', flat=True)
+
+        all_additional_numbers = [
+            int(num)
+            for draw in past_additional_draws if isinstance(draw, list)
+            for num in draw
+            if additional_min <= int(num) <= additional_max
+        ]
         additional_counts = Counter(all_additional_numbers)
-        additional_candidates = [num for num, count in additional_counts.most_common(additional_total)]
+        additional_candidates = [num for num, _ in additional_counts.most_common(additional_total)]
 
         if len(additional_candidates) < additional_total:
             for num in range(additional_min, additional_max + 1):

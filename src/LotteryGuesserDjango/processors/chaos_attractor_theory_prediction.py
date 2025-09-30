@@ -74,18 +74,26 @@ def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List
         additional_max = lottery_type_instance.additional_max_number
         additional_required = lottery_type_instance.additional_numbers_count
 
+        # Use additional number history (not main) for additional predictions
+        additional_past_draws = list(
+            lg_lottery_winner_number.objects.filter(
+                lottery_type=lottery_type_instance
+            ).order_by('-id')[:200].values_list('additional_numbers', flat=True)
+        )
+        additional_past_draws = [d for d in additional_past_draws if isinstance(d, list)]
+
         # Chaos Theory predictions for additional numbers
-        additional_attractor_numbers = analyze_attractor_points(past_draws, additional_min, additional_max)
-        additional_basin_numbers = analyze_chaos_basins(past_draws, additional_min, additional_max)
-        additional_stability_numbers = analyze_lyapunov_stability(past_draws, additional_min, additional_max)
+        additional_attractor_numbers = analyze_attractor_points(additional_past_draws, additional_min, additional_max)
+        additional_basin_numbers = analyze_chaos_basins(additional_past_draws, additional_min, additional_max)
+        additional_stability_numbers = analyze_lyapunov_stability(additional_past_draws, additional_min, additional_max)
 
         additional_candidates = set()
         additional_candidates.update(additional_attractor_numbers[:additional_required // 3])
         additional_candidates.update(additional_basin_numbers[:additional_required // 3])
         additional_candidates.update(additional_stability_numbers[:additional_required // 3])
 
-        # Fill remaining slots for additional numbers
-        additional_numbers = fill_remaining_slots(additional_candidates, past_draws, additional_required, additional_min, additional_max)
+        # Fill remaining slots for additional numbers using additional history
+        additional_numbers = fill_remaining_slots(additional_candidates, additional_past_draws, additional_required, additional_min, additional_max)
 
     return sorted(main_numbers), sorted(additional_numbers)
 

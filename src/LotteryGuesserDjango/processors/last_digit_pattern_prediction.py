@@ -42,21 +42,17 @@ def generate_numbers(
     """
     Generate numbers based on last digit patterns.
     """
-    # Fetch past draws
+    # Fetch past draws from the correct field
+    field_name = 'lottery_type_number' if is_main else 'additional_numbers'
     past_draws_queryset = lg_lottery_winner_number.objects.filter(
         lottery_type=lottery_type_instance
-    ).values_list('lottery_type_number', flat=True)
+    ).values_list(field_name, flat=True)
 
-    # Extract numbers based on whether they are main or additional
+    # Extract numbers
     past_numbers = []
     for draw in past_draws_queryset:
         if isinstance(draw, list):
-            if is_main:
-                numbers = [num for num in draw if min_num <= num <= max_num]
-            else:
-                # Assuming additional numbers are stored separately
-                additional_nums = getattr(draw, 'additional_numbers', [])
-                numbers = [num for num in additional_nums if min_num <= num <= max_num]
+            numbers = [num for num in draw if min_num <= num <= max_num]
             if numbers:
                 past_numbers.extend(numbers)
 

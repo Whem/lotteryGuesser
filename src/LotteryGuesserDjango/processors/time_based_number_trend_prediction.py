@@ -117,7 +117,7 @@ def generate_numbers(
                 lottery_type=lottery_type_instance,
                 lottery_type_number_year=target_year,
                 lottery_type_number_week=target_week
-            ).values_list('lottery_type_number', flat=True)
+            ).values_list(number_field, flat=True)
 
             for draw in draws:
                 if isinstance(draw, list):
@@ -142,7 +142,7 @@ def generate_numbers(
                 lottery_type=lottery_type_instance,
                 lottery_type_number_year=target_year,
                 lottery_type_number_week=target_week
-            ).values_list('lottery_type_number', flat=True)
+            ).values_list(number_field, flat=True)
 
             for draw in draws:
                 if isinstance(draw, list):

@@ -42,9 +42,10 @@ def generate_numbers(
     """
     Generate a set of numbers using interval analysis.
     """
-    # Fetch past draws
+    # Fetch past draws from the correct field (main vs additional)
+    field_name = 'lottery_type_number' if is_main else 'additional_numbers'
     queryset = lg_lottery_winner_number.objects.filter(lottery_type=lottery_type).values_list(
-        'lottery_type_number', flat=True
+        field_name, flat=True
     )
 
     intervals = defaultdict(list)
@@ -55,12 +56,8 @@ def generate_numbers(
         if not isinstance(numbers, list):
             continue
 
-        if is_main:
-            # Extract main numbers within the specified range
-            numbers = [num for num in numbers if min_num <= num <= max_num]
-        else:
-            # Assuming additional numbers are stored separately
-            numbers = [num for num in numbers if min_num <= num <= max_num]
+        # Keep only numbers in the specified range
+        numbers = [num for num in numbers if min_num <= num <= max_num]
 
         for number in numbers:
             if number in last_occurrence:

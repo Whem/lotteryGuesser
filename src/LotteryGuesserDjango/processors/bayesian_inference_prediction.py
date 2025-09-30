@@ -34,21 +34,37 @@ def get_numbers(lottery_type_instance: lg_lottery_type) -> Tuple[List[int], List
     # Generate additional numbers if required
     additional_numbers = []
     if lottery_type_instance.has_additional_numbers:
-        additional_probabilities = {num: probabilities.get(num, 1 / (
-                    lottery_type_instance.additional_max_number - lottery_type_instance.additional_min_number + 1))
-                                    for num in range(lottery_type_instance.additional_min_number,
-                                                     lottery_type_instance.additional_max_number + 1)}
+        add_min = lottery_type_instance.additional_min_number
+        add_max = lottery_type_instance.additional_max_number
+        add_count = lottery_type_instance.additional_numbers_count
 
-        # Apply Bayesian inference for additional numbers
-        updated_additional_probabilities = bayesian_update(additional_probabilities,
-                                                           lottery_type_instance.additional_min_number,
-                                                           lottery_type_instance.additional_max_number)
+        # Build prior probabilities from additional history
+        add_draws = lg_lottery_winner_number.objects.filter(
+            lottery_type=lottery_type_instance
+        ).values_list('additional_numbers', flat=True)
 
-        # Predict additional numbers with the highest updated probabilities
-        all_additional_numbers = list(
-            range(lottery_type_instance.additional_min_number, lottery_type_instance.additional_max_number + 1))
-        additional_numbers = sorted(all_additional_numbers, key=lambda x: updated_additional_probabilities.get(x, 0),
-                                    reverse=True)[:lottery_type_instance.additional_numbers_count]
+        add_freq = Counter()
+        for draw in add_draws:
+            if isinstance(draw, list):
+                for n in draw:
+                    if add_min <= n <= add_max:
+                        add_freq[n] += 1
+
+        total_add = sum(add_freq.values())
+        if total_add == 0:
+            additional_probabilities = {n: 1.0 / (add_max - add_min + 1) for n in range(add_min, add_max + 1)}
+        else:
+            additional_probabilities = {n: add_freq.get(n, 0) / total_add for n in range(add_min, add_max + 1)}
+
+        # Apply Bayesian update on additional range
+        updated_additional_probabilities = bayesian_update(additional_probabilities, add_min, add_max)
+
+        all_additional_numbers = list(range(add_min, add_max + 1))
+        additional_numbers = sorted(
+            all_additional_numbers,
+            key=lambda x: updated_additional_probabilities.get(x, 0),
+            reverse=True
+        )[:add_count]
 
     return sorted(main_numbers), sorted(additional_numbers)
 

@@ -36,15 +36,34 @@ def get_numbers(lottery_type_instance) -> Tuple[List[int], List[int]]:
     # Generate additional numbers if the lottery type requires it
     additional_numbers = []
     if lottery_type_instance.has_additional_numbers:
-        additional_common_numbers = [num for num, _ in
-                                     number_frequency.most_common(lottery_type_instance.additional_numbers_count * 2)]
-        additional_numbers = set()
+        # Build frequency from historical additional numbers (not main)
+        add_frequency = Counter()
+        additional_draws = lg_lottery_winner_number.objects.filter(
+            lottery_type=lottery_type_instance
+        ).values_list('additional_numbers', flat=True)
+        for draw in additional_draws:
+            if isinstance(draw, list):
+                add_frequency.update(
+                    [n for n in draw
+                     if lottery_type_instance.additional_min_number <= n <= lottery_type_instance.additional_max_number]
+                )
 
+        additional_common_numbers = [
+            num for num, _ in add_frequency.most_common(
+                lottery_type_instance.additional_numbers_count * 2
+            )
+        ]
+
+        additional_numbers = set()
         while len(additional_numbers) < lottery_type_instance.additional_numbers_count:
             if additional_common_numbers:
                 additional_numbers.add(random.choice(additional_common_numbers))
             else:
-                additional_numbers.add(random.randint(lottery_type_instance.additional_min_number,
-                                                      lottery_type_instance.additional_max_number))
+                additional_numbers.add(
+                    random.randint(
+                        lottery_type_instance.additional_min_number,
+                        lottery_type_instance.additional_max_number,
+                    )
+                )
 
     return sorted(main_numbers), sorted(additional_numbers)
