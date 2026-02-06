@@ -40,7 +40,8 @@ develop-eggs/
 dist/
 downloads/
 eggs/
-lib/
+# Python lib - exclude Flutter mobile lib
+/src/LotteryGuesserDjango/lib/
 lib64/
 parts/
 sdist/
@@ -89,3 +90,11 @@ local_settings.py
 db.sqlite3
 /src/LotteryGuesserDjango/general.log
 /src/LotteryGuesserDjango/db.sqlite3
+
+# LotterySystem
+node_modules/
+*.tar.gz
+.idea/
+/src/LotterySystem/server/dist/
+/src/LotterySystem/server/lottery-deploy.tar.gz
+/src/LotterySystem/server/scripts/otos_lotto_data.json
